@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Insurance - Quote Survey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body.green-quote-modal-active {
+            overflow: hidden;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        /* Glass card */
+        .modal-container {
+            background: rgba(15, 40, 25, 0.92);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(107, 194, 74, 0.25);
+            border-radius: 24px;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.6),
+                0 0 40px rgba(107, 194, 74, 0.2);
+            max-width: 650px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUpQuote 0.35s ease;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        @keyframes slideUpQuote {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            padding: 30px 30px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .modal-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .modal-body {
+            padding: 24px 30px 30px;
+        }
+
+        /* Initial buttons */
+        .button-group {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .button-group.vertical {
+            flex-direction: column;
+        }
+
+        .primary-button,
+        .secondary-button {
+            flex: 1;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .primary-button {
+            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(107, 194, 74, 0.45);
+        }
+
+        .primary-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(107, 194, 74, 0.65);
+        }
+
+        .secondary-button {
+            background: transparent;
+            border: 2px solid #6bc24a;
+            color: #fff;
+        }
+
+        .secondary-button:hover {
+            background: rgba(107, 194, 74, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Close button */
+        .close-button {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            border: none;
+            background: rgba(0, 0, 0, 0.35);
+            color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .close-button:hover {
+            background: rgba(0, 0, 0, 0.5);
+            transform: rotate(90deg);
+        }
+
+        /* Progress */
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(12, 27, 18, 0.95);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 25%;
+            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
+            border-radius: 3px;
+            transition: width 0.25s ease;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .step-dot {
+            width: 26px;
+            height: 26px;
+            border-radius: 999px;
+            background: rgba(15, 30, 20, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: #9ca3af;
+            transition: all 0.25s ease;
+        }
+
+        .step-dot.active {
+            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
+            color: #fff;
+        }
+
+        .step-dot.completed {
+            background: #10b981;
+            color: #fff;
+        }
+
+        /* Steps */
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+            animation: fadeInStep 0.25s ease;
+        }
+
+        @keyframes fadeInStep {
+            from { opacity: 0; transform: translateX(16px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(107, 194, 74, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #6bc24a;
+            box-shadow: 0 0 0 2px rgba(107, 194, 74, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        select option {
+            background: #1a3d2e;
+            color: #fff;
+        }
+
+        .error {
+            border-color: #ef4444 !important;
+        }
+
+        .error-message {
+            font-size: 12px;
+            color: #fca5a5;
+            margin-top: 3px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 22px;
+        }
+
+        .nav-button {
+            flex: 1;
+            padding: 11px 18px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.25s ease;
+        }
+
+        .back-button {
+            background: rgba(243, 244, 246, 0.12);
+            color: #e5e7eb;
+            max-width: 120px;
+        }
+
+        .back-button:hover {
+            background: rgba(229, 231, 235, 0.2);
+        }
+
+        .next-button,
+        .submit-button {
+            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(107, 194, 74, 0.45);
+        }
+
+        .next-button:hover,
+        .submit-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 7px 22px rgba(107, 194, 74, 0.65);
+        }
+
+        .summary-section {
+            background: rgba(15, 30, 20, 0.95);
+            border-radius: 10px;
+            padding: 14px 16px;
+            margin-top: 10px;
+            border: 1px solid rgba(55, 65, 81, 0.7);
+        }
+
+        .summary-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(55, 65, 81, 0.7);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: #9ca3af;
+        }
+
+        .summary-value {
+            font-weight: 600;
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 16px 24px;
+            background: rgba(15, 40, 25, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+            z-index: 20000;
+            color: #fff;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        @media (max-width: 640px) {
+            .modal-container {
+                margin: 16px;
+                max-height: 80vh;
+            }
+            .modal-header {
+                padding: 24px 20px 16px;
+            }
+            .modal-body {
+                padding: 18px 20px 22px;
+            }
+            .modal-title {
+                font-size: 22px;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .form-navigation {
+                flex-direction: column-reverse;
+            }
+            .back-button {
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- MODAL HTML -->
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-container">
+            <button class="close-button" onclick="closeModal()">
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                    <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+
+            <div class="modal-header">
+                <h1 class="modal-title">Add New Opportunity</h1>
+                <p class="modal-subtitle" id="headerSubtitle">Choose how you would like to proceed</p>
+            </div>
+
+            <div class="modal-body">
+                <!-- Initial choice buttons -->
+                <div id="initialChoice" class="button-group vertical">
+                    <button class="primary-button" onclick="startNewContact()">
+                        <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6z"/>
+                        </svg>
+                        New Contact & Quote
+                    </button>
+                    <button class="primary-button" onclick="startExistingContact()">
+                        <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Existing Contact & Quote
+                    </button>
+                    <button class="secondary-button" onclick="redirectToContacts()">
+                        <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                        </svg>
+                        Browse All Contacts
+                    </button>
+                </div>
+
+                <!-- Contact Selection for Existing -->
+                <div id="contactSelection" style="display: none;">
+                    <div class="form-group">
+                        <label for="contactId">Select Contact *</label>
+                        <select id="contactId" required>
+                            <option value="">Loading contacts...</option>
+                        </select>
+                        <div class="error-message">Please select a contact</div>
+                    </div>
+                    <div class="form-navigation">
+                        <button class="nav-button back-button" onclick="backToChoice()">Back</button>
+                        <button class="nav-button next-button" onclick="proceedWithContact()">Continue to Quote</button>
+                    </div>
+                </div>
+
+                <!-- Multi step form -->
+                <div id="quoteForm" style="display:none;">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div id="progressFill" class="progress-fill"></div>
+                        </div>
+                        <div class="step-indicator" id="stepIndicator">
+                            <!-- Will be populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- STEP 0: CONTACT INFO (for new contacts only) -->
+                    <div id="step0" class="form-step">
+                        <div class="form-group">
+                            <label for="contactFirstName">First Name *</label>
+                            <input type="text" id="contactFirstName" placeholder="Enter first name" required>
+                            <div class="error-message">First name is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactLastName">Last Name *</label>
+                            <input type="text" id="contactLastName" placeholder="Enter last name" required>
+                            <div class="error-message">Last name is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email *</label>
+                            <input type="email" id="contactEmail" placeholder="Enter email address" required>
+                            <div class="error-message">Valid email is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactPhone">Phone *</label>
+                            <input type="tel" id="contactPhone" placeholder="Enter phone number" required>
+                            <div class="error-message">Phone number is required</div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 1: BASIC INFO -->
+                    <div id="step1" class="form-step">
+                        <div class="form-group">
+                            <label for="quoteNumber">Quote Number *</label>
+                            <input id="quoteNumber" type="text" placeholder="Auto-generated" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quoteStatus">Quote Status *</label>
+                            <select id="quoteStatus" required>
+                                <option value="">Please select</option>
+                                <option value="New" selected>New</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Quoted">Quoted</option>
+                                <option value="Sent to Client">Sent to Client</option>
+                                <option value="Accepted">Accepted</option>
+                                <option value="Rejected">Rejected</option>
+                                <option value="Lost to Competitor">Lost to Competitor</option>
+                            </select>
+                            <div class="error-message">Please select a status</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lineOfBusiness">Line of Business *</label>
+                            <select id="lineOfBusiness" required>
+                                <option value="">Please select</option>
+                                <option value="Personal Auto">Personal Auto</option>
+                                <option value="Commercial Auto">Commercial Auto</option>
+                                <option value="Health">Health</option>
+                                <option value="Life">Life</option>
+                                <option value="Dental">Dental</option>
+                                <option value="Workers Comp">Workers Comp</option>
+                                <option value="General Liability">General Liability</option>
+                            </select>
+                            <div class="error-message">Please select a line of business</div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: CARRIER INFO -->
+                    <div id="step2" class="form-step">
+                        <div class="form-group">
+                            <label for="ezlynxQuoteId">EZLynx Quote ID</label>
+                            <input id="ezlynxQuoteId" type="text" placeholder="Enter EZLynx ID (optional)">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mainCarrier">Main Carrier *</label>
+                            <select id="mainCarrier" required>
+                                <option value="">Please select</option>
+                                <option>Advantage</option>
+                                <option>Allstate</option>
+                                <option>Amtrust</option>
+                                <option>Appalachian Underwriters</option>
+                                <option>Assurant</option>
+                                <option>Assurance Renters</option>
+                                <option>Attune</option>
+                                <option>Auto-Owners</option>
+                                <option>Bass Underwriters</option>
+                                <option>Benchmark Insurance</option>
+                                <option>Berkley Net</option>
+                                <option>Berkshire Hathaway Direct</option>
+                                <option>Biberk</option>
+                                <option>Bristol West</option>
+                                <option>Capitol Indemnity</option>
+                                <option>Cimarron</option>
+                                <option>Clear Blue Insurance</option>
+                                <option>Coterie</option>
+                                <option>Crum & Forster</option>
+                                <option>Employers</option>
+                                <option>Evanston Insurance Company</option>
+                                <option>First Connect</option>
+                                <option>Foremost</option>
+                                <option>Frankcrum Insurance</option>
+                                <option>Gainsco</option>
+                                <option>Geico</option>
+                                <option>Hanover</option>
+                                <option>Hiscox</option>
+                                <option>Home Insurance</option>
+                                <option>Infinity</option>
+                                <option>Liberty Mutual</option>
+                                <option>Nautilus</option>
+                                <option>Next</option>
+                                <option>Pathpoint</option>
+                                <option>Progressive</option>
+                                <option>RLI</option>
+                                <option>Southbay</option>
+                                <option>Spinnaker Insurance</option>
+                                <option>Suprem</option>
+                                <option>Technology Insurance Company</option>
+                                <option>Travelers</option>
+                                <option>USLI</option>
+                                <option>Verve</option>
+                                <option>Western World Insurance</option>
+                                <option>Workers Comp</option>
+                            </select>
+                            <div class="error-message">Carrier is required</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="effectiveDate">Effective Date *</label>
+                            <input id="effectiveDate" type="date" required>
+                            <div class="error-message">Effective date is required</div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: PREMIUM / FINANCIALS -->
+                    <div id="step3" class="form-step">
+                        <div class="form-group">
+                            <label for="grossPremium">Gross Premium *</label>
+                            <input id="grossPremium" type="number" step="0.01" min="0" placeholder="0.00" required>
+                            <div class="error-message">Gross premium is required</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="taxesAndFees">Taxes and Fees</label>
+                            <input id="taxesAndFees" type="number" step="0.01" min="0" placeholder="0.00">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="agencyFees">Agency Fees</label>
+                            <input id="agencyFees" type="number" step="0.01" min="0" placeholder="0.00">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="totalPremium">Total Premium *</label>
+                            <input id="totalPremium" type="number" step="0.01" min="0" placeholder="0.00" readonly>
+                            <div class="error-message">Total premium is required</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="paymentPlan">Payment Plan</label>
+                            <select id="paymentPlan">
+                                <option value="">Please select</option>
+                                <option>Paid in Full</option>
+                                <option>Monthly</option>
+                                <option>Two Payments</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="downPayment">Down Payment</label>
+                            <input id="downPayment" type="number" step="0.01" min="0" placeholder="0.00">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="monthlyPremium">Monthly Premium</label>
+                            <input id="monthlyPremium" type="number" step="0.01" min="0" placeholder="0.00">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <select id="location">
+                                <option value="">Please select</option>
+                                <option>Roswell</option>
+                                <option>Marietta</option>
+                                <option>Atlanta</option>
+                                <option>Morrow</option>
+                                <option>Jonesboro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: DATES + REVIEW -->
+                    <div id="step4" class="form-step">
+                        <div class="form-group">
+                            <label for="dateQuoted">Date Quoted *</label>
+                            <input id="dateQuoted" type="date" required>
+                            <div class="error-message">Date quoted is required</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="expirationDate">Expiration Date *</label>
+                            <input id="expirationDate" type="date" required>
+                            <div class="error-message">Expiration date is required</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notes">Additional Notes</label>
+                            <textarea id="notes" rows="3" placeholder="Enter any additional notes"></textarea>
+                        </div>
+
+                        <div class="summary-section">
+                            <h3 class="summary-title">Quote Summary</h3>
+                            <div class="summary-item">
+                                <span class="summary-label">Quote Number</span>
+                                <span id="summaryQuoteNumber" class="summary-value">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Status</span>
+                                <span id="summaryStatus" class="summary-value">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Line of Business</span>
+                                <span id="summaryLOB" class="summary-value">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Carrier</span>
+                                <span id="summaryCarrier" class="summary-value">-</span>
+                            </div>
+                            <div class="summary-item">
+                                <span class="summary-label">Total Premium</span>
+                                <span id="summaryPremium" class="summary-value">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NAV BUTTONS -->
+                    <div class="form-navigation">
+                        <button id="backBtn" class="nav-button back-button" onclick="previousStep()" style="display:none;">Back</button>
+                        <button id="nextBtn" class="nav-button next-button" onclick="nextStep()">Next</button>
+                        <button id="submitBtn" class="nav-button submit-button" onclick="submitForm()" style="display:none;">Submit Quote</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let totalSteps = 4;
+        let isNewContact = false;
+        let selectedContactId = null;
+
+        // Generate unique quote number
+        function generateQuoteNumber() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            return `Q${year}${month}${day}-${random}`;
+        }
+
+        // Show modal when page loads
+        window.addEventListener('load', () => {
+            const overlay = document.getElementById('modalOverlay');
+            if (!overlay) return;
+            overlay.style.display = 'flex';
+            document.body.classList.add('green-quote-modal-active');
+
+            // Set defaults
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dateQuoted').value = today;
+            document.getElementById('quoteNumber').value = generateQuoteNumber();
+        });
+
+        function closeModal() {
+            const overlay = document.getElementById('modalOverlay');
+            if (!overlay) return;
+            overlay.style.display = 'none';
+            document.body.classList.remove('green-quote-modal-active');
+        }
+
+        function redirectToContacts() {
+            window.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
+        }
+
+        function startNewContact() {
+            isNewContact = true;
+            totalSteps = 5; // Add contact step
+            currentStep = 0;
+            
+            document.getElementById('initialChoice').style.display = 'none';
+            document.getElementById('quoteForm').style.display = 'block';
+            
+            setupStepIndicators();
+            document.getElementById('step0').classList.add('active');
+            updateProgress();
+            updateNavigation();
+            document.getElementById('headerSubtitle').textContent = 'Step 1 of 5: Contact Information';
+        }
+
+        function startExistingContact() {
+            isNewContact = false;
+            document.getElementById('initialChoice').style.display = 'none';
+            document.getElementById('contactSelection').style.display = 'block';
+            document.getElementById('headerSubtitle').textContent = 'Select an existing contact';
+            loadContacts();
+        }
+
+        function loadContacts() {
+            // This should be replaced with actual GHL API call
+            const selectElement = document.getElementById('contactId');
+            selectElement.innerHTML = `
+                <option value="">Select a contact...</option>
+                <option value="contact1">John Doe - john@example.com</option>
+                <option value="contact2">Jane Smith - jane@example.com</option>
+                <option value="contact3">Bob Johnson - bob@example.com</option>
+            `;
+        }
+
+        function backToChoice() {
+            document.getElementById('contactSelection').style.display = 'none';
+            document.getElementById('initialChoice').style.display = 'block';
+            document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
+        }
+
+        function proceedWithContact() {
+            const contactId = document.getElementById('contactId').value;
+            if (!contactId) {
+                document.getElementById('contactId').classList.add('error');
+                document.getElementById('contactId').parentElement.querySelector('.error-message').classList.add('show');
+                return;
+            }
+            
+            selectedContactId = contactId;
+            isNewContact = false;
+            totalSteps = 4;
+            currentStep = 1;
+            
+            document.getElementById('contactSelection').style.display = 'none';
+            document.getElementById('quoteForm').style.display = 'block';
+            
+            setupStepIndicators();
+            document.getElementById('step1').classList.add('active');
+            updateProgress();
+            updateNavigation();
+            document.getElementById('headerSubtitle').textContent = 'Step 1 of 4: Basic Information';
+        }
+
+        function setupStepIndicators() {
+            const indicatorContainer = document.getElementById('stepIndicator');
+            indicatorContainer.innerHTML = '';
+            
+            for (let i = 1; i <= totalSteps; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'step-dot';
+                dot.id = `dot${i}`;
+                dot.textContent = i;
+                if (i === 1) dot.classList.add('active');
+                indicatorContainer.appendChild(dot);
+            }
+        }
+
+        // Auto-calc total premium
+        function calculateTotal() {
+            const gross = parseFloat(document.getElementById('grossPremium').value) || 0;
+            const taxes = parseFloat(document.getElementById('taxesAndFees').value) || 0;
+            const agency = parseFloat(document.getElementById('agencyFees').value) || 0;
+            const total = gross + taxes + agency;
+            document.getElementById('totalPremium').value = total ? total.toFixed(2) : '';
+        }
+
+        ['grossPremium', 'taxesAndFees', 'agencyFees'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('input', calculateTotal);
+        });
+
+        function nextStep() {
+            if (!validateStep(currentStep)) return;
+            if (currentStep >= totalSteps - 1) return;
+
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            if (currentStep > 0 || !isNewContact) {
+                const dotIndex = isNewContact ? currentStep + 1 : currentStep;
+                document.getElementById(`dot${dotIndex}`).classList.remove('active');
+                document.getElementById(`dot${dotIndex}`).classList.add('completed');
+            }
+
+            currentStep++;
+
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            const nextDotIndex = isNewContact ? currentStep + 1 : currentStep;
+            document.getElementById(`dot${nextDotIndex}`).classList.add('active');
+
+            updateProgress();
+            updateNavigation();
+            updateHeaderSubtitle();
+
+            if (currentStep === totalSteps - 1) updateSummary();
+        }
+
+        function previousStep() {
+            const minStep = isNewContact ? 0 : 1;
+            if (currentStep <= minStep) return;
+
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            const dotIndex = isNewContact ? currentStep + 1 : currentStep;
+            document.getElementById(`dot${dotIndex}`).classList.remove('active');
+
+            currentStep--;
+
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            const prevDotIndex = isNewContact ? currentStep + 1 : currentStep;
+            document.getElementById(`dot${prevDotIndex}`).classList.add('active');
+            document.getElementById(`dot${prevDotIndex}`).classList.remove('completed');
+
+            updateProgress();
+            updateNavigation();
+            updateHeaderSubtitle();
+        }
+
+        function updateProgress() {
+            const percent = ((currentStep + 1) / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = percent + '%';
+        }
+
+        function updateNavigation() {
+            const backBtn = document.getElementById('backBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+
+            backBtn.style.display = currentStep > (isNewContact ? 0 : 1) ? 'block' : 'none';
+
+            if (currentStep === totalSteps - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        function updateHeaderSubtitle() {
+            const subtitles = isNewContact ? [
+                'Step 1 of 5: Contact Information',
+                'Step 2 of 5: Basic Information',
+                'Step 3 of 5: Carrier Information',
+                'Step 4 of 5: Premium and Payment Details',
+                'Step 5 of 5: Dates and Review'
+            ] : [
+                'Step 1 of 4: Basic Information',
+                'Step 2 of 4: Carrier Information',
+                'Step 3 of 4: Premium and Payment Details',
+                'Step 4 of 4: Dates and Review'
+            ];
+            
+            document.getElementById('headerSubtitle').textContent = subtitles[currentStep] || '';
+        }
+
+        function updateSummary() {
+            document.getElementById('summaryQuoteNumber').textContent = document.getElementById('quoteNumber').value || '-';
+            document.getElementById('summaryStatus').textContent = document.getElementById('quoteStatus').value || '-';
+            document.getElementById('summaryLOB').textContent = document.getElementById('lineOfBusiness').value || '-';
+            document.getElementById('summaryCarrier').textContent = document.getElementById('mainCarrier').value || '-';
+            const total = document.getElementById('totalPremium').value;
+            document.getElementById('summaryPremium').textContent = total ? `$${parseFloat(total).toFixed(2)}` : '-';
+        }
+
+        function validateStep(step) {
+            let valid = true;
+            const stepElement = document.getElementById(`step${step}`);
+            if (!stepElement) return true;
+
+            const inputs = stepElement.querySelectorAll('input[required], select[required]');
+            inputs.forEach(input => {
+                const err = input.parentElement.querySelector('.error-message');
+                if (!input.value || !String(input.value).trim()) {
+                    input.classList.add('error');
+                    if (err) err.classList.add('show');
+                    valid = false;
+                } else {
+                    input.classList.remove('error');
+                    if (err) err.classList.remove('show');
+                }
+            });
+
+            return valid;
+        }
+
+        // Clear error on input change
+        document.querySelectorAll('input, select, textarea').forEach(el => {
+            el.addEventListener('input', function () {
+                this.classList.remove('error');
+                const err = this.parentElement.querySelector('.error-message');
+                if (err) err.classList.remove('show');
+            });
+        });
+
+        function showToast(message, type) {
+            const existingToast = document.querySelector('.toast');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${message}</span>`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function submitForm() {
+            if (!validateStep(currentStep)) return;
+
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
+
+            // Build data object
+            const formData = {
+                // Contact info (if new)
+                ...(isNewContact && {
+                    contactFirstName: document.getElementById('contactFirstName').value,
+                    contactLastName: document.getElementById('contactLastName').value,
+                    contactEmail: document.getElementById('contactEmail').value,
+                    contactPhone: document.getElementById('contactPhone').value,
+                }),
+                // Existing contact ID
+                ...(selectedContactId && { contactId: selectedContactId }),
+                
+                // Quote data - matching exact field names from webhook
+                quoteNumber: document.getElementById('quoteNumber').value,
+                quoteStatus: document.getElementById('quoteStatus').value,
+                lineOfBusiness: document.getElementById('lineOfBusiness').value,
+                ezlynxQuoteId: document.getElementById('ezlynxQuoteId').value,
+                mainCarrier: document.getElementById('mainCarrier').value,
+                effectiveDate: document.getElementById('effectiveDate').value,
+                grossPremium: parseFloat(document.getElementById('grossPremium').value),
+                taxesAndFees: parseFloat(document.getElementById('taxesAndFees').value) || 0,
+                agencyFees: parseFloat(document.getElementById('agencyFees').value) || 0,
+                totalPremium: parseFloat(document.getElementById('totalPremium').value),
+                paymentPlan: document.getElementById('paymentPlan').value,
+                downPayment: parseFloat(document.getElementById('downPayment').value) || 0,
+                monthlyPremium: parseFloat(document.getElementById('monthlyPremium').value) || 0,
+                location: document.getElementById('location').value,
+                dateQuoted: document.getElementById('dateQuoted').value,
+                expirationDate: document.getElementById('expirationDate').value,
+                notes: document.getElementById('notes').value,
+                isNewContact: isNewContact,
+                timestamp: new Date().toISOString()
+            };
+
+            console.log('Submitting form data:', formData);
+
+            // Send to GHL webhook
+            fetch('https://services.leadconnectorhq.com/hooks/YtNhoKQqqoEZSVFceqZm/webhook-trigger/26db136c-27ca-47b4-af16-f8b1f0dfd852', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(function(response) {
+                console.log('Response status:', response.status);
+                if (response.ok) {
+                    showToast('Quote submitted successfully!', 'success');
+                    setTimeout(function() { closeModal(); }, 2000);
+                } else {
+                    showToast('Error submitting quote. Please try again.', 'error');
+                }
+            })
+            .catch(function(error) {
+                console.error('Network Error:', error);
+                showToast('Network error. Please try again.', 'error');
+            })
+            .finally(function() {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
+        }
+
+        // Close when clicking outside card
+        document.getElementById('modalOverlay').addEventListener('click', e => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+    </script>
+</body>
+</html>
