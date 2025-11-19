@@ -695,7 +695,7 @@
                                 <option>Morrow</option>
                                 <option>Jonesboro</option>
                             </select>
-                        </div>
+                        </div class="error-message">Location is required</div>
                     </div>
 
                     <!-- STEP 4: DATES + REVIEW -->
@@ -1091,6 +1091,23 @@ function handlePaymentPlanChange() {
 
             // Special validation for step 3 - payment plan fields
             if (step === 3) {
+// Add location validation
+    const location = document.getElementById('location');
+    if (!location.value) {
+        location.classList.add('error');
+        const err = location.parentElement.querySelector('.error-message');
+        if (!err) {
+            // Create error message if it doesn't exist
+            const errorMsg = document.createElement('div');
+            errorMsg.className = 'error-message show';
+            errorMsg.textContent = 'Location is required';
+            location.parentElement.appendChild(errorMsg);
+        } else {
+            err.classList.add('show');
+        }
+        valid = false;
+    }
+                
                 const plan = document.getElementById('paymentPlan').value;
                 if (plan === 'Monthly') {
                     const downPayment = document.getElementById('downPayment');
