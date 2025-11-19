@@ -687,7 +687,7 @@
 
                         <div class="form-group">
                             <label for="location">Location</label>
-                            <select id="location">
+                            <select id="location"> required>
                                 <option value="">Please select</option>
                                 <option>Roswell</option>
                                 <option>Marietta</option>
@@ -938,11 +938,11 @@ function resetToMainMenu() {
             const taxes = parseFloat(document.getElementById('taxesAndFees').value) || 0;
             const agency = parseFloat(document.getElementById('agencyFees').value) || 0;
             
-            // Auto-populate agency fees at 10% of gross if not manually set
-            if (!document.getElementById('agencyFees').value && gross > 0) {
-                const autoAgencyFee = (gross * 0.10).toFixed(2);
-                document.getElementById('agencyFees').value = autoAgencyFee;
-            }
+// Auto-populate agency fees at 10% of gross if not manually set
+if (!document.getElementById('agencyFees').getAttribute('data-manual') && gross > 0) {
+    const autoAgencyFee = (gross * 0.10).toFixed(2);
+    document.getElementById('agencyFees').value = autoAgencyFee;
+}
             
             const finalAgency = parseFloat(document.getElementById('agencyFees').value) || 0;
             const total = gross + taxes + finalAgency;
@@ -953,6 +953,20 @@ function resetToMainMenu() {
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', calculateTotal);
         });
+
+// Mark agency fees as manually edited if user changes it
+document.getElementById('agencyFees').addEventListener('focus', function() {
+    this.setAttribute('data-manual', 'true');
+});
+document.getElementById('agencyFees').addEventListener('blur', function() {
+    if (!this.value) {
+        this.removeAttribute('data-manual');
+        calculateTotal();
+    }
+});
+
+// Handle payment plan changes  // This should be around line 957 now
+function handlePaymentPlanChange() {
 
         // Handle payment plan changes
         function handlePaymentPlanChange() {
