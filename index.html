@@ -762,6 +762,34 @@ if (window !== window.top) {
             document.body.classList.remove('green-quote-modal-active');
         }
 
+// Line 763: }  <- This is the end of closeModal()
+
+// ADD THE NEW FUNCTION HERE (starting at line 764):
+function resetToMainMenu() {
+    // Hide all sections
+    document.getElementById('contactSelection').style.display = 'none';
+    document.getElementById('quoteForm').style.display = 'none';
+    
+    // Show main menu with proper styling
+    const initialChoice = document.getElementById('initialChoice');
+    initialChoice.style.display = 'flex';
+    initialChoice.style.flexDirection = 'column';
+    initialChoice.style.gap = '14px';
+    
+    // Reset header
+    document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
+    
+    // Reset form states
+    currentStep = 1;
+    isNewContact = false;
+    selectedContactId = null;
+    
+    // Clear any active steps
+    document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+}
+
+// Line 765 (which will become line 787 after adding the function): function redirectToContacts() {
+        
         function redirectToContacts() {
     window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
 }
