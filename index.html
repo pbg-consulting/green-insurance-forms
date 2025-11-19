@@ -820,8 +820,7 @@ function resetToMainMenu() {
     // Show main menu with proper styling
     const initialChoice = document.getElementById('initialChoice');
     initialChoice.style.display = 'flex';
-    initialChoice.style.flexDirection = 'column';
-    initialChoice.style.gap = '14px';
+    initialChoice.className = 'button-group horizontal'; // Force horizontal class
     
     // Reset header
     document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
@@ -1078,20 +1077,22 @@ function formatCurrency(input) {
         }
 
         function updateNavigation() {
-            const backBtn = document.getElementById('backBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const submitBtn = document.getElementById('submitBtn');
+    const backBtn = document.getElementById('backBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
 
-            backBtn.style.display = currentStep > (isNewContact ? 0 : 1) ? 'block' : 'none';
+    // Show/hide back button
+    backBtn.style.display = currentStep > (isNewContact ? 0 : 1) ? 'block' : 'none';
 
-            if (currentStep === totalSteps - 1) {
-                nextBtn.style.display = 'none';
-                submitBtn.style.display = 'block';
-            } else {
-                nextBtn.style.display = 'block';
-                submitBtn.style.display = 'none';
-            }
-        }
+    // Always show next button except on last step
+    if (currentStep === totalSteps - 1) {
+        nextBtn.style.display = 'none';
+        submitBtn.style.display = 'block';
+    } else {
+        nextBtn.style.display = 'block';  // This ensures Next shows on step 0
+        submitBtn.style.display = 'none';
+    }
+}
 
         function updateHeaderSubtitle() {
             const subtitles = isNewContact ? [
