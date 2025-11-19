@@ -1210,6 +1210,18 @@ function submitForm() {
                 closeModal();
             }
         });
+
+    // TEMPORARY: Force show modal
+setTimeout(() => {
+    const modal = document.getElementById('modalOverlay');
+    if (modal) {
+        modal.style.display = 'flex';
+        console.log('Modal forced to display');
+    } else {
+        console.log('Modal not found!');
+    }
+}, 1000);
+    
    <script>
 </body>
 </html>
