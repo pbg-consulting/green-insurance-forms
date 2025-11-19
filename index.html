@@ -427,200 +427,227 @@
             <div class="modal-body">
                 
                 <!-- Initial choice buttons -->
+<!-- Replace your current buttons with this -->
 <div id="initialChoice" class="button-group vertical">
-    <button class="glass-button glass-green" onclick="startNewContact()">
-        <div class="button-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
-            </svg>
+    <button class="neon-button" onclick="startNewContact()">
+        <div class="neon-circle neon-green">
+            <span class="circle-letter">N</span>
         </div>
-        <span class="button-text">New & Quote</span>
+        <div class="button-bar">
+            <span class="button-label">New & Quote</span>
+        </div>
     </button>
     
-    <button class="glass-button glass-blue" onclick="startExistingContact()">
-        <div class="button-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
-            </svg>
+    <button class="neon-button" onclick="startExistingContact()">
+        <div class="neon-circle neon-blue">
+            <span class="circle-letter">E</span>
         </div>
-        <span class="button-text">Existing & Quote</span>
+        <div class="button-bar">
+            <span class="button-label">Existing & Quote</span>
+        </div>
     </button>
     
-    <button class="glass-button glass-purple" onclick="redirectToContacts()">
-        <div class="button-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            </svg>
+    <button class="neon-button" onclick="redirectToContacts()">
+        <div class="neon-circle neon-purple">
+            <span class="circle-letter">F</span>
         </div>
-        <span class="button-text">Find Existing Contact</span>
+        <div class="button-bar">
+            <span class="button-label">Find Existing Contact</span>
+        </div>
     </button>
 </div>
 
 <style>
-/* Modern Glass Button Styles */
+/* Neon Infographic Button Styles */
 .button-group.vertical {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 35px;
+    padding: 10px 0;
 }
 
-.glass-button {
+.neon-button {
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 12px;
     width: 100%;
-    padding: 18px 24px;
+    height: 70px;
+    padding: 0;
     border: none;
-    border-radius: 16px;
+    background: none;
     cursor: pointer;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: white;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    
-    /* Glass effect */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    
-    /* 3D effect */
-    transform-style: preserve-3d;
-    transform: perspective(1000px) translateZ(0);
+    transition: all 0.3s ease;
 }
 
-/* Button icon container */
-.glass-button .button-icon {
+/* Glass bar background */
+.button-bar {
+    position: absolute;
+    left: 35px;
+    right: 0;
+    height: 50px;
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.08) 50%,
+        rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    padding-left: 55px;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Neon circle */
+.neon-circle {
+    position: relative;
+    z-index: 2;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-}
-
-.glass-button .button-text {
-    flex: 1;
-    text-align: left;
-}
-
-/* Green button variant */
-.glass-green {
-    background: linear-gradient(135deg, 
-        rgba(107, 194, 74, 0.9) 0%, 
-        rgba(90, 166, 61, 0.9) 100%);
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 10px currentColor;
+    transition: all 0.3s ease;
     box-shadow: 
-        0 8px 32px rgba(107, 194, 74, 0.3),
-        0 4px 16px rgba(0, 0, 0, 0.2),
-        inset 0 2px 4px rgba(255, 255, 255, 0.3),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+        0 0 40px currentColor,
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-.glass-green:hover {
-    background: linear-gradient(135deg, 
-        rgba(117, 204, 84, 1) 0%, 
-        rgba(100, 176, 71, 1) 100%);
-    transform: perspective(1000px) translateZ(10px) translateY(-2px);
-    box-shadow: 
-        0 12px 40px rgba(107, 194, 74, 0.4),
-        0 6px 20px rgba(0, 0, 0, 0.25),
-        inset 0 2px 4px rgba(255, 255, 255, 0.4),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+.circle-letter {
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    line-height: 1;
 }
 
-/* Blue button variant */
-.glass-blue {
-    background: linear-gradient(135deg, 
-        rgba(74, 144, 226, 0.9) 0%, 
-        rgba(54, 124, 206, 0.9) 100%);
-    box-shadow: 
-        0 8px 32px rgba(74, 144, 226, 0.3),
-        0 4px 16px rgba(0, 0, 0, 0.2),
-        inset 0 2px 4px rgba(255, 255, 255, 0.3),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+/* Green neon */
+.neon-green {
+    background: radial-gradient(circle at 30% 30%, 
+        #6bc24a 0%, 
+        #4a9f2e 50%, 
+        #2d6e1a 100%);
+    border: 3px solid #6bc24a;
+    color: #9aff6e;
 }
 
-.glass-blue:hover {
-    background: linear-gradient(135deg, 
-        rgba(84, 154, 236, 1) 0%, 
-        rgba(64, 134, 216, 1) 100%);
-    transform: perspective(1000px) translateZ(10px) translateY(-2px);
+.neon-green:hover {
     box-shadow: 
-        0 12px 40px rgba(74, 144, 226, 0.4),
-        0 6px 20px rgba(0, 0, 0, 0.25),
-        inset 0 2px 4px rgba(255, 255, 255, 0.4),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+        0 0 60px #6bc24a,
+        0 0 100px #6bc24a,
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Purple button variant */
-.glass-purple {
-    background: linear-gradient(135deg, 
-        rgba(139, 92, 246, 0.9) 0%, 
-        rgba(109, 62, 216, 0.9) 100%);
-    box-shadow: 
-        0 8px 32px rgba(139, 92, 246, 0.3),
-        0 4px 16px rgba(0, 0, 0, 0.2),
-        inset 0 2px 4px rgba(255, 255, 255, 0.3),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+/* Blue neon */
+.neon-blue {
+    background: radial-gradient(circle at 30% 30%, 
+        #4a90e2 0%, 
+        #2e6fb3 50%, 
+        #1a4d80 100%);
+    border: 3px solid #4a90e2;
+    color: #6eafff;
 }
 
-.glass-purple:hover {
-    background: linear-gradient(135deg, 
-        rgba(149, 102, 255, 1) 0%, 
-        rgba(119, 72, 226, 1) 100%);
-    transform: perspective(1000px) translateZ(10px) translateY(-2px);
+.neon-blue:hover {
     box-shadow: 
-        0 12px 40px rgba(139, 92, 246, 0.4),
-        0 6px 20px rgba(0, 0, 0, 0.25),
-        inset 0 2px 4px rgba(255, 255, 255, 0.4),
-        inset 0 -2px 4px rgba(0, 0, 0, 0.1);
+        0 0 60px #4a90e2,
+        0 0 100px #4a90e2,
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Purple neon */
+.neon-purple {
+    background: radial-gradient(circle at 30% 30%, 
+        #8b5cf6 0%, 
+        #6d3fd8 50%, 
+        #4c2b96 100%);
+    border: 3px solid #8b5cf6;
+    color: #b794ff;
+}
+
+.neon-purple:hover {
+    box-shadow: 
+        0 0 60px #8b5cf6,
+        0 0 100px #8b5cf6,
+        inset 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Button label text */
+.button-label {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(255, 255, 255, 0.7) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 1px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Hover effects */
+.neon-button:hover .button-bar {
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.12) 50%,
+        rgba(255, 255, 255, 0.08) 100%);
+    box-shadow: 
+        0 6px 30px rgba(0, 0, 0, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.neon-button:hover .neon-circle {
+    transform: scale(1.1) translateX(-5px);
+}
+
+.neon-button:hover .button-label {
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 1) 0%, 
+        rgba(255, 255, 255, 0.85) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* Active state */
-.glass-button:active {
-    transform: perspective(1000px) translateZ(0) translateY(0);
+.neon-button:active .neon-circle {
+    transform: scale(0.95);
+}
+
+.neon-button:active .button-bar {
     box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.2),
-        inset 0 2px 4px rgba(0, 0, 0, 0.2),
-        inset 0 -1px 2px rgba(255, 255, 255, 0.2);
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
-/* Glossy overlay effect */
-.glass-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.3) 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        transparent 100%
-    );
-    border-radius: 16px 16px 0 0;
-    pointer-events: none;
-}
-
-/* Mobile responsiveness */
+/* Mobile adjustments */
 @media (max-width: 640px) {
-    .glass-button {
-        padding: 16px 20px;
-        font-size: 15px;
+    .neon-button {
+        height: 60px;
     }
     
-    .glass-button .button-icon {
-        width: 28px;
-        height: 28px;
+    .neon-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+    
+    .button-bar {
+        height: 45px;
+        left: 30px;
+        padding-left: 45px;
+    }
+    
+    .button-label {
+        font-size: 16px;
     }
 }
 </style>
