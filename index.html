@@ -732,20 +732,18 @@
         }
 
         // Show modal when page loads
-       window.addEventListener('load', () => {
-    // Don't auto-show if we're in an iframe
-    if (window !== window.top) return;
-    
+    window.addEventListener('load', () => {
     const overlay = document.getElementById('modalOverlay');
     if (!overlay) return;
+
     overlay.style.display = 'flex';
     document.body.classList.add('green-quote-modal-active');
 
-            // Set defaults
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('dateQuoted').value = today;
-            document.getElementById('quoteNumber').value = generateQuoteNumber();
-        });
+    // Set defaults
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('dateQuoted').value = today;
+    document.getElementById('quoteNumber').value = generateQuoteNumber();
+});
 
         function closeModal() {
             const overlay = document.getElementById('modalOverlay');
