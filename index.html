@@ -746,11 +746,11 @@
                     </div>
 
                     <!-- NAV BUTTONS -->
-                    <div class="form-navigation">
-                        <button id="backBtn" class="nav-button back-button" onclick="previousStep()" style="display:none;">Back</button>
-                        <button id="nextBtn" class="nav-button next-button" onclick="nextStep()">Next</button>
-                        <button id="submitBtn" class="nav-button submit-button" onclick="submitForm()" style="display:none;">Submit Quote</button>
-                    </div>
+                   <div class="form-navigation">
+    <button id="backBtn" class="nav-button back-button" onclick="previousStep()" style="display:none;">Back</button>
+    <button id="nextBtn" class="nav-button next-button" onclick="nextStep()">Next</button>
+    <button id="submitBtn" class="nav-button submit-button" onclick="submitForm()" style="display:none;">Submit Quote</button>
+</div>
                 </div>
             </div>
         </div>
@@ -852,6 +852,9 @@ function resetToMainMenu() {
             document.getElementById('step0').classList.add('active');
             updateProgress();
             updateNavigation();
+            // Force show the Next button for the contact form
+document.querySelector('.form-navigation').style.display = 'flex';
+document.getElementById('nextBtn').style.display = 'block';
             document.getElementById('headerSubtitle').textContent = 'Step 1 of 5: Contact Information';
         }
 
