@@ -4,23 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Green Insurance - Quote Survey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
         }
 
         body.green-quote-modal-active {
             overflow: hidden;
         }
 
+        /* Animated background */
+        .animated-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #0a1f14 0%, #1a3d2e 50%, #0f2818 100%);
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(107, 194, 74, 0.3) 0%, rgba(107, 194, 74, 0.1) 70%);
+            animation: float 20s infinite ease-in-out;
+            filter: blur(1px);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0) scale(1);
+            }
+            33% {
+                transform: translateY(-100px) translateX(50px) scale(1.1);
+            }
+            66% {
+                transform: translateY(50px) translateX(-50px) scale(0.9);
+            }
+        }
+
         /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -43,7 +81,6 @@
             position: relative;
             animation: slideUpQuote 0.35s ease;
             color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         @keyframes slideUpQuote {
@@ -410,10 +447,13 @@
     </style>
 </head>
 <body>
+    <!-- ANIMATED BACKGROUND -->
+    <div class="animated-bg" id="animatedBg"></div>
+
     <!-- MODAL HTML -->
     <div id="modalOverlay" class="modal-overlay">
         <div class="modal-container">
-            <button class="close-button" onclick="closeModal()">
+            <button class="close-button" onclick="resetToMainMenu()">
                 <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
                     <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
@@ -431,19 +471,19 @@
                         <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6z"/>
                         </svg>
-                        New Contact & Quote
+                        New & Quote
                     </button>
                     <button class="primary-button" onclick="startExistingContact()">
                         <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0z"/>
                         </svg>
-                        Existing Contact & Quote
+                        Existing & Quote
                     </button>
                     <button class="secondary-button" onclick="redirectToContacts()">
                         <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
                         </svg>
-                        Browse All Contacts
+                        Find Existing Contact
                     </button>
                 </div>
 
@@ -457,7 +497,7 @@
                         <div class="error-message">Please select a contact</div>
                     </div>
                     <div class="form-navigation">
-                        <button class="nav-button back-button" onclick="backToChoice()">Back</button>
+                        <button class="nav-button back-button" onclick="resetToMainMenu()">Back</button>
                         <button class="nav-button next-button" onclick="proceedWithContact()">Continue to Quote</button>
                     </div>
                 </div>
@@ -611,8 +651,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="taxesAndFees">Taxes and Fees</label>
-                            <input id="taxesAndFees" type="number" step="0.01" min="0" placeholder="0.00">
+                            <label for="taxesAndFees">Taxes and Fees *</label>
+                            <input id="taxesAndFees" type="number" step="0.01" min="0" placeholder="0.00" required>
+                            <div class="error-message">Taxes and fees are required</div>
                         </div>
 
                         <div class="form-group">
@@ -627,24 +668,27 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="paymentPlan">Payment Plan</label>
-                            <select id="paymentPlan">
+                            <label for="paymentPlan">Payment Plan *</label>
+                            <select id="paymentPlan" required onchange="handlePaymentPlanChange()">
                                 <option value="">Please select</option>
-                                <option>Paid in Full</option>
-                                <option>Monthly</option>
-                                <option>Two Payments</option>
-                                <option>Other</option>
+                                <option value="Paid in Full">Paid in Full</option>
+                                <option value="Monthly">Monthly</option>
+                                <option value="Two Payments">Two Payments</option>
+                                <option value="Other">Other</option>
                             </select>
+                            <div class="error-message">Payment plan is required</div>
                         </div>
 
                         <div class="form-group">
-                            <label for="downPayment">Down Payment</label>
+                            <label for="downPayment">Down Payment <span id="downPaymentRequired" style="display:none;">*</span></label>
                             <input id="downPayment" type="number" step="0.01" min="0" placeholder="0.00">
+                            <div class="error-message">Down payment is required for monthly plans</div>
                         </div>
 
                         <div class="form-group">
-                            <label for="monthlyPremium">Monthly Premium</label>
+                            <label for="monthlyPremium">Monthly Premium <span id="monthlyPremiumRequired" style="display:none;">*</span></label>
                             <input id="monthlyPremium" type="number" step="0.01" min="0" placeholder="0.00">
+                            <div class="error-message">Monthly premium is required for monthly plans</div>
                         </div>
 
                         <div class="form-group">
@@ -720,6 +764,24 @@
         let totalSteps = 4;
         let isNewContact = false;
         let selectedContactId = null;
+        let createdContactId = null;
+
+        // Generate animated background
+        function createBubbles() {
+            const bg = document.getElementById('animatedBg');
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                const size = Math.random() * 60 + 20;
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.left = Math.random() * 100 + '%';
+                bubble.style.top = Math.random() * 100 + '%';
+                bubble.style.animationDelay = Math.random() * 20 + 's';
+                bubble.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                bg.appendChild(bubble);
+            }
+        }
 
         // Generate unique quote number
         function generateQuoteNumber() {
@@ -731,21 +793,55 @@
             return `Q${year}${month}${day}-${random}`;
         }
 
-        // Show modal when page loads
-window.addEventListener('load', () => {
-    // Don't auto-show if we're in an iframe
-    if (window !== window.top) return;
-    
-    const overlay = document.getElementById('modalOverlay');
-    if (!overlay) return;
-    overlay.style.display = 'flex';
-    document.body.classList.add('green-quote-modal-active');
+        // Show modal when page loads (only if not in iframe)
+        window.addEventListener('load', () => {
+            // Don't auto-show if we're in an iframe
+            if (window !== window.top) return;
+            
+            const overlay = document.getElementById('modalOverlay');
+            if (!overlay) return;
+            overlay.style.display = 'flex';
+            document.body.classList.add('green-quote-modal-active');
 
-    // Set defaults
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('dateQuoted').value = today;
-    document.getElementById('quoteNumber').value = generateQuoteNumber();
-});
+            // Create animated background
+            createBubbles();
+
+            // Set defaults
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dateQuoted').value = today;
+            document.getElementById('quoteNumber').value = generateQuoteNumber();
+        });
+
+        // If in iframe, show modal immediately
+        if (window !== window.top) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const overlay = document.getElementById('modalOverlay');
+                if (overlay) {
+                    overlay.style.display = 'flex';
+                    document.body.classList.add('green-quote-modal-active');
+                    createBubbles();
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('dateQuoted').value = today;
+                    document.getElementById('quoteNumber').value = generateQuoteNumber();
+                }
+            });
+        }
+
+        function resetToMainMenu() {
+            // Reset everything and show main menu
+            document.getElementById('initialChoice').style.display = 'block';
+            document.getElementById('contactSelection').style.display = 'none';
+            document.getElementById('quoteForm').style.display = 'none';
+            document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
+            
+            // Reset form states
+            currentStep = 1;
+            isNewContact = false;
+            selectedContactId = null;
+            
+            // Clear any active steps
+            document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+        }
 
         function closeModal() {
             const overlay = document.getElementById('modalOverlay');
@@ -755,8 +851,8 @@ window.addEventListener('load', () => {
         }
 
         function redirectToContacts() {
-    window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
-}
+            window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
+        }
 
         function startNewContact() {
             isNewContact = true;
@@ -790,12 +886,6 @@ window.addEventListener('load', () => {
                 <option value="contact2">Jane Smith - jane@example.com</option>
                 <option value="contact3">Bob Johnson - bob@example.com</option>
             `;
-        }
-
-        function backToChoice() {
-            document.getElementById('contactSelection').style.display = 'none';
-            document.getElementById('initialChoice').style.display = 'block';
-            document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
         }
 
         function proceedWithContact() {
@@ -835,12 +925,20 @@ window.addEventListener('load', () => {
             }
         }
 
-        // Auto-calc total premium
+        // Auto-calc total premium and agency fees
         function calculateTotal() {
             const gross = parseFloat(document.getElementById('grossPremium').value) || 0;
             const taxes = parseFloat(document.getElementById('taxesAndFees').value) || 0;
             const agency = parseFloat(document.getElementById('agencyFees').value) || 0;
-            const total = gross + taxes + agency;
+            
+            // Auto-populate agency fees at 10% of gross if not manually set
+            if (!document.getElementById('agencyFees').value && gross > 0) {
+                const autoAgencyFee = (gross * 0.10).toFixed(2);
+                document.getElementById('agencyFees').value = autoAgencyFee;
+            }
+            
+            const finalAgency = parseFloat(document.getElementById('agencyFees').value) || 0;
+            const total = gross + taxes + finalAgency;
             document.getElementById('totalPremium').value = total ? total.toFixed(2) : '';
         }
 
@@ -848,6 +946,18 @@ window.addEventListener('load', () => {
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', calculateTotal);
         });
+
+        // Handle payment plan changes
+        function handlePaymentPlanChange() {
+            const plan = document.getElementById('paymentPlan').value;
+            const isMonthly = plan === 'Monthly';
+            
+            document.getElementById('downPaymentRequired').style.display = isMonthly ? 'inline' : 'none';
+            document.getElementById('monthlyPremiumRequired').style.display = isMonthly ? 'inline' : 'none';
+            
+            document.getElementById('downPayment').required = isMonthly;
+            document.getElementById('monthlyPremium').required = isMonthly;
+        }
 
         function nextStep() {
             if (!validateStep(currentStep)) return;
@@ -958,6 +1068,27 @@ window.addEventListener('load', () => {
                 }
             });
 
+            // Special validation for step 3 - payment plan fields
+            if (step === 3) {
+                const plan = document.getElementById('paymentPlan').value;
+                if (plan === 'Monthly') {
+                    const downPayment = document.getElementById('downPayment');
+                    const monthlyPremium = document.getElementById('monthlyPremium');
+                    
+                    if (!downPayment.value) {
+                        downPayment.classList.add('error');
+                        downPayment.parentElement.querySelector('.error-message').classList.add('show');
+                        valid = false;
+                    }
+                    
+                    if (!monthlyPremium.value) {
+                        monthlyPremium.classList.add('error');
+                        monthlyPremium.parentElement.querySelector('.error-message').classList.add('show');
+                        valid = false;
+                    }
+                }
+            }
+
             return valid;
         }
 
@@ -1038,7 +1169,21 @@ window.addEventListener('load', () => {
                 console.log('Response status:', response.status);
                 if (response.ok) {
                     showToast('Quote submitted successfully!', 'success');
-                    setTimeout(function() { closeModal(); }, 2000);
+                    
+                    // Redirect to contact if we have an ID
+                    setTimeout(function() {
+                        if (isNewContact && formData.contactEmail) {
+                            // For new contacts, redirect to contacts list
+                            // In production, this should redirect to the specific created contact
+                            window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
+                        } else if (selectedContactId) {
+                            // For existing contacts, redirect to that contact
+                            // This needs the actual GHL contact ID format
+                            window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
+                        } else {
+                            closeModal();
+                        }
+                    }, 2000);
                 } else {
                     showToast('Error submitting quote. Please try again.', 'error');
                 }
@@ -1053,9 +1198,11 @@ window.addEventListener('load', () => {
             });
         }
 
-        // Close when clicking outside card
+        // Close when clicking outside card (only if not in iframe)
         document.getElementById('modalOverlay').addEventListener('click', e => {
-            if (e.target === e.currentTarget) closeModal();
+            if (e.target === e.currentTarget && window === window.top) {
+                closeModal();
+            }
         });
     </script>
 </body>
