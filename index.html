@@ -1071,6 +1071,26 @@ if (window !== window.top) {
         document.getElementById('modalOverlay').addEventListener('click', e => {
             if (e.target === e.currentTarget) closeModal();
         });
+
+        // Force show modal for GHL iframe
+setTimeout(() => {
+    const overlay = document.getElementById('modalOverlay');
+    if (overlay) {
+        overlay.style.display = 'flex';
+        document.body.classList.add('green-quote-modal-active');
+        
+        // Set defaults if not already set
+        const dateQuoted = document.getElementById('dateQuoted');
+        const quoteNumber = document.getElementById('quoteNumber');
+        if (dateQuoted && !dateQuoted.value) {
+            dateQuoted.value = new Date().toISOString().split('T')[0];
+        }
+        if (quoteNumber && !quoteNumber.value) {
+            quoteNumber.value = generateQuoteNumber();
+        }
+    }
+}, 500);
+        
     </script>
 </body>
 </html>
