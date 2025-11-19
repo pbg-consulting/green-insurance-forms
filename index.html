@@ -787,24 +787,24 @@
             return `Q${year}${month}${day}-${random}`;
         }
 
-        // Show modal when page loads (only if not in iframe)
-        window.addEventListener('load', () => {
-            // Don't auto-show if we're in an iframe
-            if (window !== window.top) return;
-            
-            const overlay = document.getElementById('modalOverlay');
-            if (!overlay) return;
-            overlay.style.display = 'flex';
-            document.body.classList.add('green-quote-modal-active');
+// Show modal when page loads (only if not in iframe)
+window.addEventListener('load', () => {
+    // Don't auto-show if we're in an iframe
+    if (window !== window.top) return;
+    
+    const overlay = document.getElementById('modalOverlay');
+    if (!overlay) return;
+    overlay.style.display = 'flex';
+    document.body.classList.add('green-quote-modal-active');
 
-            // Create animated background
-            createBubbles();
+    // Create animated background
+    createBubbles();
 
-            // Set defaults
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('dateQuoted').value = today;
-            document.getElementById('quoteNumber').value = generateQuoteNumber();
-        });
+    // Set defaults
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('dateQuoted').value = today;
+    document.getElementById('quoteNumber').value = generateQuoteNumber();
+});
 
         // If in iframe, show modal immediately
         if (window !== window.top) {
