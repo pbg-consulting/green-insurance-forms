@@ -828,14 +828,21 @@
         }
 
 function resetToMainMenu() {
-    // Hide all sections
+    // Hide all sections first
     document.getElementById('contactSelection').style.display = 'none';
     document.getElementById('quoteForm').style.display = 'none';
     
-    // Show main menu with proper styling
+    // Reset and show main menu
     const initialChoice = document.getElementById('initialChoice');
-    initialChoice.style.display = 'flex';
-    initialChoice.className = 'button-group vertical';
+    initialChoice.style.display = 'block';  // Changed from 'flex' to 'block'
+    
+    // Re-apply the vertical button group styling
+    const buttonGroup = document.querySelector('#initialChoice');
+    if (buttonGroup) {
+        buttonGroup.style.display = 'flex';
+        buttonGroup.style.flexDirection = 'column';
+        buttonGroup.style.gap = '14px';
+    }
     
     // Reset header
     document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
