@@ -733,6 +733,21 @@
 
         // Show modal when page loads
 window.addEventListener('load', () => {
+
+    // If in iframe (GHL), show modal immediately
+if (window !== window.top) {
+    document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('modalOverlay');
+        if (overlay) {
+            overlay.style.display = 'flex';
+            document.body.classList.add('green-quote-modal-active');
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('dateQuoted').value = today;
+            document.getElementById('quoteNumber').value = generateQuoteNumber();
+        }
+    });
+}
+    
     // Don't auto-show if we're in an iframe
     if (window !== window.top) return;
     
