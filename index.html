@@ -827,21 +827,27 @@
             });
         }
 
-        function resetToMainMenu() {
-            // Reset everything and show main menu
-            document.getElementById('initialChoice').style.display = 'block';
-            document.getElementById('contactSelection').style.display = 'none';
-            document.getElementById('quoteForm').style.display = 'none';
-            document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
-            
-            // Reset form states
-            currentStep = 1;
-            isNewContact = false;
-            selectedContactId = null;
-            
-            // Clear any active steps
-            document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
-        }
+function resetToMainMenu() {
+    // Hide all sections
+    document.getElementById('contactSelection').style.display = 'none';
+    document.getElementById('quoteForm').style.display = 'none';
+    
+    // Show main menu with proper styling
+    const initialChoice = document.getElementById('initialChoice');
+    initialChoice.style.display = 'flex';
+    initialChoice.className = 'button-group vertical';
+    
+    // Reset header
+    document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
+    
+    // Reset form states
+    currentStep = 1;
+    isNewContact = false;
+    selectedContactId = null;
+    
+    // Clear any active steps
+    document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+}
 
         function closeModal() {
             const overlay = document.getElementById('modalOverlay');
