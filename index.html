@@ -1072,14 +1072,12 @@ function handlePaymentPlanChange() {
         }
 
         function validateStep(step) {
-            console.log('Validating step:', step);
             let valid = true;
             const stepElement = document.getElementById(`step${step}`);
             if (!stepElement) return true;
 
             const inputs = stepElement.querySelectorAll('input[required], select[required]');
             inputs.forEach(input => {
-                console.log('Checking input:', input.id, 'Value:', input.value, 'Required:', input.required);
                 const err = input.parentElement.querySelector('.error-message');
                 if (!input.value || !String(input.value).trim()) {
                     input.classList.add('error');
