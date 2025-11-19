@@ -748,8 +748,7 @@ if (window !== window.top) {
     });
 }
     
-    // Don't auto-show if we're in an iframe
-    if (window !== window.top) return;
+// if (window !== window.top) return;  // COMMENTED OUT
     
     const overlay = document.getElementById('modalOverlay');
     if (!overlay) return;
