@@ -954,17 +954,6 @@ if (!document.getElementById('agencyFees').getAttribute('data-manual') && gross 
             if (el) el.addEventListener('input', calculateTotal);
         });
 
-// Mark agency fees as manually edited if user changes it
-document.getElementById('agencyFees').addEventListener('focus', function() {
-    this.setAttribute('data-manual', 'true');
-});
-document.getElementById('agencyFees').addEventListener('blur', function() {
-    if (!this.value) {
-        this.removeAttribute('data-manual');
-        calculateTotal();
-    }
-});
-
 // Handle payment plan changes  // This should be around line 957 now
 function handlePaymentPlanChange() {
 
