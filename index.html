@@ -732,10 +732,12 @@
         }
 
         // Show modal when page loads
-    window.addEventListener('load', () => {
+window.addEventListener('load', () => {
+    // Don't auto-show if we're in an iframe
+    if (window !== window.top) return;
+    
     const overlay = document.getElementById('modalOverlay');
     if (!overlay) return;
-
     overlay.style.display = 'flex';
     document.body.classList.add('green-quote-modal-active');
 
