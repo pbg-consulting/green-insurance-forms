@@ -4,61 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Green Insurance - Quote Survey</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
         }
 
         body.green-quote-modal-active {
             overflow: hidden;
         }
 
-        /* Animated background */
-        .animated-bg {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background: linear-gradient(135deg, #0a1f14 0%, #1a3d2e 50%, #0f2818 100%);
-            overflow: hidden;
-            z-index: -1;
-        }
-
-        .bubble {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(107, 194, 74, 0.3) 0%, rgba(107, 194, 74, 0.1) 70%);
-            animation: float 20s infinite ease-in-out;
-            filter: blur(1px);
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) translateX(0) scale(1);
-            }
-            33% {
-                transform: translateY(-100px) translateX(50px) scale(1.1);
-            }
-            66% {
-                transform: translateY(50px) translateX(-50px) scale(0.9);
-            }
-        }
-
         /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -81,6 +43,7 @@
             position: relative;
             animation: slideUpQuote 0.35s ease;
             color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         @keyframes slideUpQuote {
@@ -447,13 +410,10 @@
     </style>
 </head>
 <body>
-    <!-- ANIMATED BACKGROUND -->
-    <div class="animated-bg" id="animatedBg"></div>
-
     <!-- MODAL HTML -->
     <div id="modalOverlay" class="modal-overlay">
         <div class="modal-container">
-            <button class="close-button" onclick="resetToMainMenu()">
+            <button class="close-button" onclick="closeModal()">
                 <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
                     <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
@@ -467,18 +427,24 @@
             <div class="modal-body">
                 <!-- Initial choice buttons -->
                 <div id="initialChoice" class="button-group vertical">
-<button class="primary-button" onclick="startNewContact()">
-    <span class="icon" style="font-size: 20px;">➕</span>
-    New & Quote
-</button>
-<button class="primary-button" onclick="startExistingContact()">
-    <span class="icon" style="font-size: 20px;">👥</span>
-    Existing & Quote
-</button>
-<button class="secondary-button" onclick="redirectToContacts()">
-    <span class="icon" style="font-size: 20px;">🔍</span>
-    Find Existing Contact
-</button>
+                    <button class="primary-button" onclick="startNewContact()">
+                        <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6z"/>
+                        </svg>
+                        New Contact & Quote
+                    </button>
+                    <button class="primary-button" onclick="startExistingContact()">
+                        <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Existing Contact & Quote
+                    </button>
+                    <button class="secondary-button" onclick="redirectToContacts()">
+                        <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                        </svg>
+                        Browse All Contacts
+                    </button>
                 </div>
 
                 <!-- Contact Selection for Existing -->
@@ -491,7 +457,7 @@
                         <div class="error-message">Please select a contact</div>
                     </div>
                     <div class="form-navigation">
-                        <button class="nav-button back-button" onclick="resetToMainMenu()">Back</button>
+                        <button class="nav-button back-button" onclick="backToChoice()">Back</button>
                         <button class="nav-button next-button" onclick="proceedWithContact()">Continue to Quote</button>
                     </div>
                 </div>
@@ -645,9 +611,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="taxesAndFees">Taxes and Fees *</label>
-                            <input id="taxesAndFees" type="number" step="0.01" min="0" placeholder="0.00" required>
-                            <div class="error-message">Taxes and fees are required</div>
+                            <label for="taxesAndFees">Taxes and Fees</label>
+                            <input id="taxesAndFees" type="number" step="0.01" min="0" placeholder="0.00">
                         </div>
 
                         <div class="form-group">
@@ -662,32 +627,29 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="paymentPlan">Payment Plan *</label>
-                            <select id="paymentPlan" required onchange="handlePaymentPlanChange()">
+                            <label for="paymentPlan">Payment Plan</label>
+                            <select id="paymentPlan">
                                 <option value="">Please select</option>
-                                <option value="Paid in Full">Paid in Full</option>
-                                <option value="Monthly">Monthly</option>
-                                <option value="Two Payments">Two Payments</option>
-                                <option value="Other">Other</option>
+                                <option>Paid in Full</option>
+                                <option>Monthly</option>
+                                <option>Two Payments</option>
+                                <option>Other</option>
                             </select>
-                            <div class="error-message">Payment plan is required</div>
                         </div>
 
                         <div class="form-group">
-                            <label for="downPayment">Down Payment <span id="downPaymentRequired" style="display:none;">*</span></label>
+                            <label for="downPayment">Down Payment</label>
                             <input id="downPayment" type="number" step="0.01" min="0" placeholder="0.00">
-                            <div class="error-message">Down payment is required for monthly plans</div>
                         </div>
 
                         <div class="form-group">
-                            <label for="monthlyPremium">Monthly Premium <span id="monthlyPremiumRequired" style="display:none;">*</span></label>
+                            <label for="monthlyPremium">Monthly Premium</label>
                             <input id="monthlyPremium" type="number" step="0.01" min="0" placeholder="0.00">
-                            <div class="error-message">Monthly premium is required for monthly plans</div>
                         </div>
 
                         <div class="form-group">
                             <label for="location">Location</label>
-                            <select id="location"> required>
+                            <select id="location">
                                 <option value="">Please select</option>
                                 <option>Roswell</option>
                                 <option>Marietta</option>
@@ -695,7 +657,7 @@
                                 <option>Morrow</option>
                                 <option>Jonesboro</option>
                             </select>
-                        </div class="error-message">Location is required</div>
+                        </div>
                     </div>
 
                     <!-- STEP 4: DATES + REVIEW -->
@@ -758,24 +720,6 @@
         let totalSteps = 4;
         let isNewContact = false;
         let selectedContactId = null;
-        let createdContactId = null;
-
-        // Generate animated background
-        function createBubbles() {
-            const bg = document.getElementById('animatedBg');
-            for (let i = 0; i < 15; i++) {
-                const bubble = document.createElement('div');
-                bubble.className = 'bubble';
-                const size = Math.random() * 60 + 20;
-                bubble.style.width = size + 'px';
-                bubble.style.height = size + 'px';
-                bubble.style.left = Math.random() * 100 + '%';
-                bubble.style.top = Math.random() * 100 + '%';
-                bubble.style.animationDelay = Math.random() * 20 + 's';
-                bubble.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                bg.appendChild(bubble);
-            }
-        }
 
         // Generate unique quote number
         function generateQuoteNumber() {
@@ -787,7 +731,7 @@
             return `Q${year}${month}${day}-${random}`;
         }
 
-// Show modal when page loads (only if not in iframe)
+        // Show modal when page loads
 window.addEventListener('load', () => {
     // Don't auto-show if we're in an iframe
     if (window !== window.top) return;
@@ -797,58 +741,11 @@ window.addEventListener('load', () => {
     overlay.style.display = 'flex';
     document.body.classList.add('green-quote-modal-active');
 
-    // Create animated background
-    createBubbles();
-
     // Set defaults
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('dateQuoted').value = today;
     document.getElementById('quoteNumber').value = generateQuoteNumber();
 });
-
-        // If in iframe, show modal immediately
-        if (window !== window.top) {
-            document.addEventListener('DOMContentLoaded', () => {
-                const overlay = document.getElementById('modalOverlay');
-                if (overlay) {
-                    overlay.style.display = 'flex';
-                    document.body.classList.add('green-quote-modal-active');
-                    createBubbles();
-                    const today = new Date().toISOString().split('T')[0];
-                    document.getElementById('dateQuoted').value = today;
-                    document.getElementById('quoteNumber').value = generateQuoteNumber();
-                }
-            });
-        }
-
-function resetToMainMenu() {
-    // Hide all sections first
-    document.getElementById('contactSelection').style.display = 'none';
-    document.getElementById('quoteForm').style.display = 'none';
-    
-    // Reset and show main menu
-    const initialChoice = document.getElementById('initialChoice');
-    initialChoice.style.display = 'block';  // Changed from 'flex' to 'block'
-    
-    // Re-apply the vertical button group styling
-    const buttonGroup = document.querySelector('#initialChoice');
-    if (buttonGroup) {
-        buttonGroup.style.display = 'flex';
-        buttonGroup.style.flexDirection = 'column';
-        buttonGroup.style.gap = '14px';
-    }
-    
-    // Reset header
-    document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
-    
-    // Reset form states
-    currentStep = 1;
-    isNewContact = false;
-    selectedContactId = null;
-    
-    // Clear any active steps
-    document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
-}
 
         function closeModal() {
             const overlay = document.getElementById('modalOverlay');
@@ -858,8 +755,8 @@ function resetToMainMenu() {
         }
 
         function redirectToContacts() {
-            window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
-        }
+    window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
+}
 
         function startNewContact() {
             isNewContact = true;
@@ -893,6 +790,12 @@ function resetToMainMenu() {
                 <option value="contact2">Jane Smith - jane@example.com</option>
                 <option value="contact3">Bob Johnson - bob@example.com</option>
             `;
+        }
+
+        function backToChoice() {
+            document.getElementById('contactSelection').style.display = 'none';
+            document.getElementById('initialChoice').style.display = 'block';
+            document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
         }
 
         function proceedWithContact() {
@@ -932,20 +835,12 @@ function resetToMainMenu() {
             }
         }
 
-        // Auto-calc total premium and agency fees
+        // Auto-calc total premium
         function calculateTotal() {
             const gross = parseFloat(document.getElementById('grossPremium').value) || 0;
             const taxes = parseFloat(document.getElementById('taxesAndFees').value) || 0;
             const agency = parseFloat(document.getElementById('agencyFees').value) || 0;
-            
-// Auto-populate agency fees at 10% of gross if not manually set
-if (!document.getElementById('agencyFees').getAttribute('data-manual') && gross > 0) {
-    const autoAgencyFee = (gross * 0.10).toFixed(2);
-    document.getElementById('agencyFees').value = autoAgencyFee;
-}
-            
-            const finalAgency = parseFloat(document.getElementById('agencyFees').value) || 0;
-            const total = gross + taxes + finalAgency;
+            const total = gross + taxes + agency;
             document.getElementById('totalPremium').value = total ? total.toFixed(2) : '';
         }
 
@@ -953,21 +848,6 @@ if (!document.getElementById('agencyFees').getAttribute('data-manual') && gross 
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', calculateTotal);
         });
-
-// Handle payment plan changes  // This should be around line 957 now
-function handlePaymentPlanChange() {
-
-        // Handle payment plan changes
-        function handlePaymentPlanChange() {
-            const plan = document.getElementById('paymentPlan').value;
-            const isMonthly = plan === 'Monthly';
-            
-            document.getElementById('downPaymentRequired').style.display = isMonthly ? 'inline' : 'none';
-            document.getElementById('monthlyPremiumRequired').style.display = isMonthly ? 'inline' : 'none';
-            
-            document.getElementById('downPayment').required = isMonthly;
-            document.getElementById('monthlyPremium').required = isMonthly;
-        }
 
         function nextStep() {
             if (!validateStep(currentStep)) return;
@@ -1060,47 +940,26 @@ function handlePaymentPlanChange() {
             document.getElementById('summaryPremium').textContent = total ? `$${parseFloat(total).toFixed(2)}` : '-';
         }
 
-function validateStep(step) {
-    let valid = true;
-    const stepElement = document.getElementById(`step${step}`);
-    if (!stepElement) return true;
+        function validateStep(step) {
+            let valid = true;
+            const stepElement = document.getElementById(`step${step}`);
+            if (!stepElement) return true;
 
-    const inputs = stepElement.querySelectorAll('input[required], select[required]');
-    inputs.forEach(input => {
-        const err = input.parentElement.querySelector('.error-message');
-        if (!input.value || !String(input.value).trim()) {
-            input.classList.add('error');
-            if (err) err.classList.add('show');
-            valid = false;
-        } else {
-            input.classList.remove('error');
-            if (err) err.classList.remove('show');
+            const inputs = stepElement.querySelectorAll('input[required], select[required]');
+            inputs.forEach(input => {
+                const err = input.parentElement.querySelector('.error-message');
+                if (!input.value || !String(input.value).trim()) {
+                    input.classList.add('error');
+                    if (err) err.classList.add('show');
+                    valid = false;
+                } else {
+                    input.classList.remove('error');
+                    if (err) err.classList.remove('show');
+                }
+            });
+
+            return valid;
         }
-    });
-
-    // Special validation for step 3 - payment plan fields
-    if (step === 3) {
-        const plan = document.getElementById('paymentPlan').value;
-        if (plan === 'Monthly') {
-            const downPayment = document.getElementById('downPayment');
-            const monthlyPremium = document.getElementById('monthlyPremium');
-            
-            if (!downPayment.value) {
-                downPayment.classList.add('error');
-                downPayment.parentElement.querySelector('.error-message').classList.add('show');
-                valid = false;
-            }
-            
-            if (!monthlyPremium.value) {
-                monthlyPremium.classList.add('error');
-                monthlyPremium.parentElement.querySelector('.error-message').classList.add('show');
-                valid = false;
-            }
-        }
-    }
-
-    return valid;
-}
 
         // Clear error on input change
         document.querySelectorAll('input, select, textarea').forEach(el => {
@@ -1123,83 +982,81 @@ function validateStep(step) {
             setTimeout(() => toast.remove(), 3000);
         }
 
-function submitForm() {
-    if (!validateStep(currentStep)) return;
+        function submitForm() {
+            if (!validateStep(currentStep)) return;
 
-    const submitBtn = document.getElementById('submitBtn');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Submitting...';
-    submitBtn.disabled = true;
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Submitting...';
+            submitBtn.disabled = true;
 
-    // Build data object
-    const formData = {
-        // Contact info (if new)
-        ...(isNewContact && {
-            contactFirstName: document.getElementById('contactFirstName').value,
-            contactLastName: document.getElementById('contactLastName').value,
-            contactEmail: document.getElementById('contactEmail').value,
-            contactPhone: document.getElementById('contactPhone').value,
-        }),
-        // Existing contact ID
-        ...(selectedContactId && { contactId: selectedContactId }),
-        
-        // Quote data
-        quoteNumber: document.getElementById('quoteNumber').value,
-        quoteStatus: document.getElementById('quoteStatus').value,
-        lineOfBusiness: document.getElementById('lineOfBusiness').value,
-        ezlynxQuoteId: document.getElementById('ezlynxQuoteId').value,
-        mainCarrier: document.getElementById('mainCarrier').value,
-        effectiveDate: document.getElementById('effectiveDate').value,
-        grossPremium: parseFloat(document.getElementById('grossPremium').value),
-        taxesAndFees: parseFloat(document.getElementById('taxesAndFees').value) || 0,
-        agencyFees: parseFloat(document.getElementById('agencyFees').value) || 0,
-        totalPremium: parseFloat(document.getElementById('totalPremium').value),
-        paymentPlan: document.getElementById('paymentPlan').value,
-        downPayment: parseFloat(document.getElementById('downPayment').value) || 0,
-        monthlyPremium: parseFloat(document.getElementById('monthlyPremium').value) || 0,
-        location: document.getElementById('location').value,
-        dateQuoted: document.getElementById('dateQuoted').value,
-        expirationDate: document.getElementById('expirationDate').value,
-        notes: document.getElementById('notes').value,
-        isNewContact: isNewContact,
-        timestamp: new Date().toISOString()
-    };
+            // Build data object
+            const formData = {
+                // Contact info (if new)
+                ...(isNewContact && {
+                    contactFirstName: document.getElementById('contactFirstName').value,
+                    contactLastName: document.getElementById('contactLastName').value,
+                    contactEmail: document.getElementById('contactEmail').value,
+                    contactPhone: document.getElementById('contactPhone').value,
+                }),
+                // Existing contact ID
+                ...(selectedContactId && { contactId: selectedContactId }),
+                
+                // Quote data - matching exact field names from webhook
+                quoteNumber: document.getElementById('quoteNumber').value,
+                quoteStatus: document.getElementById('quoteStatus').value,
+                lineOfBusiness: document.getElementById('lineOfBusiness').value,
+                ezlynxQuoteId: document.getElementById('ezlynxQuoteId').value,
+                mainCarrier: document.getElementById('mainCarrier').value,
+                effectiveDate: document.getElementById('effectiveDate').value,
+                grossPremium: parseFloat(document.getElementById('grossPremium').value),
+                taxesAndFees: parseFloat(document.getElementById('taxesAndFees').value) || 0,
+                agencyFees: parseFloat(document.getElementById('agencyFees').value) || 0,
+                totalPremium: parseFloat(document.getElementById('totalPremium').value),
+                paymentPlan: document.getElementById('paymentPlan').value,
+                downPayment: parseFloat(document.getElementById('downPayment').value) || 0,
+                monthlyPremium: parseFloat(document.getElementById('monthlyPremium').value) || 0,
+                location: document.getElementById('location').value,
+                dateQuoted: document.getElementById('dateQuoted').value,
+                expirationDate: document.getElementById('expirationDate').value,
+                notes: document.getElementById('notes').value,
+                isNewContact: isNewContact,
+                timestamp: new Date().toISOString()
+            };
 
-    // Send to webhook
-    fetch('https://services.leadconnectorhq.com/hooks/YtNhoKQqqoEZSVFceqZm/webhook-trigger/26db136c-27ca-47b4-af16-f8b1f0dfd852', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(response => {
-        if (response.ok) {
-            showToast('Quote submitted successfully!', 'success');
-            setTimeout(() => {
-                window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
-            }, 2000);
-        } else {
-            showToast('Error submitting quote. Please try again.', 'error');
+            console.log('Submitting form data:', formData);
+
+            // Send to GHL webhook
+            fetch('https://services.leadconnectorhq.com/hooks/YtNhoKQqqoEZSVFceqZm/webhook-trigger/26db136c-27ca-47b4-af16-f8b1f0dfd852', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(function(response) {
+                console.log('Response status:', response.status);
+                if (response.ok) {
+                    showToast('Quote submitted successfully!', 'success');
+                    setTimeout(function() { closeModal(); }, 2000);
+                } else {
+                    showToast('Error submitting quote. Please try again.', 'error');
+                }
+            })
+            .catch(function(error) {
+                console.error('Network Error:', error);
+                showToast('Network error. Please try again.', 'error');
+            })
+            .finally(function() {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            });
         }
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    })
-    .catch(error => {
-        console.error('Network Error:', error);
-        showToast('Network error. Please try again.', 'error');
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    });
-}
 
-        // Close when clicking outside card (only if not in iframe)
+        // Close when clicking outside card
         document.getElementById('modalOverlay').addEventListener('click', e => {
-            if (e.target === e.currentTarget && window === window.top) {
-                closeModal();
-            }
+            if (e.target === e.currentTarget) closeModal();
         });
-
-   <script>
+    </script>
 </body>
 </html>
