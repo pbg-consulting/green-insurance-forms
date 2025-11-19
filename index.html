@@ -427,198 +427,64 @@
             <div class="modal-body">
                 
                 <!-- Initial choice buttons -->
-<div id="initialChoice" class="button-group vertical">
-    <button class="neon-pill-button neon-green" onclick="startNewContact()">
-        <div class="pill-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-            </svg>
-        </div>
-        <span class="pill-text">New & Quote</span>
+<div id="initialChoice" class="button-group horizontal">
+    <button class="simple-button primary-green" onclick="startNewContact()">
+        <span class="button-icon">+</span>
+        <span class="button-text">New Opportunity</span>
     </button>
-    
-    <button class="neon-pill-button neon-blue" onclick="startExistingContact()">
-        <div class="pill-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-            </svg>
-        </div>
-        <span class="pill-text">Existing & Quote</span>
-    </button>
-    
-    <button class="neon-pill-button neon-purple" onclick="redirectToContacts()">
-        <div class="pill-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            </svg>
-        </div>
+    <button class="simple-button outline-green" onclick="startExistingContact()">
+        <span class="button-icon">👥</span>
+        <span class="button-text">Existing Opportunity</span>
     </button>
 </div>
-
-<style>
-/* Centered Neon Pill Buttons */
-.button-group.vertical {
+/* Simple Two-Button Design */
+.button-group.horizontal {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    padding: 20px 0;
-}
-
-.neon-pill-button {
-    position: relative;
-    display: flex;
-    align-items: center;
     gap: 15px;
-    padding: 0 30px 0 15px;
-    height: 56px;
-    min-width: 280px;
-    max-width: 350px;
-    border: none;
-    border-radius: 28px;
-    cursor: pointer;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    color: white;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-    
-    /* Shadow layers */
-    box-shadow: 
-        0 10px 40px rgba(0, 0, 0, 0.4),
-        0 2px 10px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    margin-bottom: 20px;
+    justify-content: center;
 }
 
-/* Icon circle */
-.pill-icon {
+.simple-button {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: 
-        0 2px 8px rgba(0, 0, 0, 0.2),
-        0 0 20px rgba(255, 255, 255, 0.3);
+    gap: 8px;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.pill-text {
-    flex: 1;
-    text-align: left;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-/* Green variant */
-.neon-green {
+.primary-green {
     background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(107, 194, 74, 0.3);
 }
 
-.neon-green .pill-icon {
-    color: #5aa63d;
-}
-
-.neon-green:hover {
-    background: linear-gradient(135deg, #7bd25a 0%, #6ab64d 100%);
+.primary-green:hover {
     transform: translateY(-2px);
-    box-shadow: 
-        0 15px 50px rgba(107, 194, 74, 0.4),
-        0 5px 20px rgba(0, 0, 0, 0.3),
-        0 0 40px rgba(107, 194, 74, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    box-shadow: 0 6px 20px rgba(107, 194, 74, 0.4);
 }
 
-/* Blue variant */
-.neon-blue {
-    background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+.outline-green {
+    background: transparent;
+    color: #6bc24a;
+    border: 2px solid #6bc24a;
 }
 
-.neon-blue .pill-icon {
-    color: #357ABD;
+.outline-green:hover {
+    background: rgba(107, 194, 74, 0.1);
 }
 
-.neon-blue:hover {
-    background: linear-gradient(135deg, #5A9FF2 0%, #458ACD 100%);
-    transform: translateY(-2px);
-    box-shadow: 
-        0 15px 50px rgba(74, 144, 226, 0.4),
-        0 5px 20px rgba(0, 0, 0, 0.3),
-        0 0 40px rgba(74, 144, 226, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+.button-icon {
+    font-size: 18px;
 }
-
-/* Purple variant */
-.neon-purple {
-    background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%);
-}
-
-.neon-purple .pill-icon {
-    color: #7C3AED;
-}
-
-.neon-purple:hover {
-    background: linear-gradient(135deg, #9B6CFF 0%, #8C4AFD 100%);
-    transform: translateY(-2px);
-    box-shadow: 
-        0 15px 50px rgba(139, 92, 246, 0.4),
-        0 5px 20px rgba(0, 0, 0, 0.3),
-        0 0 40px rgba(139, 92, 246, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-/* Active state */
-.neon-pill-button:active {
-    transform: translateY(0);
-    box-shadow: 
-        0 5px 20px rgba(0, 0, 0, 0.4),
-        0 1px 5px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(0, 0, 0, 0.1);
-}
-
-.neon-pill-button:active .pill-icon {
-    transform: scale(0.95);
-}
-
-/* Glossy overlay */
-.neon-pill-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.15) 0%,
-        transparent 100%
-    );
-    pointer-events: none;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 640px) {
-    .neon-pill-button {
-        min-width: 240px;
-        height: 50px;
-        font-size: 14px;
-        padding: 0 25px 0 12px;
-    }
-    
-    .pill-icon {
-        width: 36px;
-        height: 36px;
-    }
-    
-    .pill-icon svg {
-        width: 20px;
-        height: 20px;
-    }
-}
-</style>
 
                 <!-- Contact Selection for Existing -->
                 <div id="contactSelection" style="display: none;">
@@ -800,14 +666,15 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="paymentPlan">Payment Plan</label>
-                            <select id="paymentPlan">
+                            <label for="paymentPlan">Payment Plan *</label>
+                            <select id="paymentPlan" required onchange="handlePaymentPlanChange()">
                                 <option value="">Please select</option>
                                 <option>Paid in Full</option>
                                 <option>Monthly</option>
                                 <option>Two Payments</option>
                                 <option>Other</option>
                             </select>
+                            <div class="error-message">Payment Plan is required</div>
                         </div>
 
                         <div class="form-group">
@@ -821,8 +688,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="location">Location</label>
-                            <select id="location">
+                            <label for="location">Location *</label>
+                            <select id="location" required>
                                 <option value="">Please select</option>
                                 <option>Roswell</option>
                                 <option>Marietta</option>
@@ -830,7 +697,7 @@
                                 <option>Morrow</option>
                                 <option>Jonesboro</option>
                             </select>
-                        </div>
+                        <div class="error-message">Location is required</div>
                     </div>
 
                     <!-- STEP 4: DATES + REVIEW -->
@@ -996,16 +863,32 @@ function resetToMainMenu() {
             loadContacts();
         }
 
-        function loadContacts() {
-            // This should be replaced with actual GHL API call
-            const selectElement = document.getElementById('contactId');
-            selectElement.innerHTML = `
-                <option value="">Select a contact...</option>
-                <option value="contact1">John Doe - john@example.com</option>
-                <option value="contact2">Jane Smith - jane@example.com</option>
-                <option value="contact3">Bob Johnson - bob@example.com</option>
-            `;
-        }
+async function loadContacts() {
+    const selectElement = document.getElementById('contactId');
+    selectElement.innerHTML = '<option value="">Loading contacts...</option>';
+    
+    try {
+        // This would be your actual GHL API call
+        // For now, using placeholder - replace with your GHL API endpoint
+        const response = await fetch('/api/contacts'); // Replace with actual endpoint
+        const contacts = await response.json();
+        
+        selectElement.innerHTML = '<option value="">Select a contact...</option>';
+        contacts.forEach(contact => {
+            const option = document.createElement('option');
+            option.value = contact.id;
+            option.textContent = `${contact.firstName} ${contact.lastName} - ${contact.email}`;
+            selectElement.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Error loading contacts:', error);
+        selectElement.innerHTML = `
+            <option value="">Select a contact...</option>
+            <option value="contact1">John Doe - john@example.com</option>
+            <option value="contact2">Jane Smith - jane@example.com</option>
+        `;
+    }
+}
 
         function backToChoice() {
             document.getElementById('contactSelection').style.display = 'none';
@@ -1051,18 +934,96 @@ function resetToMainMenu() {
         }
 
         // Auto-calc total premium
-        function calculateTotal() {
-            const gross = parseFloat(document.getElementById('grossPremium').value) || 0;
-            const taxes = parseFloat(document.getElementById('taxesAndFees').value) || 0;
-            const agency = parseFloat(document.getElementById('agencyFees').value) || 0;
-            const total = gross + taxes + agency;
-            document.getElementById('totalPremium').value = total ? total.toFixed(2) : '';
-        }
+function calculateTotal() {
+    const gross = parseFloat(document.getElementById('grossPremium').value.replace('$', '')) || 0;
+    const taxes = parseFloat(document.getElementById('taxesAndFees').value.replace('$', '')) || 0;
+    
+    // Auto-calculate agency fees at 10% if not manually edited
+    const agencyField = document.getElementById('agencyFees');
+    if (!agencyField.dataset.manual && gross > 0) {
+        const agencyFee = gross * 0.10;
+        agencyField.value = '$' + agencyFee.toFixed(2);
+    }
+    
+    const agency = parseFloat(agencyField.value.replace('$', '')) || 0;
+    const total = gross + taxes + agency;
+    document.getElementById('totalPremium').value = total ? '$' + total.toFixed(2) : '';
+}
 
         ['grossPremium', 'taxesAndFees', 'agencyFees'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.addEventListener('input', calculateTotal);
         });
+//Handle Payment Plan Change
+function handlePaymentPlanChange() {
+    const plan = document.getElementById('paymentPlan').value;
+    const isMonthly = plan === 'Monthly';
+    
+    const downPayment = document.getElementById('downPayment');
+    const monthlyPremium = document.getElementById('monthlyPremium');
+    
+    // Make fields required if Monthly is selected
+    downPayment.required = isMonthly;
+    monthlyPremium.required = isMonthly;
+    
+    // Update labels to show/hide required asterisk
+    const downLabel = downPayment.parentElement.querySelector('label');
+    const monthlyLabel = monthlyPremium.parentElement.querySelector('label');
+    
+    if (isMonthly) {
+        if (!downLabel.textContent.includes('*')) {
+            downLabel.textContent = 'Down Payment *';
+        }
+        if (!monthlyLabel.textContent.includes('*')) {
+            monthlyLabel.textContent = 'Monthly Premium *';
+        }
+        // Add error messages if they don't exist
+        if (!downPayment.parentElement.querySelector('.error-message')) {
+            const err1 = document.createElement('div');
+            err1.className = 'error-message';
+            err1.textContent = 'Down payment is required for monthly plans';
+            downPayment.parentElement.appendChild(err1);
+        }
+        if (!monthlyPremium.parentElement.querySelector('.error-message')) {
+            const err2 = document.createElement('div');
+            err2.className = 'error-message';
+            err2.textContent = 'Monthly premium is required for monthly plans';
+            monthlyPremium.parentElement.appendChild(err2);
+        }
+    } else {
+        downLabel.textContent = 'Down Payment';
+        monthlyLabel.textContent = 'Monthly Premium';
+        // Remove error messages
+        const err1 = downPayment.parentElement.querySelector('.error-message');
+        const err2 = monthlyPremium.parentElement.querySelector('.error-message');
+        if (err1) err1.remove();
+        if (err2) err2.remove();
+    }
+}
+
+        // Format input as currency
+function formatCurrency(input) {
+    let value = input.value.replace(/[^0-9.]/g, '');
+    if (value) {
+        value = parseFloat(value).toFixed(2);
+        input.value = '$' + value;
+    }
+}
+
+// Add dollar sign on focus out
+['grossPremium', 'taxesAndFees', 'agencyFees', 'downPayment', 'monthlyPremium'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+        el.addEventListener('blur', function() {
+            if (this.value && !this.value.startsWith('$')) {
+                formatCurrency(this);
+            }
+        });
+        el.addEventListener('focus', function() {
+            this.value = this.value.replace('$', '');
+        });
+    }
+});
 
         function nextStep() {
             if (!validateStep(currentStep)) return;
@@ -1184,7 +1145,7 @@ function resetToMainMenu() {
                 if (err) err.classList.remove('show');
             });
         });
-
+        
         function showToast(message, type) {
             const existingToast = document.querySelector('.toast');
             if (existingToast) existingToast.remove();
@@ -1197,6 +1158,53 @@ function resetToMainMenu() {
             setTimeout(() => toast.remove(), 3000);
         }
 
+function handlePaymentPlanChange() {
+    const plan = document.getElementById('paymentPlan').value;
+    const isMonthly = plan === 'Monthly';
+    
+    const downPayment = document.getElementById('downPayment');
+    const monthlyPremium = document.getElementById('monthlyPremium');
+    
+    // Make fields required if Monthly is selected
+    downPayment.required = isMonthly;
+    monthlyPremium.required = isMonthly;
+    
+    // Update labels to show/hide required asterisk
+    const downLabel = downPayment.parentElement.querySelector('label');
+    const monthlyLabel = monthlyPremium.parentElement.querySelector('label');
+    
+    if (isMonthly) {
+        if (!downLabel.textContent.includes('*')) {
+            downLabel.textContent = 'Down Payment *';
+        }
+        if (!monthlyLabel.textContent.includes('*')) {
+            monthlyLabel.textContent = 'Monthly Premium *';
+        }
+        // Add error messages if they don't exist
+        if (!downPayment.parentElement.querySelector('.error-message')) {
+            const err1 = document.createElement('div');
+            err1.className = 'error-message';
+            err1.textContent = 'Down payment is required for monthly plans';
+            downPayment.parentElement.appendChild(err1);
+        }
+        if (!monthlyPremium.parentElement.querySelector('.error-message')) {
+            const err2 = document.createElement('div');
+            err2.className = 'error-message';
+            err2.textContent = 'Monthly premium is required for monthly plans';
+            monthlyPremium.parentElement.appendChild(err2);
+        }
+    } else {
+        downLabel.textContent = 'Down Payment';
+        monthlyLabel.textContent = 'Monthly Premium';
+        // Remove error messages
+        const err1 = downPayment.parentElement.querySelector('.error-message');
+        const err2 = monthlyPremium.parentElement.querySelector('.error-message');
+        if (err1) err1.remove();
+        if (err2) err2.remove();
+    }
+}
+
+        
         function submitForm() {
             if (!validateStep(currentStep)) return;
 
@@ -1267,11 +1275,6 @@ function resetToMainMenu() {
                 submitBtn.disabled = false;
             });
         }
-
-        // Close when clicking outside card
-        document.getElementById('modalOverlay').addEventListener('click', e => {
-            if (e.target === e.currentTarget) closeModal();
-        });
 
         // Force show modal for GHL iframe
 setTimeout(() => {
