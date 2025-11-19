@@ -1134,90 +1134,75 @@ function validateStep(step) {
             setTimeout(() => toast.remove(), 3000);
         }
 
-        function submitForm() {
-            if (!validateStep(currentStep)) return;
+function submitForm() {
+    if (!validateStep(currentStep)) return;
 
-            const submitBtn = document.getElementById('submitBtn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Submitting...';
-            submitBtn.disabled = true;
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Submitting...';
+    submitBtn.disabled = true;
 
-            // Build data object
-            const formData = {
-                // Contact info (if new)
-                ...(isNewContact && {
-                    contactFirstName: document.getElementById('contactFirstName').value,
-                    contactLastName: document.getElementById('contactLastName').value,
-                    contactEmail: document.getElementById('contactEmail').value,
-                    contactPhone: document.getElementById('contactPhone').value,
-                }),
-                // Existing contact ID
-                ...(selectedContactId && { contactId: selectedContactId }),
-                
-                // Quote data - matching exact field names from webhook
-                quoteNumber: document.getElementById('quoteNumber').value,
-                quoteStatus: document.getElementById('quoteStatus').value,
-                lineOfBusiness: document.getElementById('lineOfBusiness').value,
-                ezlynxQuoteId: document.getElementById('ezlynxQuoteId').value,
-                mainCarrier: document.getElementById('mainCarrier').value,
-                effectiveDate: document.getElementById('effectiveDate').value,
-                grossPremium: parseFloat(document.getElementById('grossPremium').value),
-                taxesAndFees: parseFloat(document.getElementById('taxesAndFees').value) || 0,
-                agencyFees: parseFloat(document.getElementById('agencyFees').value) || 0,
-                totalPremium: parseFloat(document.getElementById('totalPremium').value),
-                paymentPlan: document.getElementById('paymentPlan').value,
-                downPayment: parseFloat(document.getElementById('downPayment').value) || 0,
-                monthlyPremium: parseFloat(document.getElementById('monthlyPremium').value) || 0,
-                location: document.getElementById('location').value,
-                dateQuoted: document.getElementById('dateQuoted').value,
-                expirationDate: document.getElementById('expirationDate').value,
-                notes: document.getElementById('notes').value,
-                isNewContact: isNewContact,
-                timestamp: new Date().toISOString()
-            };
+    // Build data object
+    const formData = {
+        // Contact info (if new)
+        ...(isNewContact && {
+            contactFirstName: document.getElementById('contactFirstName').value,
+            contactLastName: document.getElementById('contactLastName').value,
+            contactEmail: document.getElementById('contactEmail').value,
+            contactPhone: document.getElementById('contactPhone').value,
+        }),
+        // Existing contact ID
+        ...(selectedContactId && { contactId: selectedContactId }),
+        
+        // Quote data
+        quoteNumber: document.getElementById('quoteNumber').value,
+        quoteStatus: document.getElementById('quoteStatus').value,
+        lineOfBusiness: document.getElementById('lineOfBusiness').value,
+        ezlynxQuoteId: document.getElementById('ezlynxQuoteId').value,
+        mainCarrier: document.getElementById('mainCarrier').value,
+        effectiveDate: document.getElementById('effectiveDate').value,
+        grossPremium: parseFloat(document.getElementById('grossPremium').value),
+        taxesAndFees: parseFloat(document.getElementById('taxesAndFees').value) || 0,
+        agencyFees: parseFloat(document.getElementById('agencyFees').value) || 0,
+        totalPremium: parseFloat(document.getElementById('totalPremium').value),
+        paymentPlan: document.getElementById('paymentPlan').value,
+        downPayment: parseFloat(document.getElementById('downPayment').value) || 0,
+        monthlyPremium: parseFloat(document.getElementById('monthlyPremium').value) || 0,
+        location: document.getElementById('location').value,
+        dateQuoted: document.getElementById('dateQuoted').value,
+        expirationDate: document.getElementById('expirationDate').value,
+        notes: document.getElementById('notes').value,
+        isNewContact: isNewContact,
+        timestamp: new Date().toISOString()
+    };
 
-            console.log('Submitting form data:', formData);
-
-            // Send to GHL webhook
-            fetch('https://services.leadconnectorhq.com/hooks/YtNhoKQqqoEZSVFceqZm/webhook-trigger/26db136c-27ca-47b4-af16-f8b1f0dfd852', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(function(response) {
-                console.log('Response status:', response.status);
-                if (response.ok) {
-                    showToast('Quote submitted successfully!', 'success');
-                    
-                    // Redirect to contact if we have an ID
-                    setTimeout(function() {
-                        if (isNewContact && formData.contactEmail) {
-                            // For new contacts, redirect to contacts list
-                            // In production, this should redirect to the specific created contact
-                            window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
-                        } else if (selectedContactId) {
-                            // For existing contacts, redirect to that contact
-                            // This needs the actual GHL contact ID format
-                            window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
-                        } else {
-                            closeModal();
-                        }
-                    }, 2000);
-                } else {
-                    showToast('Error submitting quote. Please try again.', 'error');
-                }
-            })
-            .catch(function(error) {
-                console.error('Network Error:', error);
-                showToast('Network error. Please try again.', 'error');
-            })
-            .finally(function() {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            });
+    // Send to webhook
+    fetch('https://services.leadconnectorhq.com/hooks/YtNhoKQqqoEZSVFceqZm/webhook-trigger/26db136c-27ca-47b4-af16-f8b1f0dfd852', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (response.ok) {
+            showToast('Quote submitted successfully!', 'success');
+            setTimeout(() => {
+                window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
+            }, 2000);
+        } else {
+            showToast('Error submitting quote. Please try again.', 'error');
         }
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    })
+    .catch(error => {
+        console.error('Network Error:', error);
+        showToast('Network error. Please try again.', 'error');
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    });
+}
 
         // Close when clicking outside card (only if not in iframe)
         document.getElementById('modalOverlay').addEventListener('click', e => {
