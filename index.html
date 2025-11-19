@@ -481,7 +481,7 @@
         <span class="button-text">New Opportunity</span>
     </button>
     <button class="simple-button outline-green" onclick="startExistingContact()">
-        <span class="button-icon">👥</span>
+       <span class="button-icon" style="filter: brightness(0) invert(1);">👥</span>
         <span class="button-text">Existing Opportunity</span>
     </button>
 </div>
@@ -892,10 +892,11 @@ async function loadContacts() {
 }
 
         function backToChoice() {
-            document.getElementById('contactSelection').style.display = 'none';
-            document.getElementById('initialChoice').style.display = 'block';
-            document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
-        }
+    document.getElementById('contactSelection').style.display = 'none';
+    document.getElementById('initialChoice').style.display = 'flex';
+    document.getElementById('initialChoice').className = 'button-group horizontal'; // Force horizontal layout
+    document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
+}
 
         function proceedWithContact() {
             const contactId = document.getElementById('contactId').value;
@@ -917,6 +918,7 @@ async function loadContacts() {
             document.getElementById('step1').classList.add('active');
             updateProgress();
             updateNavigation();
+            document.getElementById('nextBtn').style.display = 'block';
             document.getElementById('headerSubtitle').textContent = 'Step 1 of 4: Basic Information';
         }
 
