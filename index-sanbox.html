@@ -1322,78 +1322,88 @@
             setTimeout(() => toast.remove(), 3000);
         }
 
-        function submitForm() {
-            if (!validateStep(currentStep)) return;
+        <script>
+    function submitForm() {
+        if (!validateStep(currentStep)) return;
 
-            const submitBtn = document.getElementById("submitBtn");
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = "Submitting...";
-            submitBtn.disabled = true;
+        const submitBtn = document.getElementById('submitBtn');
+        const originalText = submitBtn.textContent;
 
-            const formData = {
-                preferredLanguage: selectedLanguage || "English",
+        submitBtn.textContent = 'Submitting...';
+        submitBtn.disabled = true;
 
-                // Always send contact info, new or existing
-                contactFirstName: document.getElementById("contactFirstName").value,
-                contactLastName: document.getElementById("contactLastName").value,
-                contactEmail: document.getElementById("contactEmail").value,
-                contactPhone: document.getElementById("contactPhone").value,
+        // Build data object – SAME FIELDS for new + existing
+        const formData = {
+            // Language (always include)
+            preferredLanguage: selectedLanguage || 'English',
 
-                ...(existingContactPhone && { 
-                    existingContactPhone: existingContactPhone,
-                    contactId: selectedContactId
-                }),
-                
-                quoteNumber: document.getElementById("quoteNumber").value,
-                quoteStatus: document.getElementById("quoteStatus").value,
-                lineOfBusiness: document.getElementById("lineOfBusiness").value,
-                ezlynxQuoteId: document.getElementById("ezlynxQuoteId").value,
-                mainCarrier: document.getElementById("mainCarrier").value,
-                effectiveDate: document.getElementById("effectiveDate").value,
-                grossPremium: parseCurrency(document.getElementById("grossPremium").value),
-                taxesAndFees: parseCurrency(document.getElementById("taxesAndFees").value),
-                agencyFees: parseCurrency(document.getElementById("agencyFees").value),
-                totalPremium: parseCurrency(document.getElementById("totalPremium").value),
-                paymentPlan: document.getElementById("paymentPlan").value,
-                downPayment: parseCurrency(document.getElementById("downPayment").value),
-                monthlyPremium: parseCurrency(document.getElementById("monthlyPremium").value),
-                location: document.getElementById("location").value,
-                dateQuoted: document.getElementById("dateQuoted").value,
-                expirationDate: document.getElementById("expirationDate").value,
-                notes: document.getElementById("notes").value,
-                isNewContact: isNewContact,
-                timestamp: new Date().toISOString()
-            };
+            // Contact info – always send, even for existing
+            contactFirstName: document.getElementById('contactFirstName').value || '',
+            contactLastName: document.getElementById('contactLastName').value || '',
+            contactEmail: document.getElementById('contactEmail').value || '',
+            contactPhone: document.getElementById('contactPhone').value || '',
 
-            console.log("Submitting form data:", formData);
+            // Existing-contact helpers (only present for that flow)
+            ...(existingContactPhone && {
+                existingContactPhone: existingContactPhone,
+                contactId: selectedContactId
+            }),
 
-            fetch("https://services.leadconnectorhq.com/hooks/YtNhoKQqqoEZSVFceqZm/webhook-trigger/26db136c-27ca-47b4-af16-f8b1f0dfd852", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(function(response) {
-                console.log("Response status:", response.status);
-                if (response.ok) {
-                    showToast("Quote submitted successfully!", "");
-                    setTimeout(function() { 
-                        window.top.location.href = "https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All";
-                    }, 2000);
-                } else {
-                    showToast("Error submitting quote. Please try again.", "error");
-                }
-            })
-            .catch(function(error) {
-                console.error("Network Error:", error);
-                showToast("Network error. Please try again.", "error");
-            })
-            .finally(function() {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            });
-        }
+            // Quote data
+            quoteNumber: document.getElementById('quoteNumber').value,
+            quoteStatus: document.getElementById('quoteStatus').value,
+            lineOfBusiness: document.getElementById('lineOfBusiness').value,
+            ezlynxQuoteId: document.getElementById('ezlynxQuoteId').value,
+            mainCarrier: document.getElementById('mainCarrier').value,
+            effectiveDate: document.getElementById('effectiveDate').value,
+            grossPremium: parseCurrency(document.getElementById('grossPremium').value),
+            taxesAndFees: parseCurrency(document.getElementById('taxesAndFees').value),
+            agencyFees: parseCurrency(document.getElementById('agencyFees').value),
+            totalPremium: parseCurrency(document.getElementById('totalPremium').value),
+            paymentPlan: document.getElementById('paymentPlan').value,
+            downPayment: parseCurrency(document.getElementById('downPayment').value),
+            monthlyPremium: parseCurrency(document.getElementById('monthlyPremium').value),
+            location: document.getElementById('location').value,
+            dateQuoted: document.getElementById('dateQuoted').value,
+            expirationDate: document.getElementById('expirationDate').value,
+            notes: document.getElementById('notes').value,
+
+            // Flags & metadata
+            isNewContact: isNewContact,
+            timestamp: new Date().toISOString()
+        };
+
+        console.log('Submitting form data:', formData);
+
+        fetch('https://services.leadconnectorhq.com/hooks/YtNhoKQqqoEZSVFceqZm/webhook-trigger/26db136c-27ca-47b4-af16-f8b1f0dfd852', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(function(response) {
+            console.log('Response status:', response.status);
+            if (response.ok) {
+                showToast('Quote submitted successfully!', 'success');
+                setTimeout(function() {
+                    window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
+                }, 2000);
+            } else {
+                showToast('Error submitting quote. Please try again.', 'error');
+            }
+        })
+        .catch(function(error) {
+            console.error('Network Error:', error);
+            showToast('Network error. Please try again.', 'error');
+        })
+        .finally(function() {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
+    }
+</script>
+
 
         // Backup force show modal for GHL
         setTimeout(() => {
