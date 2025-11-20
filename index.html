@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Insurance – Quote Survey</title>
+    <title>Green Insurance - Quote Survey</title>
 
     <!-- Poppins font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -15,30 +17,22 @@
             box-sizing: border-box;
         }
 
-        /* Global font */
-        body,
-        input,
-        select,
-        textarea,
-        button {
-            font-family: "Poppins", sans-serif;
+        body {
+            font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #000000;
+            color: #fff;
         }
 
         body.green-quote-modal-active {
             overflow: hidden;
-            background: radial-gradient(circle at top left, #0b2817 0, #020911 55%);
-            color: #fff;
         }
 
         /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background:
-                radial-gradient(circle at top left, rgba(107, 194, 74, 0.2), transparent 55%),
-                radial-gradient(circle at bottom right, rgba(42, 180, 92, 0.25), transparent 55%),
-                rgba(0, 0, 0, 0.78);
-            backdrop-filter: blur(10px);
+            background: #000000;
+            backdrop-filter: blur(6px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -60,8 +54,6 @@
             border-radius: 50%;
             pointer-events: none;
             animation: float-up 15s infinite;
-            transform: translateZ(0);
-            will-change: transform, opacity;
         }
 
         @keyframes float-up {
@@ -70,26 +62,29 @@
                 opacity: 0;
             }
             10% {
-                opacity: 0.4;
+                opacity: 0.45;
             }
             90% {
-                opacity: 0.4;
+                opacity: 0.45;
             }
             100% {
-                transform: translateY(-100vh) scale(1.5);
+                transform: translateY(-100vh) scale(1.6);
                 opacity: 0;
             }
         }
 
         /* Glass card */
         .modal-container {
-            background: rgba(7, 24, 15, 0.96);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(107, 194, 74, 0.3);
+            background:
+                radial-gradient(circle at top left, rgba(34, 197, 94, 0.18), transparent 60%),
+                radial-gradient(circle at bottom right, rgba(22, 163, 74, 0.18), transparent 60%),
+                rgba(5, 12, 9, 0.96);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(148, 245, 181, 0.24);
             border-radius: 24px;
             box-shadow:
-                0 18px 45px rgba(0, 0, 0, 0.75),
-                0 0 40px rgba(107, 194, 74, 0.35);
+                0 18px 60px rgba(0, 0, 0, 0.85),
+                0 0 60px rgba(74, 222, 128, 0.25);
             max-width: 650px;
             width: 100%;
             max-height: 90vh;
@@ -97,8 +92,6 @@
             position: relative;
             animation: slideUpQuote 0.35s ease;
             color: #fff;
-            transform: translateZ(0);
-            will-change: transform, opacity;
         }
 
         @keyframes slideUpQuote {
@@ -108,7 +101,7 @@
 
         .modal-header {
             padding: 30px 30px 18px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             text-align: center;
         }
 
@@ -116,11 +109,12 @@
             font-size: 26px;
             font-weight: 700;
             margin-bottom: 8px;
+            letter-spacing: 0.02em;
         }
 
         .modal-subtitle {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(226, 232, 240, 0.8);
         }
 
         .modal-body {
@@ -136,7 +130,7 @@
             height: 32px;
             border-radius: 999px;
             border: none;
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(15, 23, 42, 0.8);
             color: #e5e7eb;
             display: flex;
             align-items: center;
@@ -146,7 +140,7 @@
         }
 
         .close-button:hover {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(15, 23, 42, 1);
             transform: rotate(90deg);
         }
 
@@ -165,7 +159,7 @@
         .progress-fill {
             height: 100%;
             width: 25%;
-            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
+            background: linear-gradient(135deg, #6bc24a 0%, #4ade80 100%);
             border-radius: 3px;
             transition: width 0.25s ease;
         }
@@ -191,7 +185,7 @@
         }
 
         .step-dot.active {
-            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
+            background: linear-gradient(135deg, #6bc24a 0%, #4ade80 100%);
             color: #fff;
         }
 
@@ -233,16 +227,15 @@
             padding: 10px 12px;
             border-radius: 10px;
             border: 1px solid rgba(107, 194, 74, 0.3);
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(15, 23, 42, 0.96);
             color: #fff;
             font-size: 14px;
             transition: all 0.2s ease;
-            -webkit-appearance: none;
         }
 
         input::placeholder,
         textarea::placeholder {
-            color: rgba(255, 255, 255, 0.55);
+            color: rgba(148, 163, 184, 0.85);
         }
 
         input:focus,
@@ -250,12 +243,12 @@
         textarea:focus {
             outline: none;
             border-color: #6bc24a;
-            box-shadow: 0 0 0 2px rgba(107, 194, 74, 0.3);
-            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 1px rgba(107, 194, 74, 0.6);
+            background: rgba(15, 23, 42, 1);
         }
 
         select option {
-            background: #1a3d2e;
+            background: #020617;
             color: #fff;
         }
 
@@ -293,30 +286,31 @@
         }
 
         .back-button {
-            background: rgba(243, 244, 246, 0.12);
+            background: rgba(15, 23, 42, 0.96);
             color: #e5e7eb;
             max-width: 120px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
         }
 
         .back-button:hover {
-            background: rgba(229, 231, 235, 0.2);
+            background: rgba(15, 23, 42, 1);
         }
 
         .next-button,
         .submit-button {
-            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(107, 194, 74, 0.45);
+            background: linear-gradient(135deg, #6bc24a 0%, #4ade80 100%);
+            color: #020617;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.5);
         }
 
         .next-button:hover,
         .submit-button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 7px 22px rgba(107, 194, 74, 0.65);
+            box-shadow: 0 7px 22px rgba(34, 197, 94, 0.8);
         }
 
         .summary-section {
-            background: rgba(15, 30, 20, 0.95);
+            background: rgba(3, 10, 7, 0.98);
             border-radius: 10px;
             padding: 14px 16px;
             margin-top: 10px;
@@ -355,15 +349,17 @@
             bottom: 30px;
             right: 30px;
             padding: 16px 24px;
-            background: rgba(7, 24, 15, 0.98);
+            background: rgba(5, 12, 9, 0.98);
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             display: flex;
             align-items: center;
             gap: 12px;
             animation: slideIn 0.3s ease;
             z-index: 20000;
             color: #fff;
+            border-left: 3px solid #22c55e;
+            font-size: 14px;
         }
 
         @keyframes slideIn {
@@ -377,12 +373,8 @@
             }
         }
 
-        .toast.success {
-            border-left: 4px solid #10b981;
-        }
-
         .toast.error {
-            border-left: 4px solid #ef4444;
+            border-left-color: #ef4444;
         }
 
         /* Simple Two-Button Design */
@@ -408,76 +400,75 @@
         }
 
         .primary-green {
-            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
-            color: white;
+            background: linear-gradient(135deg, #6bc24a 0%, #4ade80 100%);
+            color: #020617;
             border: none;
-            box-shadow: 0 4px 12px rgba(107, 194, 74, 0.3);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
         }
 
         .primary-green:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(107, 194, 74, 0.4);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.55);
         }
 
         .outline-green {
             background: transparent;
-            color: #6bc24a;
-            border: 2px solid #6bc24a;
+            color: #bbf7d0;
+            border: 1px solid #4ade80;
         }
 
         .outline-green:hover {
-            background: rgba(107, 194, 74, 0.1);
+            background: rgba(22, 163, 74, 0.18);
         }
 
         .button-icon {
             font-size: 18px;
         }
 
-        /* Language Selection Buttons (smaller version) */
+        /* Language Selection Buttons (smaller) */
         .language-buttons {
             display: flex;
             gap: 16px;
             justify-content: center;
-            margin: 28px 0 10px;
+            margin: 26px 0;
         }
 
         .language-button {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            padding: 18px 26px;
-            background: linear-gradient(135deg, rgba(107, 194, 74, 0.14) 0%, rgba(107, 194, 74, 0.06) 100%);
-            border: 2px solid #6bc24a;
+            gap: 10px;
+            padding: 18px 22px;
+            background: linear-gradient(135deg, rgba(22, 163, 74, 0.26) 0%, rgba(2, 6, 23, 0.96) 100%);
+            border: 1px solid rgba(74, 222, 128, 0.72);
             border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
             min-width: 130px;
-            max-width: 180px;
         }
 
         .language-button:hover {
-            background: linear-gradient(135deg, rgba(107, 194, 74, 0.26) 0%, rgba(107, 194, 74, 0.1) 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 22px rgba(107, 194, 74, 0.3);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.34) 0%, rgba(2, 6, 23, 1) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.35);
         }
 
         .flag-icon {
-            font-size: 38px;
+            font-size: 40px;
             line-height: 1;
         }
 
         .language-text {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
-            color: #fff;
+            color: #e5e7eb;
         }
 
         /* Phone Search Section */
         .phone-search-info {
             text-align: center;
-            margin-bottom: 20px;
-            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 14px;
+            color: rgba(226, 232, 240, 0.85);
             font-size: 14px;
         }
 
@@ -506,7 +497,6 @@
             }
             .language-button {
                 width: 100%;
-                max-width: none;
             }
         }
     </style>
@@ -830,6 +820,10 @@
     </div>
 
     <script>
+        // CONFIG: replace with your real values
+        const LC_COMPANY_API_KEY = "pit-609ea3a9-5374-48c4-b835-74daf043d5e8";
+        const LC_LOCATION_ID = "YtNhoKQqqoEZSVFceqZm";
+
         let currentStep = 1;
         let totalSteps = 4;
         let isNewContact = false;
@@ -847,24 +841,19 @@
             return `Q${year}${month}${day}-${random}`;
         }
 
-        // Create animated background particles (responsive count)
+        // Create animated background particles
         function createParticles() {
             const particlesContainer = document.getElementById("particles");
-            const particleCount = window.innerWidth > 900 ? 15 : 7;
+            const particleCount = 15;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement("div");
                 particle.className = "particle";
                 
-                // Random size
                 const size = Math.random() * 60 + 20;
                 particle.style.width = size + "px";
                 particle.style.height = size + "px";
-                
-                // Random horizontal position
                 particle.style.left = Math.random() * 100 + "%";
-                
-                // Random animation delay and duration
                 particle.style.animationDelay = Math.random() * 15 + "s";
                 particle.style.animationDuration = (Math.random() * 10 + 15) + "s";
                 
@@ -879,10 +868,8 @@
             overlay.style.display = "flex";
             document.body.classList.add("green-quote-modal-active");
 
-            // Create animated background
             createParticles();
 
-            // Set defaults
             const today = new Date().toISOString().split("T")[0];
             document.getElementById("dateQuoted").value = today;
             document.getElementById("quoteNumber").value = generateQuoteNumber();
@@ -896,34 +883,27 @@
         }
 
         function resetToMainMenu() {
-            // Hide all sections
             document.getElementById("contactSelection").style.display = "none";
             document.getElementById("languageSelection").style.display = "none";
             document.getElementById("quoteForm").style.display = "none";
             
-            // Show main menu with proper styling
             const initialChoice = document.getElementById("initialChoice");
             initialChoice.style.display = "flex";
             initialChoice.className = "button-group horizontal";
             
-            // Reset header
             document.getElementById("headerSubtitle").textContent = "Choose how you would like to proceed";
             
-            // Reset form states
             currentStep = 1;
             isNewContact = false;
             selectedContactId = null;
             selectedLanguage = null;
             existingContactPhone = null;
             
-            // Clear any active steps
             document.querySelectorAll(".form-step").forEach(step => step.classList.remove("active"));
         }
 
         function startNewContact() {
             isNewContact = true;
-            
-            // Show language selection instead of going directly to form
             document.getElementById("initialChoice").style.display = "none";
             document.getElementById("languageSelection").style.display = "block";
             document.getElementById("headerSubtitle").textContent = "Select your preferred language";
@@ -949,8 +929,6 @@
             document.getElementById("initialChoice").style.display = "none";
             document.getElementById("contactSelection").style.display = "block";
             document.getElementById("headerSubtitle").textContent = "Enter existing contact phone number";
-            
-            // Clear any previous phone input
             document.getElementById("contactPhoneSearch").value = "";
         }
 
@@ -961,33 +939,113 @@
             document.getElementById("headerSubtitle").textContent = "Choose how you would like to proceed";
         }
 
-        function proceedWithContact() {
-            const phoneInput = document.getElementById("contactPhoneSearch").value;
-            
-            // Basic phone validation
+        // Duplicate search by phone using company token
+        async function findContactByPhone(phoneInput) {
+            const digits = phoneInput.replace(/\D/g, "");
+
+            if (digits.length < 10) {
+                throw new Error("invalid_phone");
+            }
+
+            let e164;
+            if (digits.length === 10) {
+                e164 = "+1" + digits;
+            } else if (digits.length === 11 && digits.startsWith("1")) {
+                e164 = "+" + digits;
+            } else if (digits.startsWith("00")) {
+                e164 = "+" + digits.slice(2);
+            } else {
+                e164 = "+" + digits;
+            }
+
+            const url = `https://services.leadconnectorhq.com/contacts/search/duplicate?locationId=${encodeURIComponent(
+                LC_LOCATION_ID
+            )}&number=${encodeURIComponent(e164)}`;
+
+            const res = await fetch(url, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${LC_COMPANY_API_KEY}`,
+                    Version: "2021-07-28",
+                    Accept: "application/json"
+                }
+            });
+
+            if (!res.ok) {
+                console.error("LeadConnector search error", res.status, await res.text());
+                throw new Error("search_failed");
+            }
+
+            const data = await res.json();
+            console.log("Duplicate search result", data);
+
+            const contact = data.contact || (data.contacts && data.contacts[0]) || null;
+
+            return {
+                contact,
+                normalizedPhone: e164
+            };
+        }
+
+        async function proceedWithContact() {
+            const inputEl = document.getElementById("contactPhoneSearch");
+            const phoneInput = inputEl.value.trim();
+            const errorEl = inputEl.parentElement.querySelector(".error-message");
+
+            inputEl.classList.remove("error");
+            if (errorEl) errorEl.classList.remove("show");
+
             const cleanPhone = phoneInput.replace(/\D/g, "");
-            
+
             if (!phoneInput || cleanPhone.length < 10) {
-                const phoneField = document.getElementById("contactPhoneSearch");
-                phoneField.classList.add("error");
-                phoneField.parentElement.querySelector(".error-message").classList.add("show");
+                inputEl.classList.add("error");
+                if (errorEl) {
+                    errorEl.textContent = "Please enter a valid phone number";
+                    errorEl.classList.add("show");
+                }
                 return;
             }
-            
-            existingContactPhone = phoneInput;
-            selectedContactId = "phone_" + cleanPhone; // Create an ID based on phone
-            isNewContact = false;
-            totalSteps = 4;
-            currentStep = 1;
-            
-            document.getElementById("contactSelection").style.display = "none";
-            document.getElementById("quoteForm").style.display = "block";
-            
-            setupStepIndicators();
-            document.getElementById("step1").classList.add("active");
-            updateProgress();
-            updateNavigation();
-            document.getElementById("headerSubtitle").textContent = "Step 1 of 4: Basic Information";
+
+            try {
+                inputEl.disabled = true;
+                showToast("Searching contact...", "");
+
+                const { contact, normalizedPhone } = await findContactByPhone(phoneInput);
+
+                if (!contact) {
+                    showToast("No contact found with that phone. You can go back and create a new contact.", "error");
+                    inputEl.disabled = false;
+                    return;
+                }
+
+                existingContactPhone = normalizedPhone;
+                selectedContactId = contact.id || contact._id || null;
+                isNewContact = false;
+                totalSteps = 4;
+                currentStep = 1;
+
+                const fullName = `${contact.firstName || ""} ${contact.lastName || ""}`.trim();
+                if (fullName) {
+                    showToast(`Contact found: ${fullName}`, "");
+                } else {
+                    showToast("Contact found. Continuing to quote.", "");
+                }
+
+                document.getElementById("contactSelection").style.display = "none";
+                document.getElementById("quoteForm").style.display = "block";
+
+                setupStepIndicators();
+                document.getElementById("step1").classList.add("active");
+                updateProgress();
+                updateNavigation();
+                document.getElementById("headerSubtitle").textContent = "Step 1 of 4: Basic Information";
+
+            } catch (err) {
+                console.error(err);
+                showToast("There was a problem looking up that phone. Please try again.", "error");
+            } finally {
+                inputEl.disabled = false;
+            }
         }
 
         function setupStepIndicators() {
@@ -1004,7 +1062,6 @@
             }
         }
 
-        // Format currency
         function formatCurrency(value) {
             const num = parseFloat(value.replace(/[^0-9.-]/g, "")) || 0;
             return "$" + num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1014,12 +1071,10 @@
             return parseFloat(value.replace(/[^0-9.-]/g, "")) || 0;
         }
 
-        // Auto-calc total premium
         function calculateTotal() {
             const gross = parseCurrency(document.getElementById("grossPremium").value);
             const taxes = parseCurrency(document.getElementById("taxesAndFees").value);
             
-            // Auto-calculate agency fees at 10 percent if not manually edited
             const agencyField = document.getElementById("agencyFees");
             if (!agencyField.dataset.manual && gross > 0) {
                 agencyField.value = formatCurrency(String(gross * 0.10));
@@ -1030,7 +1085,6 @@
             document.getElementById("totalPremium").value = formatCurrency(String(total));
         }
 
-        // Setup currency formatting
         ["grossPremium", "taxesAndFees", "agencyFees", "downPayment", "monthlyPremium"].forEach(id => {
             const el = document.getElementById(id);
             if (el) {
@@ -1085,26 +1139,17 @@
             if (!validateStep(currentStep)) return;
             if (currentStep >= totalSteps - 1) return;
 
-            const currentStepEl = document.getElementById(`step${currentStep}`);
-            if (!currentStepEl) return;
-
-            currentStepEl.classList.remove("active");
+            document.getElementById(`step${currentStep}`).classList.remove("active");
             if (currentStep > 0 || !isNewContact) {
                 const dotIndex = isNewContact ? currentStep + 1 : currentStep;
-                const dot = document.getElementById(`dot${dotIndex}`);
-                if (dot) {
-                    dot.classList.remove("active");
-                    dot.classList.add("completed");
-                }
+                document.getElementById(`dot${dotIndex}`).classList.remove("active");
+                document.getElementById(`dot${dotIndex}`).classList.add("completed");
             }
 
             currentStep++;
-
-            const nextStepEl = document.getElementById(`step${currentStep}`);
-            if (nextStepEl) nextStepEl.classList.add("active");
+            document.getElementById(`step${currentStep}`).classList.add("active");
             const nextDotIndex = isNewContact ? currentStep + 1 : currentStep;
-            const nextDot = document.getElementById(`dot${nextDotIndex}`);
-            if (nextDot) nextDot.classList.add("active");
+            document.getElementById(`dot${nextDotIndex}`).classList.add("active");
 
             updateProgress();
             updateNavigation();
@@ -1117,24 +1162,16 @@
             const minStep = isNewContact ? 0 : 1;
             if (currentStep <= minStep) return;
 
-            const currentStepEl = document.getElementById(`step${currentStep}`);
-            if (!currentStepEl) return;
-
-            currentStepEl.classList.remove("active");
+            document.getElementById(`step${currentStep}`).classList.remove("active");
             const dotIndex = isNewContact ? currentStep + 1 : currentStep;
-            const dot = document.getElementById(`dot${dotIndex}`);
-            if (dot) dot.classList.remove("active");
+            document.getElementById(`dot${dotIndex}`).classList.remove("active");
 
             currentStep--;
 
-            const prevStepEl = document.getElementById(`step${currentStep}`);
-            if (prevStepEl) prevStepEl.classList.add("active");
+            document.getElementById(`step${currentStep}`).classList.add("active");
             const prevDotIndex = isNewContact ? currentStep + 1 : currentStep;
-            const prevDot = document.getElementById(`dot${prevDotIndex}`);
-            if (prevDot) {
-                prevDot.classList.add("active");
-                prevDot.classList.remove("completed");
-            }
+            document.getElementById(`dot${prevDotIndex}`).classList.add("active");
+            document.getElementById(`dot${prevDotIndex}`).classList.remove("completed");
 
             updateProgress();
             updateNavigation();
@@ -1206,15 +1243,14 @@
                 }
             });
 
-            // Special validation for step 3
             if (step === 3) {
                 const plan = document.getElementById("paymentPlan").value;
                 const location = document.getElementById("location").value;
                 
                 if (!location) {
-                    const locField = document.getElementById("location");
-                    locField.classList.add("error");
-                    locField.parentElement.querySelector(".error-message").classList.add("show");
+                    document.getElementById("location").classList.add("error");
+                    document.getElementById("location").parentElement
+                        .querySelector(".error-message").classList.add("show");
                     valid = false;
                 }
                 
@@ -1239,7 +1275,6 @@
             return valid;
         }
 
-        // Clear error on input change
         document.querySelectorAll("input, select, textarea").forEach(el => {
             el.addEventListener("input", function () {
                 this.classList.remove("error");
@@ -1253,7 +1288,7 @@
             if (existingToast) existingToast.remove();
             
             const toast = document.createElement("div");
-            toast.className = `toast ${type}`;
+            toast.className = "toast" + (type === "error" ? " error" : "");
             toast.innerHTML = `<span>${message}</span>`;
             document.body.appendChild(toast);
             
@@ -1265,28 +1300,24 @@
 
             const submitBtn = document.getElementById("submitBtn");
             const originalText = submitBtn.textContent;
-
             submitBtn.textContent = "Submitting...";
             submitBtn.disabled = true;
 
-            // Build data object
             const formData = {
-                // Contact info (if new)
+                preferredLanguage: selectedLanguage || "English",
+
                 ...(isNewContact && {
                     contactFirstName: document.getElementById("contactFirstName").value,
                     contactLastName: document.getElementById("contactLastName").value,
                     contactEmail: document.getElementById("contactEmail").value,
                     contactPhone: document.getElementById("contactPhone").value
                 }),
-                // Language preference
-                ...(selectedLanguage && { preferredLanguage: selectedLanguage }),
-                // Existing contact phone
+
                 ...(existingContactPhone && { 
                     existingContactPhone: existingContactPhone,
-                    contactId: selectedContactId 
+                    contactId: selectedContactId
                 }),
                 
-                // Quote data
                 quoteNumber: document.getElementById("quoteNumber").value,
                 quoteStatus: document.getElementById("quoteStatus").value,
                 lineOfBusiness: document.getElementById("lineOfBusiness").value,
@@ -1310,7 +1341,6 @@
 
             console.log("Submitting form data:", formData);
 
-            // Send to GHL webhook
             fetch("https://services.leadconnectorhq.com/hooks/YtNhoKQqqoEZSVFceqZm/webhook-trigger/26db136c-27ca-47b4-af16-f8b1f0dfd852", {
                 method: "POST",
                 headers: {
@@ -1321,7 +1351,7 @@
             .then(function(response) {
                 console.log("Response status:", response.status);
                 if (response.ok) {
-                    showToast("Quote submitted successfully!", "success");
+                    showToast("Quote submitted successfully!", "");
                     setTimeout(function() { 
                         window.top.location.href = "https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All";
                     }, 2000);
@@ -1339,7 +1369,7 @@
             });
         }
 
-        // Force show modal after delay for GHL (backup)
+        // Backup force show modal for GHL
         setTimeout(() => {
             const overlay = document.getElementById("modalOverlay");
             if (overlay && overlay.style.display !== "flex") {
