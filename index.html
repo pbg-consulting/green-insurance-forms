@@ -378,6 +378,80 @@
             font-size: 18px;
         }
 
+        /* Language Selection Buttons */
+.language-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.language-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 30px 40px;
+    background: linear-gradient(135deg, rgba(107, 194, 74, 0.1) 0%, rgba(107, 194, 74, 0.05) 100%);
+    border: 2px solid #6bc24a;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+        /* Contact Search Styles */
+.contact-search-container {
+    position: relative;
+}
+
+.contact-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(15, 30, 20, 0.98);
+    border: 1px solid rgba(107, 194, 74, 0.3);
+    border-radius: 8px;
+    margin-top: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+    display: none;
+}
+
+.search-instruction {
+    padding: 12px;
+    border-bottom: 1px solid rgba(107, 194, 74, 0.1);
+}
+
+#contactSearch {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(107, 194, 74, 0.3);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    font-size: 14px;
+}
+        
+.language-button:hover {
+    background: linear-gradient(135deg, rgba(107, 194, 74, 0.2) 0%, rgba(107, 194, 74, 0.1) 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(107, 194, 74, 0.3);
+}
+
+.flag-icon {
+    font-size: 48px;
+    line-height: 1;
+}
+
+.language-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+        
         @media (max-width: 640px) {
             .modal-container {
                 margin: 16px;
@@ -444,6 +518,20 @@
                     </div>
                 </div>
 
+                <!-- Language Selection (shown after choosing new/existing) -->
+<div id="languageSelection" style="display: none;">
+    <div class="language-buttons">
+        <button class="language-button" onclick="selectLanguage('English')">
+            <span class="flag-icon">🇺🇸</span>
+            <span class="language-text">English</span>
+        </button>
+        <button class="language-button" onclick="selectLanguage('Spanish')">
+            <span class="flag-icon">🇪🇸</span>
+            <span class="language-text">Español</span>
+        </button>
+    </div>
+</div>
+                
                 <!-- Multi step form -->
                 <div id="quoteForm" style="display:none;">
                     <div class="progress-container">
@@ -706,7 +794,7 @@
         let totalSteps = 4;
         let isNewContact = false;
         let selectedContactId = null;
-
+        let selectedLanguage = null; 
         // Generate unique quote number
         function generateQuoteNumber() {
             const date = new Date();
@@ -786,34 +874,55 @@
             loadContacts();
         }
 
-        async function loadContacts() {
-            const selectElement = document.getElementById('contactId');
-            selectElement.innerHTML = '<option value="">Loading contacts...</option>';
+async function loadContacts() {
+    const selectElement = document.getElementById('contactId');
+    
+    // Replace the select dropdown with a search input
+    const searchHTML = `
+        <div class="contact-search-container">
+            <input type="text" 
+                   id="contactSearch" 
+                   placeholder="Start typing contact name or email..." 
+                   autocomplete="off"
+                   required>
+            <div id="contactResults" class="contact-results"></div>
+            <input type="hidden" id="contactId" value="">
+            <div class="error-message">Please select a contact</div>
+        </div>
+    `;
+    
+    selectElement.parentElement.innerHTML = searchHTML;
+    
+    // Add search functionality
+    document.getElementById('contactSearch').addEventListener('input', function() {
+        const searchValue = this.value.toLowerCase();
+        const resultsDiv = document.getElementById('contactResults');
+        
+        if (searchValue.length > 2) {
+            // Show instructions for now
+            resultsDiv.innerHTML = `
+                <div class="search-instruction">
+                    <small style="color: #6bc24a;">
+                        Enter the exact name or email of the existing contact from your GHL database
+                    </small>
+                </div>
+            `;
+            resultsDiv.style.display = 'block';
             
-            try {
-                // Replace with actual GHL API endpoint
-                const response = await fetch('/api/contacts');
-                const contacts = await response.json();
-                
-                selectElement.innerHTML = '<option value="">Select a contact...</option>';
-                contacts.forEach(contact => {
-                    const option = document.createElement('option');
-                    option.value = contact.id;
-                    option.textContent = `${contact.firstName} ${contact.lastName} - ${contact.email}`;
-                    selectElement.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error loading contacts:', error);
-                // Fallback dummy data
-                selectElement.innerHTML = `
-                    <option value="">Select a contact...</option>
-                    <option value="contact1">John Doe - john@example.com</option>
-                    <option value="contact2">Jane Smith - jane@example.com</option>
-                    <option value="contact3">Bob Johnson - bob@example.com</option>
-                `;
-            }
+            // Set the hidden contact ID to the search value
+            document.getElementById('contactId').value = searchValue;
+        } else {
+            resultsDiv.style.display = 'none';
         }
-
+    });
+    
+    // Hide results when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.contact-search-container')) {
+            document.getElementById('contactResults').style.display = 'none';
+        }
+    });
+}
         function backToChoice() {
             document.getElementById('contactSelection').style.display = 'none';
             document.getElementById('initialChoice').style.display = 'flex';
