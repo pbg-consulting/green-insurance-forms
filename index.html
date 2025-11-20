@@ -910,7 +910,7 @@
 
         function selectLanguage(language) {
             selectedLanguage = language;
-            
+             console.log('Language selected:', selectedLanguage);
             // Now proceed to the contact form
             totalSteps = 5;
             currentStep = 0;
@@ -1229,6 +1229,11 @@
 
             const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.textContent;
+            const formData = {
+    // Always include language at the top level
+    preferredLanguage: selectedLanguage || 'English', // Default to English if not set
+    // ... rest of your fields
+}
             submitBtn.textContent = 'Submitting...';
             submitBtn.disabled = true;
 
