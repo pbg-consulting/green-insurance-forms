@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Insurance - Quote Survey</title>
+    <title>Green Insurance – Quote Survey</title>
 
     <!-- Poppins font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -21,19 +21,24 @@
         select,
         textarea,
         button {
-            font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: "Poppins", sans-serif;
         }
 
         body.green-quote-modal-active {
             overflow: hidden;
+            background: radial-gradient(circle at top left, #0b2817 0, #020911 55%);
+            color: #fff;
         }
 
         /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
+            background:
+                radial-gradient(circle at top left, rgba(107, 194, 74, 0.2), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(42, 180, 92, 0.25), transparent 55%),
+                rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(10px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -51,10 +56,12 @@
 
         .particle {
             position: absolute;
-            background: radial-gradient(circle, rgba(107, 194, 74, 0.3) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(107, 194, 74, 0.32) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             animation: float-up 15s infinite;
+            transform: translateZ(0);
+            will-change: transform, opacity;
         }
 
         @keyframes float-up {
@@ -76,13 +83,13 @@
 
         /* Glass card */
         .modal-container {
-            background: rgba(15, 40, 25, 0.92);
+            background: rgba(7, 24, 15, 0.96);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(107, 194, 74, 0.25);
+            border: 1px solid rgba(107, 194, 74, 0.3);
             border-radius: 24px;
             box-shadow:
-                0 8px 32px rgba(0, 0, 0, 0.6),
-                0 0 40px rgba(107, 194, 74, 0.2);
+                0 18px 45px rgba(0, 0, 0, 0.75),
+                0 0 40px rgba(107, 194, 74, 0.35);
             max-width: 650px;
             width: 100%;
             max-height: 90vh;
@@ -90,6 +97,8 @@
             position: relative;
             animation: slideUpQuote 0.35s ease;
             color: #fff;
+            transform: translateZ(0);
+            will-change: transform, opacity;
         }
 
         @keyframes slideUpQuote {
@@ -228,6 +237,7 @@
             color: #fff;
             font-size: 14px;
             transition: all 0.2s ease;
+            -webkit-appearance: none;
         }
 
         input::placeholder,
@@ -345,7 +355,7 @@
             bottom: 30px;
             right: 30px;
             padding: 16px 24px;
-            background: rgba(15, 40, 25, 0.95);
+            background: rgba(7, 24, 15, 0.98);
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             display: flex;
@@ -423,41 +433,42 @@
             font-size: 18px;
         }
 
-        /* Language Selection Buttons */
+        /* Language Selection Buttons (smaller version) */
         .language-buttons {
             display: flex;
-            gap: 20px;
+            gap: 16px;
             justify-content: center;
-            margin: 40px 0;
+            margin: 28px 0 10px;
         }
 
         .language-button {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-            padding: 30px 40px;
-            background: linear-gradient(135deg, rgba(107, 194, 74, 0.1) 0%, rgba(107, 194, 74, 0.05) 100%);
+            gap: 8px;
+            padding: 18px 26px;
+            background: linear-gradient(135deg, rgba(107, 194, 74, 0.14) 0%, rgba(107, 194, 74, 0.06) 100%);
             border: 2px solid #6bc24a;
-            border-radius: 16px;
+            border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
-            min-width: 150px;
+            min-width: 130px;
+            max-width: 180px;
         }
 
         .language-button:hover {
-            background: linear-gradient(135deg, rgba(107, 194, 74, 0.2) 0%, rgba(107, 194, 74, 0.1) 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(107, 194, 74, 0.3);
+            background: linear-gradient(135deg, rgba(107, 194, 74, 0.26) 0%, rgba(107, 194, 74, 0.1) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(107, 194, 74, 0.3);
         }
 
         .flag-icon {
-            font-size: 48px;
+            font-size: 38px;
             line-height: 1;
         }
 
         .language-text {
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 600;
             color: #fff;
         }
@@ -495,6 +506,7 @@
             }
             .language-button {
                 width: 100%;
+                max-width: none;
             }
         }
     </style>
@@ -700,7 +712,7 @@
                         </div>
                     </div>
 
-                    <!-- STEP 3: PREMIUM / FINANCIALs -->
+                    <!-- STEP 3: PREMIUM / FINANCIALS -->
                     <div id="step3" class="form-step">
                         <div class="form-group">
                             <label for="grossPremium">Gross Premium *</label>
@@ -829,80 +841,92 @@
         function generateQuoteNumber() {
             const date = new Date();
             const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDate()).padStart(2, "0");
+            const random = Math.floor(Math.random() * 10000).toString().padStart(4, "0");
             return `Q${year}${month}${day}-${random}`;
         }
 
-        // Create animated background particles
+        // Create animated background particles (responsive count)
         function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 15;
+            const particlesContainer = document.getElementById("particles");
+            const particleCount = window.innerWidth > 900 ? 15 : 7;
             
             for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
+                const particle = document.createElement("div");
+                particle.className = "particle";
                 
+                // Random size
                 const size = Math.random() * 60 + 20;
-                particle.style.width = size + 'px';
-                particle.style.height = size + 'px';
+                particle.style.width = size + "px";
+                particle.style.height = size + "px";
                 
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                // Random horizontal position
+                particle.style.left = Math.random() * 100 + "%";
+                
+                // Random animation delay and duration
+                particle.style.animationDelay = Math.random() * 15 + "s";
+                particle.style.animationDuration = (Math.random() * 10 + 15) + "s";
                 
                 particlesContainer.appendChild(particle);
             }
         }
 
         // Show modal when page loads
-        window.addEventListener('load', () => {
-            const overlay = document.getElementById('modalOverlay');
+        window.addEventListener("load", () => {
+            const overlay = document.getElementById("modalOverlay");
             if (!overlay) return;
-            overlay.style.display = 'flex';
-            document.body.classList.add('green-quote-modal-active');
+            overlay.style.display = "flex";
+            document.body.classList.add("green-quote-modal-active");
 
+            // Create animated background
             createParticles();
 
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('dateQuoted').value = today;
-            document.getElementById('quoteNumber').value = generateQuoteNumber();
+            // Set defaults
+            const today = new Date().toISOString().split("T")[0];
+            document.getElementById("dateQuoted").value = today;
+            document.getElementById("quoteNumber").value = generateQuoteNumber();
         });
 
         function closeModal() {
-            const overlay = document.getElementById('modalOverlay');
+            const overlay = document.getElementById("modalOverlay");
             if (!overlay) return;
-            overlay.style.display = 'none';
-            document.body.classList.remove('green-quote-modal-active');
+            overlay.style.display = "none";
+            document.body.classList.remove("green-quote-modal-active");
         }
 
         function resetToMainMenu() {
-            document.getElementById('contactSelection').style.display = 'none';
-            document.getElementById('languageSelection').style.display = 'none';
-            document.getElementById('quoteForm').style.display = 'none';
+            // Hide all sections
+            document.getElementById("contactSelection").style.display = "none";
+            document.getElementById("languageSelection").style.display = "none";
+            document.getElementById("quoteForm").style.display = "none";
             
-            const initialChoice = document.getElementById('initialChoice');
-            initialChoice.style.display = 'flex';
-            initialChoice.className = 'button-group horizontal';
+            // Show main menu with proper styling
+            const initialChoice = document.getElementById("initialChoice");
+            initialChoice.style.display = "flex";
+            initialChoice.className = "button-group horizontal";
             
-            document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
+            // Reset header
+            document.getElementById("headerSubtitle").textContent = "Choose how you would like to proceed";
             
+            // Reset form states
             currentStep = 1;
             isNewContact = false;
             selectedContactId = null;
             selectedLanguage = null;
             existingContactPhone = null;
             
-            document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+            // Clear any active steps
+            document.querySelectorAll(".form-step").forEach(step => step.classList.remove("active"));
         }
 
         function startNewContact() {
             isNewContact = true;
             
-            document.getElementById('initialChoice').style.display = 'none';
-            document.getElementById('languageSelection').style.display = 'block';
-            document.getElementById('headerSubtitle').textContent = 'Select your preferred language';
+            // Show language selection instead of going directly to form
+            document.getElementById("initialChoice").style.display = "none";
+            document.getElementById("languageSelection").style.display = "block";
+            document.getElementById("headerSubtitle").textContent = "Select your preferred language";
         }
 
         function selectLanguage(language) {
@@ -910,116 +934,121 @@
             totalSteps = 5;
             currentStep = 0;
             
-            document.getElementById('languageSelection').style.display = 'none';
-            document.getElementById('quoteForm').style.display = 'block';
+            document.getElementById("languageSelection").style.display = "none";
+            document.getElementById("quoteForm").style.display = "block";
             
             setupStepIndicators();
-            document.getElementById('step0').classList.add('active');
+            document.getElementById("step0").classList.add("active");
             updateProgress();
             updateNavigation();
-            document.getElementById('headerSubtitle').textContent = 'Step 1 of 5: Contact Information';
+            document.getElementById("headerSubtitle").textContent = "Step 1 of 5: Contact Information";
         }
 
         function startExistingContact() {
             isNewContact = false;
-            document.getElementById('initialChoice').style.display = 'none';
-            document.getElementById('contactSelection').style.display = 'block';
-            document.getElementById('headerSubtitle').textContent = 'Enter existing contact phone number';
+            document.getElementById("initialChoice").style.display = "none";
+            document.getElementById("contactSelection").style.display = "block";
+            document.getElementById("headerSubtitle").textContent = "Enter existing contact phone number";
             
-            document.getElementById('contactPhoneSearch').value = '';
+            // Clear any previous phone input
+            document.getElementById("contactPhoneSearch").value = "";
         }
 
         function backToChoice() {
-            document.getElementById('contactSelection').style.display = 'none';
-            document.getElementById('initialChoice').style.display = 'flex';
-            document.getElementById('initialChoice').className = 'button-group horizontal';
-            document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
+            document.getElementById("contactSelection").style.display = "none";
+            document.getElementById("initialChoice").style.display = "flex";
+            document.getElementById("initialChoice").className = "button-group horizontal";
+            document.getElementById("headerSubtitle").textContent = "Choose how you would like to proceed";
         }
 
         function proceedWithContact() {
-            const phoneInput = document.getElementById('contactPhoneSearch').value;
-            const cleanPhone = phoneInput.replace(/\D/g, '');
+            const phoneInput = document.getElementById("contactPhoneSearch").value;
+            
+            // Basic phone validation
+            const cleanPhone = phoneInput.replace(/\D/g, "");
             
             if (!phoneInput || cleanPhone.length < 10) {
-                document.getElementById('contactPhoneSearch').classList.add('error');
-                document.getElementById('contactPhoneSearch').parentElement.querySelector('.error-message').classList.add('show');
+                const phoneField = document.getElementById("contactPhoneSearch");
+                phoneField.classList.add("error");
+                phoneField.parentElement.querySelector(".error-message").classList.add("show");
                 return;
             }
             
             existingContactPhone = phoneInput;
-            selectedContactId = 'phone_' + cleanPhone;
+            selectedContactId = "phone_" + cleanPhone; // Create an ID based on phone
             isNewContact = false;
             totalSteps = 4;
             currentStep = 1;
             
-            document.getElementById('contactSelection').style.display = 'none';
-            document.getElementById('quoteForm').style.display = 'block';
+            document.getElementById("contactSelection").style.display = "none";
+            document.getElementById("quoteForm").style.display = "block";
             
             setupStepIndicators();
-            document.getElementById('step1').classList.add('active');
+            document.getElementById("step1").classList.add("active");
             updateProgress();
             updateNavigation();
-            document.getElementById('headerSubtitle').textContent = 'Step 1 of 4: Basic Information';
+            document.getElementById("headerSubtitle").textContent = "Step 1 of 4: Basic Information";
         }
 
         function setupStepIndicators() {
-            const indicatorContainer = document.getElementById('stepIndicator');
-            indicatorContainer.innerHTML = '';
+            const indicatorContainer = document.getElementById("stepIndicator");
+            indicatorContainer.innerHTML = "";
             
             for (let i = 1; i <= totalSteps; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'step-dot';
+                const dot = document.createElement("div");
+                dot.className = "step-dot";
                 dot.id = `dot${i}`;
                 dot.textContent = i;
-                if (i === 1) dot.classList.add('active');
+                if (i === 1) dot.classList.add("active");
                 indicatorContainer.appendChild(dot);
             }
         }
 
         // Format currency
         function formatCurrency(value) {
-            const num = parseFloat(value.replace(/[^0-9.-]/g, '')) || 0;
-            return '$' + num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            const num = parseFloat(value.replace(/[^0-9.-]/g, "")) || 0;
+            return "$" + num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
         function parseCurrency(value) {
-            return parseFloat(value.replace(/[^0-9.-]/g, '')) || 0;
+            return parseFloat(value.replace(/[^0-9.-]/g, "")) || 0;
         }
 
         // Auto-calc total premium
         function calculateTotal() {
-            const gross = parseCurrency(document.getElementById('grossPremium').value);
-            const taxes = parseCurrency(document.getElementById('taxesAndFees').value);
+            const gross = parseCurrency(document.getElementById("grossPremium").value);
+            const taxes = parseCurrency(document.getElementById("taxesAndFees").value);
             
-            const agencyField = document.getElementById('agencyFees');
+            // Auto-calculate agency fees at 10 percent if not manually edited
+            const agencyField = document.getElementById("agencyFees");
             if (!agencyField.dataset.manual && gross > 0) {
                 agencyField.value = formatCurrency(String(gross * 0.10));
             }
             
             const agency = parseCurrency(agencyField.value);
             const total = gross + taxes + agency;
-            document.getElementById('totalPremium').value = formatCurrency(String(total));
+            document.getElementById("totalPremium").value = formatCurrency(String(total));
         }
 
         // Setup currency formatting
-        ['grossPremium', 'taxesAndFees', 'agencyFees', 'downPayment', 'monthlyPremium'].forEach(id => {
+        ["grossPremium", "taxesAndFees", "agencyFees", "downPayment", "monthlyPremium"].forEach(id => {
             const el = document.getElementById(id);
             if (el) {
-                el.addEventListener('blur', function() {
+                el.addEventListener("blur", function() {
                     if (this.value) {
                         this.value = formatCurrency(this.value);
                     }
                 });
-                el.addEventListener('focus', function() {
+                el.addEventListener("focus", function() {
                     if (this.value) {
                         this.value = parseCurrency(this.value).toString();
                     }
                 });
-                if (id !== 'agencyFees') {
-                    el.addEventListener('input', calculateTotal);
+                if (id !== "agencyFees") {
+                    el.addEventListener("input", calculateTotal);
                 } else {
-                    el.addEventListener('input', function() {
-                        this.dataset.manual = 'true';
+                    el.addEventListener("input", function() {
+                        this.dataset.manual = "true";
                         calculateTotal();
                     });
                 }
@@ -1027,28 +1056,28 @@
         });
 
         function handlePaymentPlanChange() {
-            const plan = document.getElementById('paymentPlan').value;
-            const isMonthly = plan === 'Monthly';
+            const plan = document.getElementById("paymentPlan").value;
+            const isMonthly = plan === "Monthly";
             
-            const downPayment = document.getElementById('downPayment');
-            const monthlyPremium = document.getElementById('monthlyPremium');
+            const downPayment = document.getElementById("downPayment");
+            const monthlyPremium = document.getElementById("monthlyPremium");
             
             downPayment.required = isMonthly;
             monthlyPremium.required = isMonthly;
             
-            const downLabel = downPayment.parentElement.querySelector('label');
-            const monthlyLabel = monthlyPremium.parentElement.querySelector('label');
+            const downLabel = downPayment.parentElement.querySelector("label");
+            const monthlyLabel = monthlyPremium.parentElement.querySelector("label");
             
             if (isMonthly) {
-                downLabel.textContent = 'Down Payment *';
-                monthlyLabel.textContent = 'Monthly Premium *';
-                downPayment.parentElement.querySelector('.error-message').style.display = 'block';
-                monthlyPremium.parentElement.querySelector('.error-message').style.display = 'block';
+                downLabel.textContent = "Down Payment *";
+                monthlyLabel.textContent = "Monthly Premium *";
+                downPayment.parentElement.querySelector(".error-message").style.display = "block";
+                monthlyPremium.parentElement.querySelector(".error-message").style.display = "block";
             } else {
-                downLabel.textContent = 'Down Payment';
-                monthlyLabel.textContent = 'Monthly Premium';
-                downPayment.parentElement.querySelector('.error-message').style.display = 'none';
-                monthlyPremium.parentElement.querySelector('.error-message').style.display = 'none';
+                downLabel.textContent = "Down Payment";
+                monthlyLabel.textContent = "Monthly Premium";
+                downPayment.parentElement.querySelector(".error-message").style.display = "none";
+                monthlyPremium.parentElement.querySelector(".error-message").style.display = "none";
             }
         }
 
@@ -1056,18 +1085,26 @@
             if (!validateStep(currentStep)) return;
             if (currentStep >= totalSteps - 1) return;
 
-            document.getElementById(`step${currentStep}`).classList.remove('active');
+            const currentStepEl = document.getElementById(`step${currentStep}`);
+            if (!currentStepEl) return;
+
+            currentStepEl.classList.remove("active");
             if (currentStep > 0 || !isNewContact) {
                 const dotIndex = isNewContact ? currentStep + 1 : currentStep;
-                document.getElementById(`dot${dotIndex}`).classList.remove('active');
-                document.getElementById(`dot${dotIndex}`).classList.add('completed');
+                const dot = document.getElementById(`dot${dotIndex}`);
+                if (dot) {
+                    dot.classList.remove("active");
+                    dot.classList.add("completed");
+                }
             }
 
             currentStep++;
 
-            document.getElementById(`step${currentStep}`).classList.add('active');
+            const nextStepEl = document.getElementById(`step${currentStep}`);
+            if (nextStepEl) nextStepEl.classList.add("active");
             const nextDotIndex = isNewContact ? currentStep + 1 : currentStep;
-            document.getElementById(`dot${nextDotIndex}`).classList.add('active');
+            const nextDot = document.getElementById(`dot${nextDotIndex}`);
+            if (nextDot) nextDot.classList.add("active");
 
             updateProgress();
             updateNavigation();
@@ -1080,16 +1117,24 @@
             const minStep = isNewContact ? 0 : 1;
             if (currentStep <= minStep) return;
 
-            document.getElementById(`step${currentStep}`).classList.remove('active');
+            const currentStepEl = document.getElementById(`step${currentStep}`);
+            if (!currentStepEl) return;
+
+            currentStepEl.classList.remove("active");
             const dotIndex = isNewContact ? currentStep + 1 : currentStep;
-            document.getElementById(`dot${dotIndex}`).classList.remove('active');
+            const dot = document.getElementById(`dot${dotIndex}`);
+            if (dot) dot.classList.remove("active");
 
             currentStep--;
 
-            document.getElementById(`step${currentStep}`).classList.add('active');
+            const prevStepEl = document.getElementById(`step${currentStep}`);
+            if (prevStepEl) prevStepEl.classList.add("active");
             const prevDotIndex = isNewContact ? currentStep + 1 : currentStep;
-            document.getElementById(`dot${prevDotIndex}`).classList.add('active');
-            document.getElementById(`dot${prevDotIndex}`).classList.remove('completed');
+            const prevDot = document.getElementById(`dot${prevDotIndex}`);
+            if (prevDot) {
+                prevDot.classList.add("active");
+                prevDot.classList.remove("completed");
+            }
 
             updateProgress();
             updateNavigation();
@@ -1098,49 +1143,49 @@
 
         function updateProgress() {
             const percent = ((currentStep + 1) / totalSteps) * 100;
-            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById("progressFill").style.width = percent + "%";
         }
 
         function updateNavigation() {
-            const backBtn = document.getElementById('backBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const submitBtn = document.getElementById('submitBtn');
+            const backBtn = document.getElementById("backBtn");
+            const nextBtn = document.getElementById("nextBtn");
+            const submitBtn = document.getElementById("submitBtn");
 
-            backBtn.style.display = currentStep > (isNewContact ? 0 : 1) ? 'block' : 'none';
+            backBtn.style.display = currentStep > (isNewContact ? 0 : 1) ? "block" : "none";
 
             if (currentStep === totalSteps - 1) {
-                nextBtn.style.display = 'none';
-                submitBtn.style.display = 'block';
+                nextBtn.style.display = "none";
+                submitBtn.style.display = "block";
             } else {
-                nextBtn.style.display = 'block';
-                submitBtn.style.display = 'none';
+                nextBtn.style.display = "block";
+                submitBtn.style.display = "none";
             }
         }
 
         function updateHeaderSubtitle() {
             const subtitles = isNewContact ? [
-                'Step 1 of 5: Contact Information',
-                'Step 2 of 5: Basic Information',
-                'Step 3 of 5: Carrier Information',
-                'Step 4 of 5: Premium and Payment Details',
-                'Step 5 of 5: Dates and Review'
+                "Step 1 of 5: Contact Information",
+                "Step 2 of 5: Basic Information",
+                "Step 3 of 5: Carrier Information",
+                "Step 4 of 5: Premium and Payment Details",
+                "Step 5 of 5: Dates and Review"
             ] : [
-                'Step 1 of 4: Basic Information',
-                'Step 2 of 4: Carrier Information',
-                'Step 3 of 4: Premium and Payment Details',
-                'Step 4 of 4: Dates and Review'
+                "Step 1 of 4: Basic Information",
+                "Step 2 of 4: Carrier Information",
+                "Step 3 of 4: Premium and Payment Details",
+                "Step 4 of 4: Dates and Review"
             ];
             
-            document.getElementById('headerSubtitle').textContent = subtitles[currentStep] || '';
+            document.getElementById("headerSubtitle").textContent = subtitles[currentStep] || "";
         }
 
         function updateSummary() {
-            document.getElementById('summaryQuoteNumber').textContent = document.getElementById('quoteNumber').value || '-';
-            document.getElementById('summaryStatus').textContent = document.getElementById('quoteStatus').value || '-';
-            document.getElementById('summaryLOB').textContent = document.getElementById('lineOfBusiness').value || '-';
-            document.getElementById('summaryCarrier').textContent = document.getElementById('mainCarrier').value || '-';
-            const total = document.getElementById('totalPremium').value;
-            document.getElementById('summaryPremium').textContent = total || '-';
+            document.getElementById("summaryQuoteNumber").textContent = document.getElementById("quoteNumber").value || "-";
+            document.getElementById("summaryStatus").textContent = document.getElementById("quoteStatus").value || "-";
+            document.getElementById("summaryLOB").textContent = document.getElementById("lineOfBusiness").value || "-";
+            document.getElementById("summaryCarrier").textContent = document.getElementById("mainCarrier").value || "-";
+            const total = document.getElementById("totalPremium").value;
+            document.getElementById("summaryPremium").textContent = total || "-";
         }
 
         function validateStep(step) {
@@ -1148,42 +1193,44 @@
             const stepElement = document.getElementById(`step${step}`);
             if (!stepElement) return true;
 
-            const inputs = stepElement.querySelectorAll('input[required], select[required]');
+            const inputs = stepElement.querySelectorAll("input[required], select[required]");
             inputs.forEach(input => {
-                const err = input.parentElement.querySelector('.error-message');
+                const err = input.parentElement.querySelector(".error-message");
                 if (!input.value || !String(input.value).trim()) {
-                    input.classList.add('error');
-                    if (err) err.classList.add('show');
+                    input.classList.add("error");
+                    if (err) err.classList.add("show");
                     valid = false;
                 } else {
-                    input.classList.remove('error');
-                    if (err) err.classList.remove('show');
+                    input.classList.remove("error");
+                    if (err) err.classList.remove("show");
                 }
             });
 
+            // Special validation for step 3
             if (step === 3) {
-                const plan = document.getElementById('paymentPlan').value;
-                const location = document.getElementById('location').value;
+                const plan = document.getElementById("paymentPlan").value;
+                const location = document.getElementById("location").value;
                 
                 if (!location) {
-                    document.getElementById('location').classList.add('error');
-                    document.getElementById('location').parentElement.querySelector('.error-message').classList.add('show');
+                    const locField = document.getElementById("location");
+                    locField.classList.add("error");
+                    locField.parentElement.querySelector(".error-message").classList.add("show");
                     valid = false;
                 }
                 
-                if (plan === 'Monthly') {
-                    const downPayment = document.getElementById('downPayment');
-                    const monthlyPremium = document.getElementById('monthlyPremium');
+                if (plan === "Monthly") {
+                    const downPayment = document.getElementById("downPayment");
+                    const monthlyPremium = document.getElementById("monthlyPremium");
                     
                     if (!downPayment.value || parseCurrency(downPayment.value) === 0) {
-                        downPayment.classList.add('error');
-                        downPayment.parentElement.querySelector('.error-message').classList.add('show');
+                        downPayment.classList.add("error");
+                        downPayment.parentElement.querySelector(".error-message").classList.add("show");
                         valid = false;
                     }
                     
                     if (!monthlyPremium.value || parseCurrency(monthlyPremium.value) === 0) {
-                        monthlyPremium.classList.add('error');
-                        monthlyPremium.parentElement.querySelector('.error-message').classList.add('show');
+                        monthlyPremium.classList.add("error");
+                        monthlyPremium.parentElement.querySelector(".error-message").classList.add("show");
                         valid = false;
                     }
                 }
@@ -1192,19 +1239,20 @@
             return valid;
         }
 
-        document.querySelectorAll('input, select, textarea').forEach(el => {
-            el.addEventListener('input', function () {
-                this.classList.remove('error');
-                const err = this.parentElement.querySelector('.error-message');
-                if (err) err.classList.remove('show');
+        // Clear error on input change
+        document.querySelectorAll("input, select, textarea").forEach(el => {
+            el.addEventListener("input", function () {
+                this.classList.remove("error");
+                const err = this.parentElement.querySelector(".error-message");
+                if (err) err.classList.remove("show");
             });
         });
 
         function showToast(message, type) {
-            const existingToast = document.querySelector('.toast');
+            const existingToast = document.querySelector(".toast");
             if (existingToast) existingToast.remove();
             
-            const toast = document.createElement('div');
+            const toast = document.createElement("div");
             toast.className = `toast ${type}`;
             toast.innerHTML = `<span>${message}</span>`;
             document.body.appendChild(toast);
@@ -1215,72 +1263,75 @@
         function submitForm() {
             if (!validateStep(currentStep)) return;
 
-            const submitBtn = document.getElementById('submitBtn');
+            const submitBtn = document.getElementById("submitBtn");
             const originalText = submitBtn.textContent;
 
-            submitBtn.textContent = 'Submitting...';
+            submitBtn.textContent = "Submitting...";
             submitBtn.disabled = true;
 
             // Build data object
             const formData = {
+                // Contact info (if new)
                 ...(isNewContact && {
-                    contactFirstName: document.getElementById('contactFirstName').value,
-                    contactLastName: document.getElementById('contactLastName').value,
-                    contactEmail: document.getElementById('contactEmail').value,
-                    contactPhone: document.getElementById('contactPhone').value,
+                    contactFirstName: document.getElementById("contactFirstName").value,
+                    contactLastName: document.getElementById("contactLastName").value,
+                    contactEmail: document.getElementById("contactEmail").value,
+                    contactPhone: document.getElementById("contactPhone").value
                 }),
-
+                // Language preference
+                ...(selectedLanguage && { preferredLanguage: selectedLanguage }),
+                // Existing contact phone
                 ...(existingContactPhone && { 
                     existingContactPhone: existingContactPhone,
                     contactId: selectedContactId 
                 }),
-
-                preferredLanguage: selectedLanguage || 'English',
-
-                quoteNumber: document.getElementById('quoteNumber').value,
-                quoteStatus: document.getElementById('quoteStatus').value,
-                lineOfBusiness: document.getElementById('lineOfBusiness').value,
-                ezlynxQuoteId: document.getElementById('ezlynxQuoteId').value,
-                mainCarrier: document.getElementById('mainCarrier').value,
-                effectiveDate: document.getElementById('effectiveDate').value,
-                grossPremium: parseCurrency(document.getElementById('grossPremium').value),
-                taxesAndFees: parseCurrency(document.getElementById('taxesAndFees').value),
-                agencyFees: parseCurrency(document.getElementById('agencyFees').value),
-                totalPremium: parseCurrency(document.getElementById('totalPremium').value),
-                paymentPlan: document.getElementById('paymentPlan').value,
-                downPayment: parseCurrency(document.getElementById('downPayment').value),
-                monthlyPremium: parseCurrency(document.getElementById('monthlyPremium').value),
-                location: document.getElementById('location').value,
-                dateQuoted: document.getElementById('dateQuoted').value,
-                expirationDate: document.getElementById('expirationDate').value,
-                notes: document.getElementById('notes').value,
+                
+                // Quote data
+                quoteNumber: document.getElementById("quoteNumber").value,
+                quoteStatus: document.getElementById("quoteStatus").value,
+                lineOfBusiness: document.getElementById("lineOfBusiness").value,
+                ezlynxQuoteId: document.getElementById("ezlynxQuoteId").value,
+                mainCarrier: document.getElementById("mainCarrier").value,
+                effectiveDate: document.getElementById("effectiveDate").value,
+                grossPremium: parseCurrency(document.getElementById("grossPremium").value),
+                taxesAndFees: parseCurrency(document.getElementById("taxesAndFees").value),
+                agencyFees: parseCurrency(document.getElementById("agencyFees").value),
+                totalPremium: parseCurrency(document.getElementById("totalPremium").value),
+                paymentPlan: document.getElementById("paymentPlan").value,
+                downPayment: parseCurrency(document.getElementById("downPayment").value),
+                monthlyPremium: parseCurrency(document.getElementById("monthlyPremium").value),
+                location: document.getElementById("location").value,
+                dateQuoted: document.getElementById("dateQuoted").value,
+                expirationDate: document.getElementById("expirationDate").value,
+                notes: document.getElementById("notes").value,
                 isNewContact: isNewContact,
                 timestamp: new Date().toISOString()
             };
 
-            console.log('Submitting form data:', formData);
+            console.log("Submitting form data:", formData);
 
-            fetch('https://services.leadconnectorhq.com/hooks/YtNhoKQqqoEZSVFceqZm/webhook-trigger/26db136c-27ca-47b4-af16-f8b1f0dfd852', {
-                method: 'POST',
+            // Send to GHL webhook
+            fetch("https://services.leadconnectorhq.com/hooks/YtNhoKQqqoEZSVFceqZm/webhook-trigger/26db136c-27ca-47b4-af16-f8b1f0dfd852", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(formData)
             })
             .then(function(response) {
-                console.log('Response status:', response.status);
+                console.log("Response status:", response.status);
                 if (response.ok) {
-                    showToast('Quote submitted successfully!', 'success');
+                    showToast("Quote submitted successfully!", "success");
                     setTimeout(function() { 
-                        window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
+                        window.top.location.href = "https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All";
                     }, 2000);
                 } else {
-                    showToast('Error submitting quote. Please try again.', 'error');
+                    showToast("Error submitting quote. Please try again.", "error");
                 }
             })
             .catch(function(error) {
-                console.error('Network Error:', error);
-                showToast('Network error. Please try again.', 'error');
+                console.error("Network Error:", error);
+                showToast("Network error. Please try again.", "error");
             })
             .finally(function() {
                 submitBtn.textContent = originalText;
@@ -1288,17 +1339,17 @@
             });
         }
 
-        // Backup show for GHL
+        // Force show modal after delay for GHL (backup)
         setTimeout(() => {
-            const overlay = document.getElementById('modalOverlay');
-            if (overlay && overlay.style.display !== 'flex') {
-                overlay.style.display = 'flex';
-                document.body.classList.add('green-quote-modal-active');
+            const overlay = document.getElementById("modalOverlay");
+            if (overlay && overlay.style.display !== "flex") {
+                overlay.style.display = "flex";
+                document.body.classList.add("green-quote-modal-active");
                 
-                const dateQuoted = document.getElementById('dateQuoted');
-                const quoteNumber = document.getElementById('quoteNumber');
+                const dateQuoted = document.getElementById("dateQuoted");
+                const quoteNumber = document.getElementById("quoteNumber");
                 if (dateQuoted && !dateQuoted.value) {
-                    dateQuoted.value = new Date().toISOString().split('T')[0];
+                    dateQuoted.value = new Date().toISOString().split("T")[0];
                 }
                 if (quoteNumber && !quoteNumber.value) {
                     quoteNumber.value = generateQuoteNumber();
