@@ -19,10 +19,7 @@
 
         body {
             font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background:
-                radial-gradient(circle at top left, rgba(22, 163, 74, 0.18), transparent 55%),
-                radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.16), transparent 55%),
-                #020617;
+            background: #000000;
             color: #fff;
         }
 
@@ -34,8 +31,8 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at top, rgba(15, 118, 110, 0.18), rgba(15, 23, 42, 0.98));
-            backdrop-filter: blur(10px);
+            background: #000000;
+            backdrop-filter: blur(6px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -53,7 +50,7 @@
 
         .particle {
             position: absolute;
-            background: radial-gradient(circle, rgba(107, 194, 74, 0.3) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(107, 194, 74, 0.32) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             animation: float-up 15s infinite;
@@ -65,28 +62,29 @@
                 opacity: 0;
             }
             10% {
-                opacity: 0.4;
+                opacity: 0.45;
             }
             90% {
-                opacity: 0.4;
+                opacity: 0.45;
             }
             100% {
-                transform: translateY(-100vh) scale(1.5);
+                transform: translateY(-100vh) scale(1.6);
                 opacity: 0;
             }
         }
 
         /* Glass card */
         .modal-container {
-            background: radial-gradient(circle at top left, rgba(22, 163, 74, 0.12), transparent 65%),
-                        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.12), transparent 65%),
-                        rgba(8, 25, 20, 0.96);
+            background:
+                radial-gradient(circle at top left, rgba(34, 197, 94, 0.18), transparent 60%),
+                radial-gradient(circle at bottom right, rgba(22, 163, 74, 0.18), transparent 60%),
+                rgba(5, 12, 9, 0.96);
             backdrop-filter: blur(24px);
-            border: 1px solid rgba(148, 245, 181, 0.2);
+            border: 1px solid rgba(148, 245, 181, 0.24);
             border-radius: 24px;
             box-shadow:
-                0 18px 60px rgba(0, 0, 0, 0.75),
-                0 0 60px rgba(74, 222, 128, 0.22);
+                0 18px 60px rgba(0, 0, 0, 0.85),
+                0 0 60px rgba(74, 222, 128, 0.25);
             max-width: 650px;
             width: 100%;
             max-height: 90vh;
@@ -132,7 +130,7 @@
             height: 32px;
             border-radius: 999px;
             border: none;
-            background: rgba(15, 23, 42, 0.7);
+            background: rgba(15, 23, 42, 0.8);
             color: #e5e7eb;
             display: flex;
             align-items: center;
@@ -142,7 +140,7 @@
         }
 
         .close-button:hover {
-            background: rgba(15, 23, 42, 0.95);
+            background: rgba(15, 23, 42, 1);
             transform: rotate(90deg);
         }
 
@@ -229,7 +227,7 @@
             padding: 10px 12px;
             border-radius: 10px;
             border: 1px solid rgba(107, 194, 74, 0.3);
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.96);
             color: #fff;
             font-size: 14px;
             transition: all 0.2s ease;
@@ -250,7 +248,7 @@
         }
 
         select option {
-            background: #0b1720;
+            background: #020617;
             color: #fff;
         }
 
@@ -288,7 +286,7 @@
         }
 
         .back-button {
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.96);
             color: #e5e7eb;
             max-width: 120px;
             border: 1px solid rgba(148, 163, 184, 0.5);
@@ -301,7 +299,7 @@
         .next-button,
         .submit-button {
             background: linear-gradient(135deg, #6bc24a 0%, #4ade80 100%);
-            color: #0b1120;
+            color: #020617;
             box-shadow: 0 4px 14px rgba(34, 197, 94, 0.5);
         }
 
@@ -312,7 +310,7 @@
         }
 
         .summary-section {
-            background: rgba(7, 16, 12, 0.98);
+            background: rgba(3, 10, 7, 0.98);
             border-radius: 10px;
             padding: 14px 16px;
             margin-top: 10px;
@@ -351,9 +349,9 @@
             bottom: 30px;
             right: 30px;
             padding: 16px 24px;
-            background: rgba(8, 25, 20, 0.98);
+            background: rgba(5, 12, 9, 0.98);
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             display: flex;
             align-items: center;
             gap: 12px;
@@ -403,7 +401,7 @@
 
         .primary-green {
             background: linear-gradient(135deg, #6bc24a 0%, #4ade80 100%);
-            color: #0b1120;
+            color: #020617;
             border: none;
             box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
         }
@@ -420,7 +418,7 @@
         }
 
         .outline-green:hover {
-            background: rgba(22, 163, 74, 0.14);
+            background: rgba(22, 163, 74, 0.18);
         }
 
         .button-icon {
@@ -441,8 +439,8 @@
             align-items: center;
             gap: 10px;
             padding: 18px 22px;
-            background: linear-gradient(135deg, rgba(22, 163, 74, 0.25) 0%, rgba(15, 23, 42, 0.95) 100%);
-            border: 1px solid rgba(74, 222, 128, 0.7);
+            background: linear-gradient(135deg, rgba(22, 163, 74, 0.26) 0%, rgba(2, 6, 23, 0.96) 100%);
+            border: 1px solid rgba(74, 222, 128, 0.72);
             border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -450,7 +448,7 @@
         }
 
         .language-button:hover {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.3) 0%, rgba(15, 23, 42, 1) 100%);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.34) 0%, rgba(2, 6, 23, 1) 100%);
             transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(34, 197, 94, 0.35);
         }
@@ -822,12 +820,9 @@
     </div>
 
     <script>
-        // ======================================
-        // CONFIG
-        // ======================================
-        const GHL_ACCESS_TOKEN = "YOUR_COMPANY_TOKEN_HERE"; // <- replace
-        // Optional: if you want to limit search to one location, add your locationId here
-        // const GHL_LOCATION_ID = "YtNhoKQqqoEZSVFceqZm";
+        // CONFIG: replace with your real values
+        const LC_COMPANY_API_KEY = "pit-609ea3a9-5374-48c4-b835-74daf043d5e8";
+        const LC_LOCATION_ID = "YtNhoKQqqoEZSVFceqZm";
 
         let currentStep = 1;
         let totalSteps = 4;
@@ -944,131 +939,114 @@
             document.getElementById("headerSubtitle").textContent = "Choose how you would like to proceed";
         }
 
-        // ======================================
-        // CONTACT SEARCH (Company token)
-        // ======================================
-
+        // Duplicate search by phone using company token
         async function findContactByPhone(phoneInput) {
-            const cleanPhone = phoneInput.replace(/\D/g, "");
-            if (!cleanPhone || cleanPhone.length < 10) {
-                return { found: false };
+            const digits = phoneInput.replace(/\D/g, "");
+
+            if (digits.length < 10) {
+                throw new Error("invalid_phone");
             }
 
-            try {
-                const response = await fetch("https://services.leadconnectorhq.com/contacts/search", {
-                    method: "POST",
-                    headers: {
-                        "Authorization": "Bearer " + GHL_ACCESS_TOKEN,
-                        "Version": "2021-07-28",
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    },
-                    body: JSON.stringify({
-                        query: cleanPhone,
-                        limit: 5,
-                        page: 1
-                        // If you want to force a single location, uncomment next line and add custom search handling using locationId filters server side
-                        // locationId: GHL_LOCATION_ID
-                    })
-                });
-
-                if (!response.ok) {
-                    console.error("Lookup error status:", response.status);
-                    showToast("Error searching contact. Please try again.", "error");
-                    return { found: false };
-                }
-
-                const data = await response.json();
-                console.log("Search result:", data);
-
-                const contacts = data.contacts || data.contactsData || [];
-                if (!contacts.length) {
-                    return { found: false };
-                }
-
-                const c = contacts[0];
-                return {
-                    found: true,
-                    contactId: c.id,
-                    firstName: c.firstName || "",
-                    lastName: c.lastName || "",
-                    email: c.email || "",
-                    phone: c.phone || phoneInput
-                };
-            } catch (err) {
-                console.error("Lookup network error:", err);
-                showToast("Network error while searching contact.", "error");
-                return { found: false };
+            let e164;
+            if (digits.length === 10) {
+                e164 = "+1" + digits;
+            } else if (digits.length === 11 && digits.startsWith("1")) {
+                e164 = "+" + digits;
+            } else if (digits.startsWith("00")) {
+                e164 = "+" + digits.slice(2);
+            } else {
+                e164 = "+" + digits;
             }
+
+            const url = `https://services.leadconnectorhq.com/contacts/search/duplicate?locationId=${encodeURIComponent(
+                LC_LOCATION_ID
+            )}&number=${encodeURIComponent(e164)}`;
+
+            const res = await fetch(url, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${LC_COMPANY_API_KEY}`,
+                    Version: "2021-07-28",
+                    Accept: "application/json"
+                }
+            });
+
+            if (!res.ok) {
+                console.error("LeadConnector search error", res.status, await res.text());
+                throw new Error("search_failed");
+            }
+
+            const data = await res.json();
+            console.log("Duplicate search result", data);
+
+            const contact = data.contact || (data.contacts && data.contacts[0]) || null;
+
+            return {
+                contact,
+                normalizedPhone: e164
+            };
         }
 
         async function proceedWithContact() {
-            const phoneField = document.getElementById("contactPhoneSearch");
-            const phoneInput = phoneField.value;
+            const inputEl = document.getElementById("contactPhoneSearch");
+            const phoneInput = inputEl.value.trim();
+            const errorEl = inputEl.parentElement.querySelector(".error-message");
+
+            inputEl.classList.remove("error");
+            if (errorEl) errorEl.classList.remove("show");
+
             const cleanPhone = phoneInput.replace(/\D/g, "");
 
             if (!phoneInput || cleanPhone.length < 10) {
-                phoneField.classList.add("error");
-                phoneField.parentElement.querySelector(".error-message").classList.add("show");
+                inputEl.classList.add("error");
+                if (errorEl) {
+                    errorEl.textContent = "Please enter a valid phone number";
+                    errorEl.classList.add("show");
+                }
                 return;
             }
 
-            phoneField.classList.remove("error");
-            phoneField.parentElement.querySelector(".error-message").classList.remove("show");
+            try {
+                inputEl.disabled = true;
+                showToast("Searching contact...", "");
 
-            showToast("Searching contact...", "success");
-            const result = await findContactByPhone(phoneInput);
+                const { contact, normalizedPhone } = await findContactByPhone(phoneInput);
 
-            if (!result.found) {
-                const createNew = confirm("No records found for this phone number. Do you want to create a new contact and quote?");
-                if (!createNew) {
+                if (!contact) {
+                    showToast("No contact found with that phone. You can go back and create a new contact.", "error");
+                    inputEl.disabled = false;
                     return;
                 }
 
-                isNewContact = true;
-                selectedLanguage = null;
-                totalSteps = 5;
-                currentStep = 0;
+                existingContactPhone = normalizedPhone;
+                selectedContactId = contact.id || contact._id || null;
+                isNewContact = false;
+                totalSteps = 4;
+                currentStep = 1;
+
+                const fullName = `${contact.firstName || ""} ${contact.lastName || ""}`.trim();
+                if (fullName) {
+                    showToast(`Contact found: ${fullName}`, "");
+                } else {
+                    showToast("Contact found. Continuing to quote.", "");
+                }
 
                 document.getElementById("contactSelection").style.display = "none";
-                document.getElementById("quoteForm").style.display = "none";
-                document.getElementById("initialChoice").style.display = "none";
-                document.getElementById("languageSelection").style.display = "block";
+                document.getElementById("quoteForm").style.display = "block";
 
-                document.getElementById("headerSubtitle").textContent =
-                    "No record found. Select your preferred language to create a new contact";
+                setupStepIndicators();
+                document.getElementById("step1").classList.add("active");
+                updateProgress();
+                updateNavigation();
+                document.getElementById("headerSubtitle").textContent = "Step 1 of 4: Basic Information";
 
-                return;
+            } catch (err) {
+                console.error(err);
+                showToast("There was a problem looking up that phone. Please try again.", "error");
+            } finally {
+                inputEl.disabled = false;
             }
-
-            existingContactPhone = result.phone || phoneInput;
-            selectedContactId = result.contactId;
-            isNewContact = false;
-            totalSteps = 4;
-            currentStep = 1;
-
-            if (result.firstName || result.lastName) {
-                showToast(
-                    `Contact found: ${result.firstName || ""} ${result.lastName || ""}`.trim(),
-                    "success"
-                );
-            } else {
-                showToast("Contact found. Continuing to quote.", "success");
-            }
-
-            document.getElementById("contactSelection").style.display = "none";
-            document.getElementById("quoteForm").style.display = "block";
-
-            setupStepIndicators();
-            document.getElementById("step1").classList.add("active");
-            updateProgress();
-            updateNavigation();
-            document.getElementById("headerSubtitle").textContent = "Step 1 of 4: Basic Information";
         }
-
-        // ======================================
-        // Steps, progress, formatting
-        // ======================================
 
         function setupStepIndicators() {
             const indicatorContainer = document.getElementById("stepIndicator");
@@ -1297,7 +1275,6 @@
             return valid;
         }
 
-        // Clear error on input change
         document.querySelectorAll("input, select, textarea").forEach(el => {
             el.addEventListener("input", function () {
                 this.classList.remove("error");
@@ -1327,10 +1304,8 @@
             submitBtn.disabled = true;
 
             const formData = {
-                // Language
                 preferredLanguage: selectedLanguage || "English",
 
-                // New contact info
                 ...(isNewContact && {
                     contactFirstName: document.getElementById("contactFirstName").value,
                     contactLastName: document.getElementById("contactLastName").value,
@@ -1338,13 +1313,11 @@
                     contactPhone: document.getElementById("contactPhone").value
                 }),
 
-                // Existing contact
                 ...(existingContactPhone && { 
                     existingContactPhone: existingContactPhone,
                     contactId: selectedContactId
                 }),
                 
-                // Quote data
                 quoteNumber: document.getElementById("quoteNumber").value,
                 quoteStatus: document.getElementById("quoteStatus").value,
                 lineOfBusiness: document.getElementById("lineOfBusiness").value,
@@ -1378,7 +1351,7 @@
             .then(function(response) {
                 console.log("Response status:", response.status);
                 if (response.ok) {
-                    showToast("Quote submitted successfully!", "success");
+                    showToast("Quote submitted successfully!", "");
                     setTimeout(function() { 
                         window.top.location.href = "https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All";
                     }, 2000);
