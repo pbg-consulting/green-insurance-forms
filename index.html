@@ -4,11 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Green Insurance - Quote Survey</title>
+
+    <!-- Poppins font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        /* Global font */
+        body,
+        input,
+        select,
+        textarea,
+        button {
+            font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body.green-quote-modal-active {
@@ -77,7 +90,6 @@
             position: relative;
             animation: slideUpQuote 0.35s ease;
             color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         @keyframes slideUpQuote {
@@ -379,7 +391,6 @@
             gap: 8px;
             padding: 14px 24px;
             border-radius: 12px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             font-size: 15px;
             font-weight: 600;
             cursor: pointer;
@@ -539,7 +550,7 @@
                         Enter the phone number of the existing contact to link this quote
                     </div>
                     <div class="form-group">
-                        <label for="contactPhone">Phone Number *</label>
+                        <label for="contactPhoneSearch">Phone Number *</label>
                         <input type="tel" id="contactPhoneSearch" placeholder="(555) 123-4567" required>
                         <div class="error-message">Please enter a valid phone number</div>
                     </div>
@@ -689,7 +700,7 @@
                         </div>
                     </div>
 
-                    <!-- STEP 3: PREMIUM / FINANCIALS -->
+                    <!-- STEP 3: PREMIUM / FINANCIALs -->
                     <div id="step3" class="form-step">
                         <div class="form-group">
                             <label for="grossPremium">Gross Premium *</label>
@@ -833,18 +844,12 @@
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 
-                // Random size
                 const size = Math.random() * 60 + 20;
                 particle.style.width = size + 'px';
                 particle.style.height = size + 'px';
                 
-                // Random horizontal position
                 particle.style.left = Math.random() * 100 + '%';
-                
-                // Random animation delay
                 particle.style.animationDelay = Math.random() * 15 + 's';
-                
-                // Random animation duration
                 particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
                 
                 particlesContainer.appendChild(particle);
@@ -858,10 +863,8 @@
             overlay.style.display = 'flex';
             document.body.classList.add('green-quote-modal-active');
 
-            // Create animated background
             createParticles();
 
-            // Set defaults
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('dateQuoted').value = today;
             document.getElementById('quoteNumber').value = generateQuoteNumber();
@@ -875,34 +878,28 @@
         }
 
         function resetToMainMenu() {
-            // Hide all sections
             document.getElementById('contactSelection').style.display = 'none';
             document.getElementById('languageSelection').style.display = 'none';
             document.getElementById('quoteForm').style.display = 'none';
             
-            // Show main menu with proper styling
             const initialChoice = document.getElementById('initialChoice');
             initialChoice.style.display = 'flex';
             initialChoice.className = 'button-group horizontal';
             
-            // Reset header
             document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
             
-            // Reset form states
             currentStep = 1;
             isNewContact = false;
             selectedContactId = null;
             selectedLanguage = null;
             existingContactPhone = null;
             
-            // Clear any active steps
             document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
         }
 
         function startNewContact() {
             isNewContact = true;
             
-            // Show language selection instead of going directly to form
             document.getElementById('initialChoice').style.display = 'none';
             document.getElementById('languageSelection').style.display = 'block';
             document.getElementById('headerSubtitle').textContent = 'Select your preferred language';
@@ -910,8 +907,6 @@
 
         function selectLanguage(language) {
             selectedLanguage = language;
-             console.log('Language selected:', selectedLanguage);
-            // Now proceed to the contact form
             totalSteps = 5;
             currentStep = 0;
             
@@ -931,7 +926,6 @@
             document.getElementById('contactSelection').style.display = 'block';
             document.getElementById('headerSubtitle').textContent = 'Enter existing contact phone number';
             
-            // Clear any previous phone input
             document.getElementById('contactPhoneSearch').value = '';
         }
 
@@ -944,9 +938,6 @@
 
         function proceedWithContact() {
             const phoneInput = document.getElementById('contactPhoneSearch').value;
-            
-            // Basic phone validation
-            const phoneRegex = /^[\d\s\-\(\)]+$/;
             const cleanPhone = phoneInput.replace(/\D/g, '');
             
             if (!phoneInput || cleanPhone.length < 10) {
@@ -956,7 +947,7 @@
             }
             
             existingContactPhone = phoneInput;
-            selectedContactId = 'phone_' + cleanPhone; // Create an ID based on phone
+            selectedContactId = 'phone_' + cleanPhone;
             isNewContact = false;
             totalSteps = 4;
             currentStep = 1;
@@ -1000,7 +991,6 @@
             const gross = parseCurrency(document.getElementById('grossPremium').value);
             const taxes = parseCurrency(document.getElementById('taxesAndFees').value);
             
-            // Auto-calculate agency fees at 10% if not manually edited
             const agencyField = document.getElementById('agencyFees');
             if (!agencyField.dataset.manual && gross > 0) {
                 agencyField.value = formatCurrency(String(gross * 0.10));
@@ -1171,7 +1161,6 @@
                 }
             });
 
-            // Special validation for step 3
             if (step === 3) {
                 const plan = document.getElementById('paymentPlan').value;
                 const location = document.getElementById('location').value;
@@ -1203,7 +1192,6 @@
             return valid;
         }
 
-        // Clear error on input change
         document.querySelectorAll('input, select, textarea').forEach(el => {
             el.addEventListener('input', function () {
                 this.classList.remove('error');
@@ -1229,28 +1217,26 @@
 
             const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.textContent;
-   
+
             submitBtn.textContent = 'Submitting...';
             submitBtn.disabled = true;
 
             // Build data object
             const formData = {
-                // Contact info (if new)
-...(isNewContact && {
-    contactFirstName: document.getElementById('contactFirstName').value,
-    contactLastName: document.getElementById('contactLastName').value,
-    contactEmail: document.getElementById('contactEmail').value,
-    contactPhone: document.getElementById('contactPhone').value,
-}),
-// Language preference (always include if selected)
-...(selectedLanguage && { preferredLanguage: selectedLanguage }),
-                // Existing contact phone
+                ...(isNewContact && {
+                    contactFirstName: document.getElementById('contactFirstName').value,
+                    contactLastName: document.getElementById('contactLastName').value,
+                    contactEmail: document.getElementById('contactEmail').value,
+                    contactPhone: document.getElementById('contactPhone').value,
+                }),
+
                 ...(existingContactPhone && { 
                     existingContactPhone: existingContactPhone,
                     contactId: selectedContactId 
                 }),
-                
-                // Quote data
+
+                preferredLanguage: selectedLanguage || 'English',
+
                 quoteNumber: document.getElementById('quoteNumber').value,
                 quoteStatus: document.getElementById('quoteStatus').value,
                 lineOfBusiness: document.getElementById('lineOfBusiness').value,
@@ -1274,7 +1260,6 @@
 
             console.log('Submitting form data:', formData);
 
-            // Send to GHL webhook
             fetch('https://services.leadconnectorhq.com/hooks/YtNhoKQqqoEZSVFceqZm/webhook-trigger/26db136c-27ca-47b4-af16-f8b1f0dfd852', {
                 method: 'POST',
                 headers: {
@@ -1303,7 +1288,7 @@
             });
         }
 
-        // Force show modal after delay for GHL (backup)
+        // Backup show for GHL
         setTimeout(() => {
             const overlay = document.getElementById('modalOverlay');
             if (overlay && overlay.style.display !== 'flex') {
