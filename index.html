@@ -866,55 +866,10 @@
             document.getElementById('headerSubtitle').textContent = 'Step 1 of 5: Contact Information';
         }
 
-        function startExistingContact() {
-            isNewContact = false;
-            document.getElementById('initialChoice').style.display = 'none';
-            document.getElementById('contactSelection').style.display = 'block';
-            document.getElementById('headerSubtitle').textContent = 'Select an existing contact';
-            loadContacts();
-        }
-
-async function loadContacts() {
-    const selectElement = document.getElementById('contactId');
-    
-    // Replace the select dropdown with a search input
-    const searchHTML = `
-        <div class="contact-search-container">
-            <input type="text" 
-                   id="contactSearch" 
-                   placeholder="Start typing contact name or email..." 
-                   autocomplete="off"
-                   required>
-            <div id="contactResults" class="contact-results"></div>
-            <input type="hidden" id="contactId" value="">
-            <div class="error-message">Please select a contact</div>
-        </div>
-    `;
-    
-    selectElement.parentElement.innerHTML = searchHTML;
-    
-    // Add search functionality
-    document.getElementById('contactSearch').addEventListener('input', function() {
-        const searchValue = this.value.toLowerCase();
-        const resultsDiv = document.getElementById('contactResults');
-        
-        if (searchValue.length > 2) {
-            // Show instructions for now
-            resultsDiv.innerHTML = `
-                <div class="search-instruction">
-                    <small style="color: #6bc24a;">
-                        Enter the exact name or email of the existing contact from your GHL database
-                    </small>
-                </div>
-            `;
-            resultsDiv.style.display = 'block';
-            
-            // Set the hidden contact ID to the search value
-            document.getElementById('contactId').value = searchValue;
-        } else {
-            resultsDiv.style.display = 'none';
-        }
-    });
+function startExistingContact() {
+    // Just redirect to contacts page
+    window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
+}
     
     // Hide results when clicking outside
     document.addEventListener('click', function(e) {
