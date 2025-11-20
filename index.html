@@ -1235,13 +1235,14 @@
             // Build data object
             const formData = {
                 // Contact info (if new)
-                ...(isNewContact && {
-                    contactFirstName: document.getElementById('contactFirstName').value,
-                    contactLastName: document.getElementById('contactLastName').value,
-                    contactEmail: document.getElementById('contactEmail').value,
-                    contactPhone: document.getElementById('contactPhone').value,
-                    preferredLanguage: selectedLanguage,
-                }),
+...(isNewContact && {
+    contactFirstName: document.getElementById('contactFirstName').value,
+    contactLastName: document.getElementById('contactLastName').value,
+    contactEmail: document.getElementById('contactEmail').value,
+    contactPhone: document.getElementById('contactPhone').value,
+}),
+// Language preference (always include if selected)
+...(selectedLanguage && { preferredLanguage: selectedLanguage }),
                 // Existing contact phone
                 ...(existingContactPhone && { 
                     existingContactPhone: existingContactPhone,
