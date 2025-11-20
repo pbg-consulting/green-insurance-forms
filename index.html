@@ -27,6 +27,40 @@
             z-index: 10000;
         }
 
+        /* Animated Background */
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(107, 194, 74, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float-up 15s infinite;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
         /* Glass card */
         .modal-container {
             background: rgba(15, 40, 25, 0.92);
@@ -379,79 +413,52 @@
         }
 
         /* Language Selection Buttons */
-.language-buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin: 40px 0;
-}
+        .language-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 40px 0;
+        }
 
-.language-button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    padding: 30px 40px;
-    background: linear-gradient(135deg, rgba(107, 194, 74, 0.1) 0%, rgba(107, 194, 74, 0.05) 100%);
-    border: 2px solid #6bc24a;
-    border-radius: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 150px;
-}
+        .language-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            padding: 30px 40px;
+            background: linear-gradient(135deg, rgba(107, 194, 74, 0.1) 0%, rgba(107, 194, 74, 0.05) 100%);
+            border: 2px solid #6bc24a;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
 
-        /* Contact Search Styles */
-.contact-search-container {
-    position: relative;
-}
+        .language-button:hover {
+            background: linear-gradient(135deg, rgba(107, 194, 74, 0.2) 0%, rgba(107, 194, 74, 0.1) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(107, 194, 74, 0.3);
+        }
 
-.contact-results {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: rgba(15, 30, 20, 0.98);
-    border: 1px solid rgba(107, 194, 74, 0.3);
-    border-radius: 8px;
-    margin-top: 4px;
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 100;
-    display: none;
-}
+        .flag-icon {
+            font-size: 48px;
+            line-height: 1;
+        }
 
-.search-instruction {
-    padding: 12px;
-    border-bottom: 1px solid rgba(107, 194, 74, 0.1);
-}
+        .language-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+        }
 
-#contactSearch {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 10px;
-    border: 1px solid rgba(107, 194, 74, 0.3);
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
-    font-size: 14px;
-}
-        
-.language-button:hover {
-    background: linear-gradient(135deg, rgba(107, 194, 74, 0.2) 0%, rgba(107, 194, 74, 0.1) 100%);
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(107, 194, 74, 0.3);
-}
+        /* Phone Search Section */
+        .phone-search-info {
+            text-align: center;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
 
-.flag-icon {
-    font-size: 48px;
-    line-height: 1;
-}
-
-.language-text {
-    font-size: 18px;
-    font-weight: 600;
-    color: #fff;
-}
-        
         @media (max-width: 640px) {
             .modal-container {
                 margin: 16px;
@@ -472,12 +479,21 @@
             .back-button {
                 max-width: none;
             }
+            .language-buttons {
+                flex-direction: column;
+            }
+            .language-button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <!-- MODAL HTML -->
     <div id="modalOverlay" class="modal-overlay">
+        <!-- Animated Background Particles -->
+        <div class="floating-particles" id="particles"></div>
+        
         <div class="modal-container">
             <button class="close-button" onclick="resetToMainMenu()">
                 <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
@@ -503,14 +519,29 @@
                     </button>
                 </div>
 
-                <!-- Contact Selection for Existing -->
+                <!-- Language Selection (shown after choosing new) -->
+                <div id="languageSelection" style="display: none;">
+                    <div class="language-buttons">
+                        <button class="language-button" onclick="selectLanguage('English')">
+                            <span class="flag-icon">🇺🇸</span>
+                            <span class="language-text">English</span>
+                        </button>
+                        <button class="language-button" onclick="selectLanguage('Spanish')">
+                            <span class="flag-icon">🇪🇸</span>
+                            <span class="language-text">Español</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Phone Search for Existing Contacts -->
                 <div id="contactSelection" style="display: none;">
+                    <div class="phone-search-info">
+                        Enter the phone number of the existing contact to link this quote
+                    </div>
                     <div class="form-group">
-                        <label for="contactId">Select Contact *</label>
-                        <select id="contactId" required>
-                            <option value="">Loading contacts...</option>
-                        </select>
-                        <div class="error-message">Please select a contact</div>
+                        <label for="contactPhone">Phone Number *</label>
+                        <input type="tel" id="contactPhoneSearch" placeholder="(555) 123-4567" required>
+                        <div class="error-message">Please enter a valid phone number</div>
                     </div>
                     <div class="form-navigation">
                         <button class="nav-button back-button" onclick="backToChoice()">Back</button>
@@ -518,20 +549,6 @@
                     </div>
                 </div>
 
-                <!-- Language Selection (shown after choosing new/existing) -->
-<div id="languageSelection" style="display: none;">
-    <div class="language-buttons">
-        <button class="language-button" onclick="selectLanguage('English')">
-            <span class="flag-icon">🇺🇸</span>
-            <span class="language-text">English</span>
-        </button>
-        <button class="language-button" onclick="selectLanguage('Spanish')">
-            <span class="flag-icon">🇪🇸</span>
-            <span class="language-text">Español</span>
-        </button>
-    </div>
-</div>
-                
                 <!-- Multi step form -->
                 <div id="quoteForm" style="display:none;">
                     <div class="progress-container">
@@ -778,7 +795,7 @@
                         </div>
                     </div>
 
-                    <!-- NAV BUTTONS - Always visible when form is shown -->
+                    <!-- NAV BUTTONS -->
                     <div class="form-navigation">
                         <button id="backBtn" class="nav-button back-button" onclick="previousStep()" style="display:none;">Back</button>
                         <button id="nextBtn" class="nav-button next-button" onclick="nextStep()">Next</button>
@@ -794,7 +811,9 @@
         let totalSteps = 4;
         let isNewContact = false;
         let selectedContactId = null;
-        let selectedLanguage = null; 
+        let selectedLanguage = null;
+        let existingContactPhone = null;
+
         // Generate unique quote number
         function generateQuoteNumber() {
             const date = new Date();
@@ -805,12 +824,42 @@
             return `Q${year}${month}${day}-${random}`;
         }
 
+        // Create animated background particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random size
+                const size = Math.random() * 60 + 20;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random horizontal position
+                particle.style.left = Math.random() * 100 + '%';
+                
+                // Random animation delay
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                
+                // Random animation duration
+                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
         // Show modal when page loads
         window.addEventListener('load', () => {
             const overlay = document.getElementById('modalOverlay');
             if (!overlay) return;
             overlay.style.display = 'flex';
             document.body.classList.add('green-quote-modal-active');
+
+            // Create animated background
+            createParticles();
 
             // Set defaults
             const today = new Date().toISOString().split('T')[0];
@@ -828,6 +877,7 @@
         function resetToMainMenu() {
             // Hide all sections
             document.getElementById('contactSelection').style.display = 'none';
+            document.getElementById('languageSelection').style.display = 'none';
             document.getElementById('quoteForm').style.display = 'none';
             
             // Show main menu with proper styling
@@ -842,21 +892,30 @@
             currentStep = 1;
             isNewContact = false;
             selectedContactId = null;
+            selectedLanguage = null;
+            existingContactPhone = null;
             
             // Clear any active steps
             document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
         }
 
-        function redirectToContacts() {
-            window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
-        }
-
         function startNewContact() {
             isNewContact = true;
+            
+            // Show language selection instead of going directly to form
+            document.getElementById('initialChoice').style.display = 'none';
+            document.getElementById('languageSelection').style.display = 'block';
+            document.getElementById('headerSubtitle').textContent = 'Select your preferred language';
+        }
+
+        function selectLanguage(language) {
+            selectedLanguage = language;
+            
+            // Now proceed to the contact form
             totalSteps = 5;
             currentStep = 0;
             
-            document.getElementById('initialChoice').style.display = 'none';
+            document.getElementById('languageSelection').style.display = 'none';
             document.getElementById('quoteForm').style.display = 'block';
             
             setupStepIndicators();
@@ -866,18 +925,16 @@
             document.getElementById('headerSubtitle').textContent = 'Step 1 of 5: Contact Information';
         }
 
-function startExistingContact() {
-    // Just redirect to contacts page
-    window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
-}
-    
-    // Hide results when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.contact-search-container')) {
-            document.getElementById('contactResults').style.display = 'none';
+        function startExistingContact() {
+            isNewContact = false;
+            document.getElementById('initialChoice').style.display = 'none';
+            document.getElementById('contactSelection').style.display = 'block';
+            document.getElementById('headerSubtitle').textContent = 'Enter existing contact phone number';
+            
+            // Clear any previous phone input
+            document.getElementById('contactPhoneSearch').value = '';
         }
-    });
-}
+
         function backToChoice() {
             document.getElementById('contactSelection').style.display = 'none';
             document.getElementById('initialChoice').style.display = 'flex';
@@ -886,14 +943,20 @@ function startExistingContact() {
         }
 
         function proceedWithContact() {
-            const contactId = document.getElementById('contactId').value;
-            if (!contactId) {
-                document.getElementById('contactId').classList.add('error');
-                document.getElementById('contactId').parentElement.querySelector('.error-message').classList.add('show');
+            const phoneInput = document.getElementById('contactPhoneSearch').value;
+            
+            // Basic phone validation
+            const phoneRegex = /^[\d\s\-\(\)]+$/;
+            const cleanPhone = phoneInput.replace(/\D/g, '');
+            
+            if (!phoneInput || cleanPhone.length < 10) {
+                document.getElementById('contactPhoneSearch').classList.add('error');
+                document.getElementById('contactPhoneSearch').parentElement.querySelector('.error-message').classList.add('show');
                 return;
             }
             
-            selectedContactId = contactId;
+            existingContactPhone = phoneInput;
+            selectedContactId = 'phone_' + cleanPhone; // Create an ID based on phone
             isNewContact = false;
             totalSteps = 4;
             currentStep = 1;
@@ -1177,9 +1240,13 @@ function startExistingContact() {
                     contactLastName: document.getElementById('contactLastName').value,
                     contactEmail: document.getElementById('contactEmail').value,
                     contactPhone: document.getElementById('contactPhone').value,
+                    preferredLanguage: selectedLanguage,
                 }),
-                // Existing contact ID
-                ...(selectedContactId && { contactId: selectedContactId }),
+                // Existing contact phone
+                ...(existingContactPhone && { 
+                    existingContactPhone: existingContactPhone,
+                    contactId: selectedContactId 
+                }),
                 
                 // Quote data
                 quoteNumber: document.getElementById('quoteNumber').value,
@@ -1234,7 +1301,7 @@ function startExistingContact() {
             });
         }
 
-        // Force show modal after delay for GHL
+        // Force show modal after delay for GHL (backup)
         setTimeout(() => {
             const overlay = document.getElementById('modalOverlay');
             if (overlay && overlay.style.display !== 'flex') {
