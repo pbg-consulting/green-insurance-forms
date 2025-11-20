@@ -1229,11 +1229,7 @@
 
             const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.textContent;
-            const formData = {
-    // Always include language at the top level
-    preferredLanguage: selectedLanguage || 'English', // Default to English if not set
-    // ... rest of your fields
-}
+   
             submitBtn.textContent = 'Submitting...';
             submitBtn.disabled = true;
 
