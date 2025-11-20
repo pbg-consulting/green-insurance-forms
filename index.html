@@ -72,60 +72,6 @@
             padding: 24px 30px 30px;
         }
 
-        /* Initial buttons */
-        .button-group {
-            display: flex;
-            gap: 14px;
-            margin-bottom: 20px;
-        }
-
-        .button-group.vertical {
-            flex-direction: column;
-        }
-
-        .primary-button,
-        .secondary-button {
-            flex: 1;
-            padding: 16px 20px;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.25s ease;
-        }
-
-        .primary-button {
-            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
-            color: #fff;
-            box-shadow: 0 4px 16px rgba(107, 194, 74, 0.45);
-        }
-
-        .primary-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(107, 194, 74, 0.65);
-        }
-
-        .secondary-button {
-            background: transparent;
-            border: 2px solid #6bc24a;
-            color: #fff;
-        }
-
-        .secondary-button:hover {
-            background: rgba(107, 194, 74, 0.08);
-            transform: translateY(-2px);
-        }
-
-        .icon {
-            width: 18px;
-            height: 18px;
-        }
-
         /* Close button */
         .close-button {
             position: absolute;
@@ -273,7 +219,7 @@
         }
 
         .form-navigation {
-            display: flex;
+            display: flex !important;
             justify-content: space-between;
             gap: 12px;
             margin-top: 22px;
@@ -383,6 +329,55 @@
             border-left: 4px solid #ef4444;
         }
 
+        /* Simple Two-Button Design */
+        .button-group.horizontal {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .simple-button {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .primary-green {
+            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 12px rgba(107, 194, 74, 0.3);
+        }
+
+        .primary-green:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 194, 74, 0.4);
+        }
+
+        .outline-green {
+            background: transparent;
+            color: #6bc24a;
+            border: 2px solid #6bc24a;
+        }
+
+        .outline-green:hover {
+            background: rgba(107, 194, 74, 0.1);
+        }
+
+        .button-icon {
+            font-size: 18px;
+        }
+
         @media (max-width: 640px) {
             .modal-container {
                 margin: 16px;
@@ -397,9 +392,6 @@
             .modal-title {
                 font-size: 22px;
             }
-            .button-group {
-                flex-direction: column;
-            }
             .form-navigation {
                 flex-direction: column-reverse;
             }
@@ -407,54 +399,6 @@
                 max-width: none;
             }
         }
-        /* Simple Two-Button Design */
-.button-group.horizontal {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    justify-content: center;
-}
-
-.simple-button {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 24px;
-    border-radius: 12px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.primary-green {
-    background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
-    color: white;
-    border: none;
-    box-shadow: 0 4px 12px rgba(107, 194, 74, 0.3);
-}
-
-.primary-green:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(107, 194, 74, 0.4);
-}
-
-.outline-green {
-    background: transparent;
-    color: #6bc24a;
-    border: 2px solid #6bc24a;
-}
-
-.outline-green:hover {
-    background: rgba(107, 194, 74, 0.1);
-}
-
-.button-icon {
-    font-size: 18px;
-}
     </style>
 </head>
 <body>
@@ -473,19 +417,17 @@
             </div>
 
             <div class="modal-body">
-                
                 <!-- Initial choice buttons -->
-<div id="initialChoice" class="button-group horizontal">
-    <button class="simple-button primary-green" onclick="startNewContact()">
-        <span class="button-icon">+</span>
-        <span class="button-text">New Opportunity</span>
-    </button>
-    <button class="simple-button outline-green" onclick="startExistingContact()">
-       <span class="button-icon" style="filter: brightness(0) invert(1);">👥</span>
-        <span class="button-text">Existing Opportunity</span>
-    </button>
-</div>
-
+                <div id="initialChoice" class="button-group horizontal">
+                    <button class="simple-button primary-green" onclick="startNewContact()">
+                        <span class="button-icon">+</span>
+                        <span class="button-text">New Opportunity</span>
+                    </button>
+                    <button class="simple-button outline-green" onclick="startExistingContact()">
+                        <span class="button-icon" style="filter: brightness(0) invert(1);">👥</span>
+                        <span class="button-text">Existing Opportunity</span>
+                    </button>
+                </div>
 
                 <!-- Contact Selection for Existing -->
                 <div id="contactSelection" style="display: none;">
@@ -646,23 +588,23 @@
                     <div id="step3" class="form-step">
                         <div class="form-group">
                             <label for="grossPremium">Gross Premium *</label>
-                            <input id="grossPremium" type="number" step="0.01" min="0" placeholder="0.00" required>
+                            <input id="grossPremium" type="text" placeholder="$0.00" required>
                             <div class="error-message">Gross premium is required</div>
                         </div>
 
                         <div class="form-group">
                             <label for="taxesAndFees">Taxes and Fees</label>
-                            <input id="taxesAndFees" type="number" step="0.01" min="0" placeholder="0.00">
+                            <input id="taxesAndFees" type="text" placeholder="$0.00">
                         </div>
 
                         <div class="form-group">
                             <label for="agencyFees">Agency Fees</label>
-                            <input id="agencyFees" type="number" step="0.01" min="0" placeholder="0.00">
+                            <input id="agencyFees" type="text" placeholder="$0.00">
                         </div>
 
                         <div class="form-group">
                             <label for="totalPremium">Total Premium *</label>
-                            <input id="totalPremium" type="number" step="0.01" min="0" placeholder="0.00" readonly>
+                            <input id="totalPremium" type="text" placeholder="$0.00" readonly>
                             <div class="error-message">Total premium is required</div>
                         </div>
 
@@ -675,17 +617,19 @@
                                 <option>Two Payments</option>
                                 <option>Other</option>
                             </select>
-                            <div class="error-message">Payment Plan is required</div>
+                            <div class="error-message">Payment plan is required</div>
                         </div>
 
                         <div class="form-group">
                             <label for="downPayment">Down Payment</label>
-                            <input id="downPayment" type="number" step="0.01" min="0" placeholder="0.00">
+                            <input id="downPayment" type="text" placeholder="$0.00">
+                            <div class="error-message">Down payment is required for monthly plans</div>
                         </div>
 
                         <div class="form-group">
                             <label for="monthlyPremium">Monthly Premium</label>
-                            <input id="monthlyPremium" type="number" step="0.01" min="0" placeholder="0.00">
+                            <input id="monthlyPremium" type="text" placeholder="$0.00">
+                            <div class="error-message">Monthly premium is required for monthly plans</div>
                         </div>
 
                         <div class="form-group">
@@ -698,7 +642,8 @@
                                 <option>Morrow</option>
                                 <option>Jonesboro</option>
                             </select>
-                        <div class="error-message">Location is required</div>
+                            <div class="error-message">Location is required</div>
+                        </div>
                     </div>
 
                     <!-- STEP 4: DATES + REVIEW -->
@@ -745,12 +690,12 @@
                         </div>
                     </div>
 
-                    <!-- NAV BUTTONS -->
-                   <div class="form-navigation">
-    <button id="backBtn" class="nav-button back-button" onclick="previousStep()" style="display:none;">Back</button>
-    <button id="nextBtn" class="nav-button next-button" onclick="nextStep()">Next</button>
-    <button id="submitBtn" class="nav-button submit-button" onclick="submitForm()" style="display:none;">Submit Quote</button>
-</div>
+                    <!-- NAV BUTTONS - Always visible when form is shown -->
+                    <div class="form-navigation">
+                        <button id="backBtn" class="nav-button back-button" onclick="previousStep()" style="display:none;">Back</button>
+                        <button id="nextBtn" class="nav-button next-button" onclick="nextStep()">Next</button>
+                        <button id="submitBtn" class="nav-button submit-button" onclick="submitForm()" style="display:none;">Submit Quote</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -773,34 +718,17 @@
         }
 
         // Show modal when page loads
-window.addEventListener('load', () => {
-
-    // If in iframe (GHL), show modal immediately
-if (window !== window.top) {
-    document.addEventListener('DOMContentLoaded', () => {
-        const overlay = document.getElementById('modalOverlay');
-        if (overlay) {
+        window.addEventListener('load', () => {
+            const overlay = document.getElementById('modalOverlay');
+            if (!overlay) return;
             overlay.style.display = 'flex';
             document.body.classList.add('green-quote-modal-active');
+
+            // Set defaults
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('dateQuoted').value = today;
             document.getElementById('quoteNumber').value = generateQuoteNumber();
-        }
-    });
-}
-    
-// if (window !== window.top) return;  // COMMENTED OUT
-    
-    const overlay = document.getElementById('modalOverlay');
-    if (!overlay) return;
-    overlay.style.display = 'flex';
-    document.body.classList.add('green-quote-modal-active');
-
-    // Set defaults
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('dateQuoted').value = today;
-    document.getElementById('quoteNumber').value = generateQuoteNumber();
-});
+        });
 
         function closeModal() {
             const overlay = document.getElementById('modalOverlay');
@@ -809,40 +737,35 @@ if (window !== window.top) {
             document.body.classList.remove('green-quote-modal-active');
         }
 
-// Line 763: }  <- This is the end of closeModal()
+        function resetToMainMenu() {
+            // Hide all sections
+            document.getElementById('contactSelection').style.display = 'none';
+            document.getElementById('quoteForm').style.display = 'none';
+            
+            // Show main menu with proper styling
+            const initialChoice = document.getElementById('initialChoice');
+            initialChoice.style.display = 'flex';
+            initialChoice.className = 'button-group horizontal';
+            
+            // Reset header
+            document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
+            
+            // Reset form states
+            currentStep = 1;
+            isNewContact = false;
+            selectedContactId = null;
+            
+            // Clear any active steps
+            document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
+        }
 
-// ADD THE NEW FUNCTION HERE (starting at line 764):
-function resetToMainMenu() {
-    // Hide all sections
-    document.getElementById('contactSelection').style.display = 'none';
-    document.getElementById('quoteForm').style.display = 'none';
-    
-    // Show main menu with proper styling
-    const initialChoice = document.getElementById('initialChoice');
-    initialChoice.style.display = 'flex';
-    initialChoice.className = 'button-group horizontal'; // Force horizontal class
-    
-    // Reset header
-    document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
-    
-    // Reset form states
-    currentStep = 1;
-    isNewContact = false;
-    selectedContactId = null;
-    
-    // Clear any active steps
-    document.querySelectorAll('.form-step').forEach(step => step.classList.remove('active'));
-}
-
-// Line 765 (which will become line 787 after adding the function): function redirectToContacts() {
-        
         function redirectToContacts() {
-    window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
-}
+            window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
+        }
 
         function startNewContact() {
             isNewContact = true;
-            totalSteps = 5; // Add contact step
+            totalSteps = 5;
             currentStep = 0;
             
             document.getElementById('initialChoice').style.display = 'none';
@@ -852,9 +775,6 @@ function resetToMainMenu() {
             document.getElementById('step0').classList.add('active');
             updateProgress();
             updateNavigation();
-            // Force show the Next button for the contact form
-document.querySelector('.form-navigation').style.display = 'flex';
-document.getElementById('nextBtn').style.display = 'block';
             document.getElementById('headerSubtitle').textContent = 'Step 1 of 5: Contact Information';
         }
 
@@ -866,39 +786,40 @@ document.getElementById('nextBtn').style.display = 'block';
             loadContacts();
         }
 
-async function loadContacts() {
-    const selectElement = document.getElementById('contactId');
-    selectElement.innerHTML = '<option value="">Loading contacts...</option>';
-    
-    try {
-        // This would be your actual GHL API call
-        // For now, using placeholder - replace with your GHL API endpoint
-        const response = await fetch('/api/contacts'); // Replace with actual endpoint
-        const contacts = await response.json();
-        
-        selectElement.innerHTML = '<option value="">Select a contact...</option>';
-        contacts.forEach(contact => {
-            const option = document.createElement('option');
-            option.value = contact.id;
-            option.textContent = `${contact.firstName} ${contact.lastName} - ${contact.email}`;
-            selectElement.appendChild(option);
-        });
-    } catch (error) {
-        console.error('Error loading contacts:', error);
-        selectElement.innerHTML = `
-            <option value="">Select a contact...</option>
-            <option value="contact1">John Doe - john@example.com</option>
-            <option value="contact2">Jane Smith - jane@example.com</option>
-        `;
-    }
-}
+        async function loadContacts() {
+            const selectElement = document.getElementById('contactId');
+            selectElement.innerHTML = '<option value="">Loading contacts...</option>';
+            
+            try {
+                // Replace with actual GHL API endpoint
+                const response = await fetch('/api/contacts');
+                const contacts = await response.json();
+                
+                selectElement.innerHTML = '<option value="">Select a contact...</option>';
+                contacts.forEach(contact => {
+                    const option = document.createElement('option');
+                    option.value = contact.id;
+                    option.textContent = `${contact.firstName} ${contact.lastName} - ${contact.email}`;
+                    selectElement.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading contacts:', error);
+                // Fallback dummy data
+                selectElement.innerHTML = `
+                    <option value="">Select a contact...</option>
+                    <option value="contact1">John Doe - john@example.com</option>
+                    <option value="contact2">Jane Smith - jane@example.com</option>
+                    <option value="contact3">Bob Johnson - bob@example.com</option>
+                `;
+            }
+        }
 
         function backToChoice() {
-    document.getElementById('contactSelection').style.display = 'none';
-    document.getElementById('initialChoice').style.display = 'flex';
-    document.getElementById('initialChoice').className = 'button-group horizontal'; // Force horizontal layout
-    document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
-}
+            document.getElementById('contactSelection').style.display = 'none';
+            document.getElementById('initialChoice').style.display = 'flex';
+            document.getElementById('initialChoice').className = 'button-group horizontal';
+            document.getElementById('headerSubtitle').textContent = 'Choose how you would like to proceed';
+        }
 
         function proceedWithContact() {
             const contactId = document.getElementById('contactId').value;
@@ -920,7 +841,6 @@ async function loadContacts() {
             document.getElementById('step1').classList.add('active');
             updateProgress();
             updateNavigation();
-            document.getElementById('nextBtn').style.display = 'block';
             document.getElementById('headerSubtitle').textContent = 'Step 1 of 4: Basic Information';
         }
 
@@ -938,97 +858,82 @@ async function loadContacts() {
             }
         }
 
+        // Format currency
+        function formatCurrency(value) {
+            const num = parseFloat(value.replace(/[^0-9.-]/g, '')) || 0;
+            return '$' + num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        function parseCurrency(value) {
+            return parseFloat(value.replace(/[^0-9.-]/g, '')) || 0;
+        }
+
         // Auto-calc total premium
-function calculateTotal() {
-    const gross = parseFloat(document.getElementById('grossPremium').value.replace('$', '')) || 0;
-    const taxes = parseFloat(document.getElementById('taxesAndFees').value.replace('$', '')) || 0;
-    
-    // Auto-calculate agency fees at 10% if not manually edited
-    const agencyField = document.getElementById('agencyFees');
-    if (!agencyField.dataset.manual && gross > 0) {
-        const agencyFee = gross * 0.10;
-        agencyField.value = '$' + agencyFee.toFixed(2);
-    }
-    
-    const agency = parseFloat(agencyField.value.replace('$', '')) || 0;
-    const total = gross + taxes + agency;
-    document.getElementById('totalPremium').value = total ? '$' + total.toFixed(2) : '';
-}
+        function calculateTotal() {
+            const gross = parseCurrency(document.getElementById('grossPremium').value);
+            const taxes = parseCurrency(document.getElementById('taxesAndFees').value);
+            
+            // Auto-calculate agency fees at 10% if not manually edited
+            const agencyField = document.getElementById('agencyFees');
+            if (!agencyField.dataset.manual && gross > 0) {
+                agencyField.value = formatCurrency(String(gross * 0.10));
+            }
+            
+            const agency = parseCurrency(agencyField.value);
+            const total = gross + taxes + agency;
+            document.getElementById('totalPremium').value = formatCurrency(String(total));
+        }
 
-        ['grossPremium', 'taxesAndFees', 'agencyFees'].forEach(id => {
+        // Setup currency formatting
+        ['grossPremium', 'taxesAndFees', 'agencyFees', 'downPayment', 'monthlyPremium'].forEach(id => {
             const el = document.getElementById(id);
-            if (el) el.addEventListener('input', calculateTotal);
-        });
-//Handle Payment Plan Change
-function handlePaymentPlanChange() {
-    const plan = document.getElementById('paymentPlan').value;
-    const isMonthly = plan === 'Monthly';
-    
-    const downPayment = document.getElementById('downPayment');
-    const monthlyPremium = document.getElementById('monthlyPremium');
-    
-    // Make fields required if Monthly is selected
-    downPayment.required = isMonthly;
-    monthlyPremium.required = isMonthly;
-    
-    // Update labels to show/hide required asterisk
-    const downLabel = downPayment.parentElement.querySelector('label');
-    const monthlyLabel = monthlyPremium.parentElement.querySelector('label');
-    
-    if (isMonthly) {
-        if (!downLabel.textContent.includes('*')) {
-            downLabel.textContent = 'Down Payment *';
-        }
-        if (!monthlyLabel.textContent.includes('*')) {
-            monthlyLabel.textContent = 'Monthly Premium *';
-        }
-        // Add error messages if they don't exist
-        if (!downPayment.parentElement.querySelector('.error-message')) {
-            const err1 = document.createElement('div');
-            err1.className = 'error-message';
-            err1.textContent = 'Down payment is required for monthly plans';
-            downPayment.parentElement.appendChild(err1);
-        }
-        if (!monthlyPremium.parentElement.querySelector('.error-message')) {
-            const err2 = document.createElement('div');
-            err2.className = 'error-message';
-            err2.textContent = 'Monthly premium is required for monthly plans';
-            monthlyPremium.parentElement.appendChild(err2);
-        }
-    } else {
-        downLabel.textContent = 'Down Payment';
-        monthlyLabel.textContent = 'Monthly Premium';
-        // Remove error messages
-        const err1 = downPayment.parentElement.querySelector('.error-message');
-        const err2 = monthlyPremium.parentElement.querySelector('.error-message');
-        if (err1) err1.remove();
-        if (err2) err2.remove();
-    }
-}
-
-        // Format input as currency
-function formatCurrency(input) {
-    let value = input.value.replace(/[^0-9.]/g, '');
-    if (value) {
-        value = parseFloat(value).toFixed(2);
-        input.value = '$' + value;
-    }
-}
-
-// Add dollar sign on focus out
-['grossPremium', 'taxesAndFees', 'agencyFees', 'downPayment', 'monthlyPremium'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-        el.addEventListener('blur', function() {
-            if (this.value && !this.value.startsWith('$')) {
-                formatCurrency(this);
+            if (el) {
+                el.addEventListener('blur', function() {
+                    if (this.value) {
+                        this.value = formatCurrency(this.value);
+                    }
+                });
+                el.addEventListener('focus', function() {
+                    if (this.value) {
+                        this.value = parseCurrency(this.value).toString();
+                    }
+                });
+                if (id !== 'agencyFees') {
+                    el.addEventListener('input', calculateTotal);
+                } else {
+                    el.addEventListener('input', function() {
+                        this.dataset.manual = 'true';
+                        calculateTotal();
+                    });
+                }
             }
         });
-        el.addEventListener('focus', function() {
-            this.value = this.value.replace('$', '');
-        });
-    }
-});
+
+        function handlePaymentPlanChange() {
+            const plan = document.getElementById('paymentPlan').value;
+            const isMonthly = plan === 'Monthly';
+            
+            const downPayment = document.getElementById('downPayment');
+            const monthlyPremium = document.getElementById('monthlyPremium');
+            
+            downPayment.required = isMonthly;
+            monthlyPremium.required = isMonthly;
+            
+            const downLabel = downPayment.parentElement.querySelector('label');
+            const monthlyLabel = monthlyPremium.parentElement.querySelector('label');
+            
+            if (isMonthly) {
+                downLabel.textContent = 'Down Payment *';
+                monthlyLabel.textContent = 'Monthly Premium *';
+                downPayment.parentElement.querySelector('.error-message').style.display = 'block';
+                monthlyPremium.parentElement.querySelector('.error-message').style.display = 'block';
+            } else {
+                downLabel.textContent = 'Down Payment';
+                monthlyLabel.textContent = 'Monthly Premium';
+                downPayment.parentElement.querySelector('.error-message').style.display = 'none';
+                monthlyPremium.parentElement.querySelector('.error-message').style.display = 'none';
+            }
+        }
 
         function nextStep() {
             if (!validateStep(currentStep)) return;
@@ -1080,22 +985,20 @@ function formatCurrency(input) {
         }
 
         function updateNavigation() {
-    const backBtn = document.getElementById('backBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const submitBtn = document.getElementById('submitBtn');
+            const backBtn = document.getElementById('backBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
 
-    // Show/hide back button
-    backBtn.style.display = currentStep > (isNewContact ? 0 : 1) ? 'block' : 'none';
+            backBtn.style.display = currentStep > (isNewContact ? 0 : 1) ? 'block' : 'none';
 
-    // Always show next button except on last step
-    if (currentStep === totalSteps - 1) {
-        nextBtn.style.display = 'none';
-        submitBtn.style.display = 'block';
-    } else {
-        nextBtn.style.display = 'block';  // This ensures Next shows on step 0
-        submitBtn.style.display = 'none';
-    }
-}
+            if (currentStep === totalSteps - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            }
+        }
 
         function updateHeaderSubtitle() {
             const subtitles = isNewContact ? [
@@ -1120,7 +1023,7 @@ function formatCurrency(input) {
             document.getElementById('summaryLOB').textContent = document.getElementById('lineOfBusiness').value || '-';
             document.getElementById('summaryCarrier').textContent = document.getElementById('mainCarrier').value || '-';
             const total = document.getElementById('totalPremium').value;
-            document.getElementById('summaryPremium').textContent = total ? `$${parseFloat(total).toFixed(2)}` : '-';
+            document.getElementById('summaryPremium').textContent = total || '-';
         }
 
         function validateStep(step) {
@@ -1141,6 +1044,35 @@ function formatCurrency(input) {
                 }
             });
 
+            // Special validation for step 3
+            if (step === 3) {
+                const plan = document.getElementById('paymentPlan').value;
+                const location = document.getElementById('location').value;
+                
+                if (!location) {
+                    document.getElementById('location').classList.add('error');
+                    document.getElementById('location').parentElement.querySelector('.error-message').classList.add('show');
+                    valid = false;
+                }
+                
+                if (plan === 'Monthly') {
+                    const downPayment = document.getElementById('downPayment');
+                    const monthlyPremium = document.getElementById('monthlyPremium');
+                    
+                    if (!downPayment.value || parseCurrency(downPayment.value) === 0) {
+                        downPayment.classList.add('error');
+                        downPayment.parentElement.querySelector('.error-message').classList.add('show');
+                        valid = false;
+                    }
+                    
+                    if (!monthlyPremium.value || parseCurrency(monthlyPremium.value) === 0) {
+                        monthlyPremium.classList.add('error');
+                        monthlyPremium.parentElement.querySelector('.error-message').classList.add('show');
+                        valid = false;
+                    }
+                }
+            }
+
             return valid;
         }
 
@@ -1152,7 +1084,7 @@ function formatCurrency(input) {
                 if (err) err.classList.remove('show');
             });
         });
-        
+
         function showToast(message, type) {
             const existingToast = document.querySelector('.toast');
             if (existingToast) existingToast.remove();
@@ -1165,53 +1097,6 @@ function formatCurrency(input) {
             setTimeout(() => toast.remove(), 3000);
         }
 
-function handlePaymentPlanChange() {
-    const plan = document.getElementById('paymentPlan').value;
-    const isMonthly = plan === 'Monthly';
-    
-    const downPayment = document.getElementById('downPayment');
-    const monthlyPremium = document.getElementById('monthlyPremium');
-    
-    // Make fields required if Monthly is selected
-    downPayment.required = isMonthly;
-    monthlyPremium.required = isMonthly;
-    
-    // Update labels to show/hide required asterisk
-    const downLabel = downPayment.parentElement.querySelector('label');
-    const monthlyLabel = monthlyPremium.parentElement.querySelector('label');
-    
-    if (isMonthly) {
-        if (!downLabel.textContent.includes('*')) {
-            downLabel.textContent = 'Down Payment *';
-        }
-        if (!monthlyLabel.textContent.includes('*')) {
-            monthlyLabel.textContent = 'Monthly Premium *';
-        }
-        // Add error messages if they don't exist
-        if (!downPayment.parentElement.querySelector('.error-message')) {
-            const err1 = document.createElement('div');
-            err1.className = 'error-message';
-            err1.textContent = 'Down payment is required for monthly plans';
-            downPayment.parentElement.appendChild(err1);
-        }
-        if (!monthlyPremium.parentElement.querySelector('.error-message')) {
-            const err2 = document.createElement('div');
-            err2.className = 'error-message';
-            err2.textContent = 'Monthly premium is required for monthly plans';
-            monthlyPremium.parentElement.appendChild(err2);
-        }
-    } else {
-        downLabel.textContent = 'Down Payment';
-        monthlyLabel.textContent = 'Monthly Premium';
-        // Remove error messages
-        const err1 = downPayment.parentElement.querySelector('.error-message');
-        const err2 = monthlyPremium.parentElement.querySelector('.error-message');
-        if (err1) err1.remove();
-        if (err2) err2.remove();
-    }
-}
-
-        
         function submitForm() {
             if (!validateStep(currentStep)) return;
 
@@ -1232,20 +1117,20 @@ function handlePaymentPlanChange() {
                 // Existing contact ID
                 ...(selectedContactId && { contactId: selectedContactId }),
                 
-                // Quote data - matching exact field names from webhook
+                // Quote data
                 quoteNumber: document.getElementById('quoteNumber').value,
                 quoteStatus: document.getElementById('quoteStatus').value,
                 lineOfBusiness: document.getElementById('lineOfBusiness').value,
                 ezlynxQuoteId: document.getElementById('ezlynxQuoteId').value,
                 mainCarrier: document.getElementById('mainCarrier').value,
                 effectiveDate: document.getElementById('effectiveDate').value,
-                grossPremium: parseFloat(document.getElementById('grossPremium').value),
-                taxesAndFees: parseFloat(document.getElementById('taxesAndFees').value) || 0,
-                agencyFees: parseFloat(document.getElementById('agencyFees').value) || 0,
-                totalPremium: parseFloat(document.getElementById('totalPremium').value),
+                grossPremium: parseCurrency(document.getElementById('grossPremium').value),
+                taxesAndFees: parseCurrency(document.getElementById('taxesAndFees').value),
+                agencyFees: parseCurrency(document.getElementById('agencyFees').value),
+                totalPremium: parseCurrency(document.getElementById('totalPremium').value),
                 paymentPlan: document.getElementById('paymentPlan').value,
-                downPayment: parseFloat(document.getElementById('downPayment').value) || 0,
-                monthlyPremium: parseFloat(document.getElementById('monthlyPremium').value) || 0,
+                downPayment: parseCurrency(document.getElementById('downPayment').value),
+                monthlyPremium: parseCurrency(document.getElementById('monthlyPremium').value),
                 location: document.getElementById('location').value,
                 dateQuoted: document.getElementById('dateQuoted').value,
                 expirationDate: document.getElementById('expirationDate').value,
@@ -1268,7 +1153,9 @@ function handlePaymentPlanChange() {
                 console.log('Response status:', response.status);
                 if (response.ok) {
                     showToast('Quote submitted successfully!', 'success');
-                    setTimeout(function() { closeModal(); }, 2000);
+                    setTimeout(function() { 
+                        window.top.location.href = 'https://crm.gogreeninsurance.com/v2/location/YtNhoKQqqoEZSVFceqZm/contacts/smart_list/All';
+                    }, 2000);
                 } else {
                     showToast('Error submitting quote. Please try again.', 'error');
                 }
@@ -1283,25 +1170,23 @@ function handlePaymentPlanChange() {
             });
         }
 
-        // Force show modal for GHL iframe
-setTimeout(() => {
-    const overlay = document.getElementById('modalOverlay');
-    if (overlay) {
-        overlay.style.display = 'flex';
-        document.body.classList.add('green-quote-modal-active');
-        
-        // Set defaults if not already set
-        const dateQuoted = document.getElementById('dateQuoted');
-        const quoteNumber = document.getElementById('quoteNumber');
-        if (dateQuoted && !dateQuoted.value) {
-            dateQuoted.value = new Date().toISOString().split('T')[0];
-        }
-        if (quoteNumber && !quoteNumber.value) {
-            quoteNumber.value = generateQuoteNumber();
-        }
-    }
-}, 500);
-        
+        // Force show modal after delay for GHL
+        setTimeout(() => {
+            const overlay = document.getElementById('modalOverlay');
+            if (overlay && overlay.style.display !== 'flex') {
+                overlay.style.display = 'flex';
+                document.body.classList.add('green-quote-modal-active');
+                
+                const dateQuoted = document.getElementById('dateQuoted');
+                const quoteNumber = document.getElementById('quoteNumber');
+                if (dateQuoted && !dateQuoted.value) {
+                    dateQuoted.value = new Date().toISOString().split('T')[0];
+                }
+                if (quoteNumber && !quoteNumber.value) {
+                    quoteNumber.value = generateQuoteNumber();
+                }
+            }
+        }, 500);
     </script>
 </body>
 </html>
