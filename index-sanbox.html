@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Insurance – Quote Survey</title>
+    <title>Green Insurance - Quote Survey</title>
 
     <!-- Poppins font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -15,29 +17,24 @@
             box-sizing: border-box;
         }
 
-        /* Global font */
-        body,
-        input,
-        select,
-        textarea,
-        button {
-            font-family: "Poppins", sans-serif;
+        body {
+            font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(22, 163, 74, 0.18), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.16), transparent 55%),
+                #020617;
+            color: #fff;
         }
 
         body.green-quote-modal-active {
             overflow: hidden;
-            background: radial-gradient(circle at top left, #0b2817 0, #020911 55%);
-            color: #fff;
         }
 
         /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background:
-                radial-gradient(circle at top left, rgba(107, 194, 74, 0.2), transparent 55%),
-                radial-gradient(circle at bottom right, rgba(42, 180, 92, 0.25), transparent 55%),
-                rgba(0, 0, 0, 0.78);
+            background: radial-gradient(circle at top, rgba(15, 118, 110, 0.18), rgba(15, 23, 42, 0.98));
             backdrop-filter: blur(10px);
             display: none;
             justify-content: center;
@@ -56,12 +53,10 @@
 
         .particle {
             position: absolute;
-            background: radial-gradient(circle, rgba(107, 194, 74, 0.32) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(107, 194, 74, 0.3) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             animation: float-up 15s infinite;
-            transform: translateZ(0);
-            will-change: transform, opacity;
         }
 
         @keyframes float-up {
@@ -83,13 +78,15 @@
 
         /* Glass card */
         .modal-container {
-            background: rgba(7, 24, 15, 0.96);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(107, 194, 74, 0.3);
+            background: radial-gradient(circle at top left, rgba(22, 163, 74, 0.12), transparent 65%),
+                        radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.12), transparent 65%),
+                        rgba(8, 25, 20, 0.96);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(148, 245, 181, 0.2);
             border-radius: 24px;
             box-shadow:
-                0 18px 45px rgba(0, 0, 0, 0.75),
-                0 0 40px rgba(107, 194, 74, 0.35);
+                0 18px 60px rgba(0, 0, 0, 0.75),
+                0 0 60px rgba(74, 222, 128, 0.22);
             max-width: 650px;
             width: 100%;
             max-height: 90vh;
@@ -97,8 +94,6 @@
             position: relative;
             animation: slideUpQuote 0.35s ease;
             color: #fff;
-            transform: translateZ(0);
-            will-change: transform, opacity;
         }
 
         @keyframes slideUpQuote {
@@ -108,7 +103,7 @@
 
         .modal-header {
             padding: 30px 30px 18px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             text-align: center;
         }
 
@@ -116,11 +111,12 @@
             font-size: 26px;
             font-weight: 700;
             margin-bottom: 8px;
+            letter-spacing: 0.02em;
         }
 
         .modal-subtitle {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(226, 232, 240, 0.8);
         }
 
         .modal-body {
@@ -136,7 +132,7 @@
             height: 32px;
             border-radius: 999px;
             border: none;
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(15, 23, 42, 0.7);
             color: #e5e7eb;
             display: flex;
             align-items: center;
@@ -146,7 +142,7 @@
         }
 
         .close-button:hover {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(15, 23, 42, 0.95);
             transform: rotate(90deg);
         }
 
@@ -165,7 +161,7 @@
         .progress-fill {
             height: 100%;
             width: 25%;
-            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
+            background: linear-gradient(135deg, #6bc24a 0%, #4ade80 100%);
             border-radius: 3px;
             transition: width 0.25s ease;
         }
@@ -191,7 +187,7 @@
         }
 
         .step-dot.active {
-            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
+            background: linear-gradient(135deg, #6bc24a 0%, #4ade80 100%);
             color: #fff;
         }
 
@@ -233,16 +229,15 @@
             padding: 10px 12px;
             border-radius: 10px;
             border: 1px solid rgba(107, 194, 74, 0.3);
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(15, 23, 42, 0.9);
             color: #fff;
             font-size: 14px;
             transition: all 0.2s ease;
-            -webkit-appearance: none;
         }
 
         input::placeholder,
         textarea::placeholder {
-            color: rgba(255, 255, 255, 0.55);
+            color: rgba(148, 163, 184, 0.85);
         }
 
         input:focus,
@@ -250,12 +245,12 @@
         textarea:focus {
             outline: none;
             border-color: #6bc24a;
-            box-shadow: 0 0 0 2px rgba(107, 194, 74, 0.3);
-            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 1px rgba(107, 194, 74, 0.6);
+            background: rgba(15, 23, 42, 1);
         }
 
         select option {
-            background: #1a3d2e;
+            background: #0b1720;
             color: #fff;
         }
 
@@ -293,30 +288,31 @@
         }
 
         .back-button {
-            background: rgba(243, 244, 246, 0.12);
+            background: rgba(15, 23, 42, 0.9);
             color: #e5e7eb;
             max-width: 120px;
+            border: 1px solid rgba(148, 163, 184, 0.5);
         }
 
         .back-button:hover {
-            background: rgba(229, 231, 235, 0.2);
+            background: rgba(15, 23, 42, 1);
         }
 
         .next-button,
         .submit-button {
-            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
-            color: #fff;
-            box-shadow: 0 4px 14px rgba(107, 194, 74, 0.45);
+            background: linear-gradient(135deg, #6bc24a 0%, #4ade80 100%);
+            color: #0b1120;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.5);
         }
 
         .next-button:hover,
         .submit-button:hover {
             transform: translateY(-1px);
-            box-shadow: 0 7px 22px rgba(107, 194, 74, 0.65);
+            box-shadow: 0 7px 22px rgba(34, 197, 94, 0.8);
         }
 
         .summary-section {
-            background: rgba(15, 30, 20, 0.95);
+            background: rgba(7, 16, 12, 0.98);
             border-radius: 10px;
             padding: 14px 16px;
             margin-top: 10px;
@@ -355,15 +351,17 @@
             bottom: 30px;
             right: 30px;
             padding: 16px 24px;
-            background: rgba(7, 24, 15, 0.98);
+            background: rgba(8, 25, 20, 0.98);
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
             gap: 12px;
             animation: slideIn 0.3s ease;
             z-index: 20000;
             color: #fff;
+            border-left: 3px solid #22c55e;
+            font-size: 14px;
         }
 
         @keyframes slideIn {
@@ -377,12 +375,8 @@
             }
         }
 
-        .toast.success {
-            border-left: 4px solid #10b981;
-        }
-
         .toast.error {
-            border-left: 4px solid #ef4444;
+            border-left-color: #ef4444;
         }
 
         /* Simple Two-Button Design */
@@ -408,76 +402,75 @@
         }
 
         .primary-green {
-            background: linear-gradient(135deg, #6bc24a 0%, #5aa63d 100%);
-            color: white;
+            background: linear-gradient(135deg, #6bc24a 0%, #4ade80 100%);
+            color: #0b1120;
             border: none;
-            box-shadow: 0 4px 12px rgba(107, 194, 74, 0.3);
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
         }
 
         .primary-green:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(107, 194, 74, 0.4);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.55);
         }
 
         .outline-green {
             background: transparent;
-            color: #6bc24a;
-            border: 2px solid #6bc24a;
+            color: #bbf7d0;
+            border: 1px solid #4ade80;
         }
 
         .outline-green:hover {
-            background: rgba(107, 194, 74, 0.1);
+            background: rgba(22, 163, 74, 0.14);
         }
 
         .button-icon {
             font-size: 18px;
         }
 
-        /* Language Selection Buttons (smaller version) */
+        /* Language Selection Buttons (smaller) */
         .language-buttons {
             display: flex;
             gap: 16px;
             justify-content: center;
-            margin: 28px 0 10px;
+            margin: 26px 0;
         }
 
         .language-button {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            padding: 18px 26px;
-            background: linear-gradient(135deg, rgba(107, 194, 74, 0.14) 0%, rgba(107, 194, 74, 0.06) 100%);
-            border: 2px solid #6bc24a;
+            gap: 10px;
+            padding: 18px 22px;
+            background: linear-gradient(135deg, rgba(22, 163, 74, 0.25) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid rgba(74, 222, 128, 0.7);
             border-radius: 14px;
             cursor: pointer;
             transition: all 0.3s ease;
             min-width: 130px;
-            max-width: 180px;
         }
 
         .language-button:hover {
-            background: linear-gradient(135deg, rgba(107, 194, 74, 0.26) 0%, rgba(107, 194, 74, 0.1) 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 22px rgba(107, 194, 74, 0.3);
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.3) 0%, rgba(15, 23, 42, 1) 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.35);
         }
 
         .flag-icon {
-            font-size: 38px;
+            font-size: 40px;
             line-height: 1;
         }
 
         .language-text {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
-            color: #fff;
+            color: #e5e7eb;
         }
 
         /* Phone Search Section */
         .phone-search-info {
             text-align: center;
-            margin-bottom: 20px;
-            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 14px;
+            color: rgba(226, 232, 240, 0.85);
             font-size: 14px;
         }
 
@@ -506,7 +499,6 @@
             }
             .language-button {
                 width: 100%;
-                max-width: none;
             }
         }
     </style>
@@ -830,6 +822,13 @@
     </div>
 
     <script>
+        // ======================================
+        // CONFIG
+        // ======================================
+        const GHL_ACCESS_TOKEN = "YOUR_COMPANY_TOKEN_HERE"; // <- replace
+        // Optional: if you want to limit search to one location, add your locationId here
+        // const GHL_LOCATION_ID = "YtNhoKQqqoEZSVFceqZm";
+
         let currentStep = 1;
         let totalSteps = 4;
         let isNewContact = false;
@@ -847,24 +846,19 @@
             return `Q${year}${month}${day}-${random}`;
         }
 
-        // Create animated background particles (responsive count)
+        // Create animated background particles
         function createParticles() {
             const particlesContainer = document.getElementById("particles");
-            const particleCount = window.innerWidth > 900 ? 15 : 7;
+            const particleCount = 15;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement("div");
                 particle.className = "particle";
                 
-                // Random size
                 const size = Math.random() * 60 + 20;
                 particle.style.width = size + "px";
                 particle.style.height = size + "px";
-                
-                // Random horizontal position
                 particle.style.left = Math.random() * 100 + "%";
-                
-                // Random animation delay and duration
                 particle.style.animationDelay = Math.random() * 15 + "s";
                 particle.style.animationDuration = (Math.random() * 10 + 15) + "s";
                 
@@ -879,10 +873,8 @@
             overlay.style.display = "flex";
             document.body.classList.add("green-quote-modal-active");
 
-            // Create animated background
             createParticles();
 
-            // Set defaults
             const today = new Date().toISOString().split("T")[0];
             document.getElementById("dateQuoted").value = today;
             document.getElementById("quoteNumber").value = generateQuoteNumber();
@@ -896,34 +888,27 @@
         }
 
         function resetToMainMenu() {
-            // Hide all sections
             document.getElementById("contactSelection").style.display = "none";
             document.getElementById("languageSelection").style.display = "none";
             document.getElementById("quoteForm").style.display = "none";
             
-            // Show main menu with proper styling
             const initialChoice = document.getElementById("initialChoice");
             initialChoice.style.display = "flex";
             initialChoice.className = "button-group horizontal";
             
-            // Reset header
             document.getElementById("headerSubtitle").textContent = "Choose how you would like to proceed";
             
-            // Reset form states
             currentStep = 1;
             isNewContact = false;
             selectedContactId = null;
             selectedLanguage = null;
             existingContactPhone = null;
             
-            // Clear any active steps
             document.querySelectorAll(".form-step").forEach(step => step.classList.remove("active"));
         }
 
         function startNewContact() {
             isNewContact = true;
-            
-            // Show language selection instead of going directly to form
             document.getElementById("initialChoice").style.display = "none";
             document.getElementById("languageSelection").style.display = "block";
             document.getElementById("headerSubtitle").textContent = "Select your preferred language";
@@ -949,8 +934,6 @@
             document.getElementById("initialChoice").style.display = "none";
             document.getElementById("contactSelection").style.display = "block";
             document.getElementById("headerSubtitle").textContent = "Enter existing contact phone number";
-            
-            // Clear any previous phone input
             document.getElementById("contactPhoneSearch").value = "";
         }
 
@@ -961,34 +944,131 @@
             document.getElementById("headerSubtitle").textContent = "Choose how you would like to proceed";
         }
 
-        function proceedWithContact() {
-            const phoneInput = document.getElementById("contactPhoneSearch").value;
-            
-            // Basic phone validation
+        // ======================================
+        // CONTACT SEARCH (Company token)
+        // ======================================
+
+        async function findContactByPhone(phoneInput) {
             const cleanPhone = phoneInput.replace(/\D/g, "");
-            
+            if (!cleanPhone || cleanPhone.length < 10) {
+                return { found: false };
+            }
+
+            try {
+                const response = await fetch("https://services.leadconnectorhq.com/contacts/search", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + GHL_ACCESS_TOKEN,
+                        "Version": "2021-07-28",
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        query: cleanPhone,
+                        limit: 5,
+                        page: 1
+                        // If you want to force a single location, uncomment next line and add custom search handling using locationId filters server side
+                        // locationId: GHL_LOCATION_ID
+                    })
+                });
+
+                if (!response.ok) {
+                    console.error("Lookup error status:", response.status);
+                    showToast("Error searching contact. Please try again.", "error");
+                    return { found: false };
+                }
+
+                const data = await response.json();
+                console.log("Search result:", data);
+
+                const contacts = data.contacts || data.contactsData || [];
+                if (!contacts.length) {
+                    return { found: false };
+                }
+
+                const c = contacts[0];
+                return {
+                    found: true,
+                    contactId: c.id,
+                    firstName: c.firstName || "",
+                    lastName: c.lastName || "",
+                    email: c.email || "",
+                    phone: c.phone || phoneInput
+                };
+            } catch (err) {
+                console.error("Lookup network error:", err);
+                showToast("Network error while searching contact.", "error");
+                return { found: false };
+            }
+        }
+
+        async function proceedWithContact() {
+            const phoneField = document.getElementById("contactPhoneSearch");
+            const phoneInput = phoneField.value;
+            const cleanPhone = phoneInput.replace(/\D/g, "");
+
             if (!phoneInput || cleanPhone.length < 10) {
-                const phoneField = document.getElementById("contactPhoneSearch");
                 phoneField.classList.add("error");
                 phoneField.parentElement.querySelector(".error-message").classList.add("show");
                 return;
             }
-            
-            existingContactPhone = phoneInput;
-            selectedContactId = "phone_" + cleanPhone; // Create an ID based on phone
+
+            phoneField.classList.remove("error");
+            phoneField.parentElement.querySelector(".error-message").classList.remove("show");
+
+            showToast("Searching contact...", "success");
+            const result = await findContactByPhone(phoneInput);
+
+            if (!result.found) {
+                const createNew = confirm("No records found for this phone number. Do you want to create a new contact and quote?");
+                if (!createNew) {
+                    return;
+                }
+
+                isNewContact = true;
+                selectedLanguage = null;
+                totalSteps = 5;
+                currentStep = 0;
+
+                document.getElementById("contactSelection").style.display = "none";
+                document.getElementById("quoteForm").style.display = "none";
+                document.getElementById("initialChoice").style.display = "none";
+                document.getElementById("languageSelection").style.display = "block";
+
+                document.getElementById("headerSubtitle").textContent =
+                    "No record found. Select your preferred language to create a new contact";
+
+                return;
+            }
+
+            existingContactPhone = result.phone || phoneInput;
+            selectedContactId = result.contactId;
             isNewContact = false;
             totalSteps = 4;
             currentStep = 1;
-            
+
+            if (result.firstName || result.lastName) {
+                showToast(
+                    `Contact found: ${result.firstName || ""} ${result.lastName || ""}`.trim(),
+                    "success"
+                );
+            } else {
+                showToast("Contact found. Continuing to quote.", "success");
+            }
+
             document.getElementById("contactSelection").style.display = "none";
             document.getElementById("quoteForm").style.display = "block";
-            
+
             setupStepIndicators();
             document.getElementById("step1").classList.add("active");
             updateProgress();
             updateNavigation();
             document.getElementById("headerSubtitle").textContent = "Step 1 of 4: Basic Information";
         }
+
+        // ======================================
+        // Steps, progress, formatting
+        // ======================================
 
         function setupStepIndicators() {
             const indicatorContainer = document.getElementById("stepIndicator");
@@ -1004,7 +1084,6 @@
             }
         }
 
-        // Format currency
         function formatCurrency(value) {
             const num = parseFloat(value.replace(/[^0-9.-]/g, "")) || 0;
             return "$" + num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -1014,12 +1093,10 @@
             return parseFloat(value.replace(/[^0-9.-]/g, "")) || 0;
         }
 
-        // Auto-calc total premium
         function calculateTotal() {
             const gross = parseCurrency(document.getElementById("grossPremium").value);
             const taxes = parseCurrency(document.getElementById("taxesAndFees").value);
             
-            // Auto-calculate agency fees at 10 percent if not manually edited
             const agencyField = document.getElementById("agencyFees");
             if (!agencyField.dataset.manual && gross > 0) {
                 agencyField.value = formatCurrency(String(gross * 0.10));
@@ -1030,7 +1107,6 @@
             document.getElementById("totalPremium").value = formatCurrency(String(total));
         }
 
-        // Setup currency formatting
         ["grossPremium", "taxesAndFees", "agencyFees", "downPayment", "monthlyPremium"].forEach(id => {
             const el = document.getElementById(id);
             if (el) {
@@ -1085,26 +1161,17 @@
             if (!validateStep(currentStep)) return;
             if (currentStep >= totalSteps - 1) return;
 
-            const currentStepEl = document.getElementById(`step${currentStep}`);
-            if (!currentStepEl) return;
-
-            currentStepEl.classList.remove("active");
+            document.getElementById(`step${currentStep}`).classList.remove("active");
             if (currentStep > 0 || !isNewContact) {
                 const dotIndex = isNewContact ? currentStep + 1 : currentStep;
-                const dot = document.getElementById(`dot${dotIndex}`);
-                if (dot) {
-                    dot.classList.remove("active");
-                    dot.classList.add("completed");
-                }
+                document.getElementById(`dot${dotIndex}`).classList.remove("active");
+                document.getElementById(`dot${dotIndex}`).classList.add("completed");
             }
 
             currentStep++;
-
-            const nextStepEl = document.getElementById(`step${currentStep}`);
-            if (nextStepEl) nextStepEl.classList.add("active");
+            document.getElementById(`step${currentStep}`).classList.add("active");
             const nextDotIndex = isNewContact ? currentStep + 1 : currentStep;
-            const nextDot = document.getElementById(`dot${nextDotIndex}`);
-            if (nextDot) nextDot.classList.add("active");
+            document.getElementById(`dot${nextDotIndex}`).classList.add("active");
 
             updateProgress();
             updateNavigation();
@@ -1117,24 +1184,16 @@
             const minStep = isNewContact ? 0 : 1;
             if (currentStep <= minStep) return;
 
-            const currentStepEl = document.getElementById(`step${currentStep}`);
-            if (!currentStepEl) return;
-
-            currentStepEl.classList.remove("active");
+            document.getElementById(`step${currentStep}`).classList.remove("active");
             const dotIndex = isNewContact ? currentStep + 1 : currentStep;
-            const dot = document.getElementById(`dot${dotIndex}`);
-            if (dot) dot.classList.remove("active");
+            document.getElementById(`dot${dotIndex}`).classList.remove("active");
 
             currentStep--;
 
-            const prevStepEl = document.getElementById(`step${currentStep}`);
-            if (prevStepEl) prevStepEl.classList.add("active");
+            document.getElementById(`step${currentStep}`).classList.add("active");
             const prevDotIndex = isNewContact ? currentStep + 1 : currentStep;
-            const prevDot = document.getElementById(`dot${prevDotIndex}`);
-            if (prevDot) {
-                prevDot.classList.add("active");
-                prevDot.classList.remove("completed");
-            }
+            document.getElementById(`dot${prevDotIndex}`).classList.add("active");
+            document.getElementById(`dot${prevDotIndex}`).classList.remove("completed");
 
             updateProgress();
             updateNavigation();
@@ -1206,15 +1265,14 @@
                 }
             });
 
-            // Special validation for step 3
             if (step === 3) {
                 const plan = document.getElementById("paymentPlan").value;
                 const location = document.getElementById("location").value;
                 
                 if (!location) {
-                    const locField = document.getElementById("location");
-                    locField.classList.add("error");
-                    locField.parentElement.querySelector(".error-message").classList.add("show");
+                    document.getElementById("location").classList.add("error");
+                    document.getElementById("location").parentElement
+                        .querySelector(".error-message").classList.add("show");
                     valid = false;
                 }
                 
@@ -1253,7 +1311,7 @@
             if (existingToast) existingToast.remove();
             
             const toast = document.createElement("div");
-            toast.className = `toast ${type}`;
+            toast.className = "toast" + (type === "error" ? " error" : "");
             toast.innerHTML = `<span>${message}</span>`;
             document.body.appendChild(toast);
             
@@ -1265,25 +1323,25 @@
 
             const submitBtn = document.getElementById("submitBtn");
             const originalText = submitBtn.textContent;
-
             submitBtn.textContent = "Submitting...";
             submitBtn.disabled = true;
 
-            // Build data object
             const formData = {
-                // Contact info (if new)
+                // Language
+                preferredLanguage: selectedLanguage || "English",
+
+                // New contact info
                 ...(isNewContact && {
                     contactFirstName: document.getElementById("contactFirstName").value,
                     contactLastName: document.getElementById("contactLastName").value,
                     contactEmail: document.getElementById("contactEmail").value,
                     contactPhone: document.getElementById("contactPhone").value
                 }),
-                // Language preference
-                ...(selectedLanguage && { preferredLanguage: selectedLanguage }),
-                // Existing contact phone
+
+                // Existing contact
                 ...(existingContactPhone && { 
                     existingContactPhone: existingContactPhone,
-                    contactId: selectedContactId 
+                    contactId: selectedContactId
                 }),
                 
                 // Quote data
@@ -1310,7 +1368,6 @@
 
             console.log("Submitting form data:", formData);
 
-            // Send to GHL webhook
             fetch("https://services.leadconnectorhq.com/hooks/YtNhoKQqqoEZSVFceqZm/webhook-trigger/26db136c-27ca-47b4-af16-f8b1f0dfd852", {
                 method: "POST",
                 headers: {
@@ -1339,7 +1396,7 @@
             });
         }
 
-        // Force show modal after delay for GHL (backup)
+        // Backup force show modal for GHL
         setTimeout(() => {
             const overlay = document.getElementById("modalOverlay");
             if (overlay && overlay.style.display !== "flex") {
